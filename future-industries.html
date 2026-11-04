@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Future Space Industries | SPACE 1</title>
+<meta content="The space economy and its future. SPACE 1, International Centre for Advanced Space Science &amp; Cosmic Research." name="description"/>
+<link href="css/theme.css?v=4" rel="stylesheet"/>
+<link href="css/base.css?v=4" rel="stylesheet"/>
+<link href="css/layout.css?v=4" rel="stylesheet"/>
+<link href="css/components.css?v=4" rel="stylesheet"/>
+<link href="css/animations.css?v=4" rel="stylesheet"/>
+<script>
+      document.documentElement.classList.add("js");
+    </script>
+<style>
+/* INLINE INDUSTRIES VIDEO BACKGROUNDS — scoped to this page */
+main[data-page="industries"] .industry-hero,
+main[data-page="industries"] .industry-video-section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #05070a;
+}
+main[data-page="industries"] .industry-hero .hero-media {
+  position: absolute;
+  inset: -6% 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+main[data-page="industries"] .industry-hero .hero-video,
+main[data-page="industries"] .industry-bg-video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+main[data-page="industries"] .industry-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+     background: linear-gradient(90deg, rgba(3, 6, 12, 0.92) 0%, rgb(3 6 12 / 0%) 1%, rgb(3 6 12 / 63%) 2%), linear-gradient(180deg, rgba(3, 6, 12, 0.25), rgb(3 6 12 / 14%));
+
+}
+main[data-page="industries"] .industry-hero > .wrap,
+main[data-page="industries"] .industry-hero .hero-notes,
+main[data-page="industries"] .industry-hero .scroll-cue {
+  position: relative;
+  z-index: 2;
+}
+main[data-page="industries"] .industry-hero .hero-notes,
+main[data-page="industries"] .industry-hero .scroll-cue { position: absolute; }
+main[data-page="industries"] .industry-video-section {
+  min-height: 540px;
+  padding-block: clamp(90px,10vw,150px);
+  background: #05070a !important;
+}
+main[data-page="industries"] .industry-video-bg,
+main[data-page="industries"] .industry-video-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+main[data-page="industries"] .industry-video-bg { z-index: 0; overflow: hidden; }
+main[data-page="industries"] .industry-video-overlay {
+  z-index: 1;
+     background: linear-gradient(90deg, rgba(3, 6, 12, 0.92) 0%, rgb(3 6 12 / 0%) 1%, rgb(3 6 12 / 63%) 2%), linear-gradient(180deg, rgba(3, 6, 12, 0.25), rgb(3 6 12 / 14%));
+
+}
+main[data-page="industries"] .industry-video-section > .wrap { position: relative; z-index: 2; }
+main[data-page="industries"] .industry-video-section .split,
+main[data-page="industries"] .industry-video-section .split.is-flipped { display: block; }
+main[data-page="industries"] .industry-video-section .split-copy { width: 100%; max-width: 790px; }
+main[data-page="industries"] .industry-video-section h2,
+main[data-page="industries"] .industry-video-section .stat b { color: white; }
+main[data-page="industries"] .industry-video-section p,
+main[data-page="industries"] .industry-video-section .bullets li,
+main[data-page="industries"] .industry-video-section .stat span { color: #e0e6ee; }
+@media(max-width:760px) {
+ main[data-page="industries"] .industry-video-section { min-height: 420px; padding-block: 74px; }
+ main[data-page="industries"] .industry-video-overlay { background: rgba(3,6,12,.78); }
+}
+@media(prefers-reduced-motion: reduce) {
+ main[data-page="industries"] video { display: none !important; }
+ main[data-page="industries"] .industry-hero .hero-media { background: url('images/future-industries/hero.jpg') center/cover; }
+ main[data-page="industries"] .industry-video-section { background: #080c14 !important; }
+}
+
+/* Alternating video / dark layout: applies only to Future Industries. */
+main[data-page="industries"] .industry-plain-section {
+  position: relative;
+  background: #0a0e16 !important;
+}
+main[data-page="industries"] .industry-video-section .section-head,
+main[data-page="industries"] .industry-video-section .card-grid,
+main[data-page="industries"] .industry-video-section .text-link {
+  position: relative;
+  z-index: 2;
+}
+main[data-page="industries"] .industry-video-section .card {
+  background: rgba(7, 12, 22, .80);
+  border-color: rgba(255, 255, 255, .16);
+  backdrop-filter: blur(6px);
+}
+main[data-page="industries"] .industry-video-section .card p { color: #dce4ee; }
+</style></head>
+<body>
+<div id="site-header"></div>
+<main data-page="industries">
+<section class="hero industry-hero">
+<div class="hero-media">
+<video aria-hidden="true" autoplay="" class="lazy-video hero-video" loop="" muted="" playsinline="" poster="space_video/16760243_3840_2160_25fps.mp4" preload="metadata" tabindex="-1" data-video="space_video/16760243_3840_2160_25fps.mp4"></video>
+</div>
+<div class="wrap">
+<p class="eyebrow">Future Space Industries</p>
+<h1>The economy beyond Earth</h1>
+<p class="lead">
+  How scientific discoveries create new industries, jobs and technological challenges, and what it takes
+  to understand them.
+</p>
+<div class="hero-buttons">
+<a class="btn btn-solid" href="future-industries.html#industries-economy">The global space economy</a>
+</div>
+</div>
+
+<span class="scroll-cue"></span>
+</section>
+<section class="submenu-section">
+<div class="wrap">
+<nav aria-label="Future Space Industries sections" class="submenu">
+<h2 data-reveal="">Future Space Industries</h2>
+<p class="submenu-sub" data-reveal="">The space economy and its future</p>
+<ul data-stagger="">
+<li><a href="#industries-economy">The Global Space Economy</a></li>
+<li><a href="#industries-launch">Commercial Spaceflight</a></li>
+<li><a href="#industries-mining">Space Mining Opportunities</a></li>
+<li><a href="#industries-services">Satellite Services</a></li>
+<li><a href="#industries-manufacturing">Space Manufacturing</a></li>
+<li><a href="#industries-solar">Space-Based Solar Power</a></li>
+<li><a href="#industries-startups">Space Startups and Entrepreneurship</a></li>
+<li><a href="#industries-insights">Investment and Industry Insights</a></li>
+<li><a href="#industries-cities">Future Space Cities</a></li>
+</ul>
+</nav>
+</div>
+</section>
+
+<section class="section industry-video-section" id="industries-economy">
+<div aria-hidden="true" class="industry-video-bg"><video autoplay="" class="lazy-video industry-bg-video" loop="" muted="" playsinline="" preload="none" tabindex="-1" data-video="space_video/11056560-hd_1920_1080_60fps.mp4"></video></div><div aria-hidden="true" class="industry-video-overlay"></div>
+<div class="wrap">
+<div class="split industry-wide-copy">
+<div class="split-copy" data-reveal="">
+<p class="eyebrow">Future Space Industries</p>
+<h2>The Global Space Economy</h2>
+<p>The space economy brings together:</p>
+<ul class="bullets" data-stagger="">
+<li>Satellite services</li>
+<li>Launch systems</li>
+<li>Spacecraft</li>
+<li>Data applications</li>
+<li>Emerging commercial technologies</li>
+</ul>
+<div class="chips" style="margin-top: 24px">
+<span class="chip is-gold">New industries</span>
+<span class="chip">Employment opportunities</span>
+<span class="chip">Technological challenges</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="section is-alt industry-plain-section" id="industries-launch">
+<div class="wrap">
+<div class="section-head" data-reveal="">
+<p class="eyebrow">Future Space Industries</p>
+<h2>Commercial Spaceflight</h2>
+<p class="lead">Privately operated launch services, spacecraft and missions for science, business and human spaceflight.</p>
+</div>
+<div class="card-grid cols-4" data-stagger="">
+<article class="card"><span class="card-tag">01</span><h3>Industry development</h3><p>How the sector has grown.</p></article>
+<article class="card"><span class="card-tag">02</span><h3>Technology</h3><p>What it takes to reach orbit.</p></article>
+<article class="card"><span class="card-tag">03</span><h3>Safety</h3><p>Keeping crews and cargo safe.</p></article>
+<article class="card"><span class="card-tag">04</span><h3>Future opportunities</h3><p>Where the industry is heading.</p></article>
+</div>
+</div>
+</section>
+
+<section class="section industry-video-section" id="industries-mining">
+<div aria-hidden="true" class="industry-video-bg"><video autoplay="" class="lazy-video industry-bg-video" loop="" muted="" playsinline="" preload="none" tabindex="-1" data-video="space_video/856309-hd_1920_1080_30fps.mp4"></video></div><div aria-hidden="true" class="industry-video-overlay"></div>
+<div class="wrap">
+<div class="split is-flipped industry-wide-copy">
+<div class="split-copy" data-reveal="">
+<p class="eyebrow">Future Space Industries</p>
+<h2>Space Mining Opportunities</h2>
+<p>The Moon and asteroids are being studied for resources that could support future exploration.</p>
+<ul class="bullets" data-stagger="">
+<li><b>Identify.</b> Finding the resources.</li>
+<li><b>Extract.</b> Extraction technologies.</li>
+<li><b>Cost.</b> Mission costs and investment uncertainty.</li>
+<li><b>Law.</b> The legal frameworks for space activities.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+
+<section class="section is-alt industry-plain-section" id="industries-services">
+<div class="wrap">
+<div class="section-head" data-reveal="">
+<p class="eyebrow">Future Space Industries</p>
+<h2>Satellite Services</h2>
+<p class="lead">Practical benefits for governments, businesses and communities.</p>
+</div>
+<div class="card-grid cols-3" data-stagger="">
+<article class="card"><h3>Communications</h3><p>Connectivity from orbit.</p></article>
+<article class="card"><h3>Navigation</h3><p>Positioning for transport and logistics.</p></article>
+<article class="card"><h3>Weather forecasting</h3><p>Forecasts from space.</p></article>
+<article class="card"><h3>Agriculture</h3><p>Crop and land monitoring.</p></article>
+<article class="card"><h3>Disaster management</h3><p>Rapid response from satellite data.</p></article>
+<article class="card"><h3>Environmental monitoring</h3><p>Tracking our changing planet.</p></article>
+</div>
+</div>
+</section>
+
+<section class="section industry-video-section" id="industries-manufacturing">
+<div aria-hidden="true" class="industry-video-bg"><video autoplay="" class="lazy-video industry-bg-video" loop="" muted="" playsinline="" preload="none" tabindex="-1" data-video="space_video/854277-hd_1280_720_30fps.mp4"></video></div><div aria-hidden="true" class="industry-video-overlay"></div>
+<div class="wrap">
+<div class="split industry-wide-copy">
+<div class="split-copy" data-reveal="">
+<p class="eyebrow">Future Space Industries</p>
+<h2>Space Manufacturing</h2>
+<p>Producing, assembling or repairing specialised components in orbit or on other celestial bodies.</p>
+<div class="chips">
+<span class="chip is-gold">Emerging technologies</span>
+<span class="chip">Possible applications</span>
+<span class="chip">Technical barriers</span>
+<span class="chip">Economic barriers</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="section is-alt industry-plain-section" id="industries-solar">
+<div class="wrap">
+<div class="section-head" data-reveal="">
+<p class="eyebrow">Future Space Industries</p>
+<h2>Space-Based Solar Power</h2>
+<p class="lead">A proposed idea: satellites collect solar energy and send it to receiving stations on Earth.</p>
+</div>
+<ol class="steps cols-4" data-stagger="">
+<li><h3>The concept</h3><p>How it would work.</p></li>
+<li><h3>Benefits</h3><p>What it could offer.</p></li>
+<li><h3>Engineering</h3><p>What it would need.</p></li>
+<li><h3>Costs and challenges</h3><p>What remains before large-scale use.</p></li>
+</ol>
+</div>
+</section>
+
+<section class="section industry-video-section" id="industries-startups">
+<div aria-hidden="true" class="industry-video-bg">
+<img src="images/future-industries/Futuristic Spaceport at Sunset.png" alt="" aria-hidden="true" tabindex="-1" style="object-position: bottom; width: 100%;" />
+</div>
+<div aria-hidden="true" class="industry-video-overlay"></div>
+<div class="wrap">
+<div class="section-head" data-reveal="">
+<p class="eyebrow">Future Space Industries</p>
+<h2>Space Startups and Entrepreneurship</h2>
+</div>
+<div class="card-grid cols-2" data-stagger="">
+<article class="card">
+<span class="card-tag">Opportunities in</span>
+<ul class="bullets">
+<li>Satellite technology</li>
+<li>Software</li>
+<li>Robotics</li>
+<li>Data services</li>
+<li>Aerospace components</li>
+</ul>
+</article>
+<article class="card">
+<span class="card-tag">How we encourage it</span>
+<ul class="bullets">
+<li>Educational programmes</li>
+<li>Industry discussions</li>
+<li>Future innovation initiatives</li>
+</ul>
+</article>
+</div>
+<a class="text-link" href="learning-academy.html#academy-tracks">Take the entrepreneurship track →</a>
+</div>
+</section>
+
+<section class="section is-alt industry-plain-section" id="industries-insights">
+<div class="wrap">
+<div class="section-head" data-reveal="">
+<p class="eyebrow">Future Space Industries</p>
+<h2>Investment and Industry Insights</h2>
+<p class="lead">Understanding the space sector means weighing:</p>
+</div>
+<div class="card-grid cols-4" data-stagger="">
+<article class="card"><span class="card-tag">Factor</span><h3>Technology readiness</h3></article>
+<article class="card"><span class="card-tag">Factor</span><h3>Market demand</h3></article>
+<article class="card"><span class="card-tag">Factor</span><h3>Capital requirements</h3></article>
+<article class="card"><span class="card-tag">Factor</span><h3>Regulation</h3></article>
+<article class="card"><span class="card-tag">Factor</span><h3>Long development cycles</h3></article>
+</div>
+<div class="note" data-reveal="">
+<b>Education, not advice</b>
+Speculative opportunities are never presented as guaranteed investments.
+</div>
+</div>
+</section>
+
+<section class="section industry-video-section" id="industries-cities">
+<div aria-hidden="true" class="industry-video-bg"><video autoplay="" class="lazy-video industry-bg-video" loop="" muted="" playsinline="" preload="none" tabindex="-1" data-video="space_video/16760243_3840_2160_25fps.mp4"></video></div><div aria-hidden="true" class="industry-video-overlay"></div>
+<div class="wrap">
+<div class="split is-flipped industry-wide-copy">
+<div class="split-copy" data-reveal="">
+<p class="eyebrow">Future Space Industries</p>
+<h2>Future Space Cities</h2>
+<p>A long-term concept of human settlements beyond Earth. We explore:</p>
+<div class="chips">
+<span class="chip is-gold">Habitat engineering</span>
+<span class="chip">Energy</span>
+<span class="chip">Food production</span>
+<span class="chip">Radiation protection</span>
+<span class="chip">Transport</span>
+<span class="chip">Resource management</span>
+</div>
+<p>Along with the major scientific, financial and social challenges involved.</p>
+</div>
+</div>
+</div>
+</section>
+<a class="next-page" href="partnerships.html">
+<div class="wrap">
+<small>Continue exploring</small>
+<h2>Partnerships →</h2>
+</div>
+</a>
+</main>
+<div id="site-footer"></div>
+<script src="js/video-lazy.js?v=4" defer></script>
+<script src="js/site-config.js?v=4"></script>
+<script src="js/layout.js?v=4"></script>
+<script src="js/components.js?v=4"></script>
+<script src="js/animations.js?v=4"></script></body>
+</html>

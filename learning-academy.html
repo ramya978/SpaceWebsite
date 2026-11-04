@@ -1,0 +1,857 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Learning Academy | SPACE 1</title>
+    <meta
+      name="description"
+      content="Ten tracks, flexible formats. SPACE 1, International Centre for Advanced Space Science &amp; Cosmic Research."
+    />
+    <link rel="stylesheet" href="css/theme.css?v=4" />
+    <link rel="stylesheet" href="css/base.css?v=4" />
+    <link rel="stylesheet" href="css/layout.css?v=4" />
+    <link rel="stylesheet" href="css/components.css?v=4" />
+    <link rel="stylesheet" href="css/animations.css?v=4" />
+    <script>
+      document.documentElement.classList.add("js");
+    </script>
+    <!-- Mobile-only redesign: accessible track pills + streamlined course detail -->
+    <style>
+      @media (max-width: 767px) {
+        #academy-tracks { overflow: hidden !important; padding-block: 42px 52px !important; }
+        #academy-tracks .wrap { width: auto !important; min-width: 0 !important; }
+        #academy-tracks .section-head { margin: 0 0 20px !important; }
+        #academy-tracks .section-head h2 { font-size: clamp(27px, 7vw, 34px) !important; line-height: 1.15 !important; margin: 8px 0 9px !important; }
+        #academy-tracks .section-head .lead { font-size: 14px !important; line-height: 1.55 !important; margin: 0 !important; }
+        #academy-tracks .course-explorer {
+          display: block !important; width: 100% !important; min-width: 0 !important;
+          padding: 0 !important; border: 0 !important; background: none !important;
+          border-radius: 0 !important; box-shadow: none !important;
+        }
+        #academy-tracks .course-list {
+          display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important;
+          align-items: stretch !important; gap: 8px !important;
+          width: 100% !important; min-width: 0 !important; max-width: 100% !important;
+          margin: 0 0 20px !important; padding: 3px 1px 12px !important;
+          overflow-x: auto !important; overflow-y: hidden !important;
+          -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain;
+          scroll-snap-type: x proximity; scrollbar-width: none;
+          border: 0 !important; border-radius: 0 !important;
+          background: transparent !important; box-shadow: none !important;
+        }
+        #academy-tracks .course-list::-webkit-scrollbar { display: none; }
+        #academy-tracks .course-list > button[role="tab"] {
+          appearance: none !important; -webkit-appearance: none !important;
+          position: relative !important; isolation: isolate;
+          display: inline-flex !important; flex: 0 0 auto !important;
+          align-items: center !important; justify-content: center !important;
+          width: auto !important; min-width: 100px !important; max-width: 166px !important;
+          height: auto !important; min-height: 46px !important;
+          margin: 0 !important; padding: 10px 13px !important;
+          box-sizing: border-box !important; transform: none !important;
+          border: 1px solid #47515e !important; border-radius: 8px !important;
+          background: #161d26 !important; background-image: none !important;
+          box-shadow: none !important; opacity: 1 !important;
+          font: 600 12px/1.35 system-ui, -apple-system, 'Segoe UI', sans-serif !important;
+          letter-spacing: 0 !important; color: #f3f5f8 !important;
+          -webkit-text-fill-color: #f3f5f8 !important;
+          text-align: center !important; text-decoration: none !important;
+          white-space: normal !important; overflow-wrap: normal !important;
+          scroll-snap-align: start; cursor: pointer;
+          transition: border-color .15s ease, background .15s ease !important;
+        }
+        #academy-tracks .course-list > button[role="tab"]::before,
+        #academy-tracks .course-list > button[role="tab"]::after { content: none !important; display: none !important; }
+        #academy-tracks .course-list > button[role="tab"].is-active,
+        #academy-tracks .course-list > button[role="tab"][aria-selected="true"] {
+          border: 1px solid #f1cf88 !important;
+          background: #60471f !important; background-image: none !important;
+          color: #fff9e8 !important; -webkit-text-fill-color: #fff9e8 !important;
+          box-shadow: inset 0 0 0 1px rgba(241,207,136,.22) !important;
+          opacity: 1 !important;
+        }
+        #academy-tracks .course-list > button[role="tab"]:focus-visible {
+          outline: 2px solid #f1cf88 !important; outline-offset: 3px !important;
+        }
+        #academy-tracks .course-detail {
+          width: 100% !important; min-width: 0 !important; padding: 0 !important;
+          background: transparent !important; border: 0 !important;
+          box-shadow: none !important;
+        }
+        #academy-tracks .course-detail article {
+          width: 100% !important; min-width: 0 !important; padding: 0 !important;
+          margin: 0 !important; background: transparent !important;
+          border: 0 !important; box-shadow: none !important;
+        }
+        #academy-tracks .course-detail article[hidden] { display: none !important; }
+        #academy-tracks .course-cover {
+          width: 100% !important; height: auto !important; aspect-ratio: 16/9 !important;
+          margin: 0 0 18px !important; border-radius: 12px !important;
+          overflow: hidden !important;
+        }
+        #academy-tracks .course-cover img {
+          display: block !important; width: 100% !important; height: 100% !important;
+          object-fit: cover !important;
+        }
+        #academy-tracks .course-detail article > .eyebrow {
+          font-size: 11px !important; letter-spacing: .16em !important;
+          color: #e9bb66 !important; margin: 0 0 7px !important;
+        }
+        #academy-tracks .course-detail h3 {
+          font-size: clamp(23px, 6.1vw, 28px) !important;
+          line-height: 1.2 !important; margin: 0 0 10px !important;
+          letter-spacing: -.025em !important; color: #fff !important;
+        }
+        #academy-tracks .course-detail article > .lead {
+          font-size: 14px !important; line-height: 1.65 !important;
+          color: #d6dce5 !important; margin: 0 0 22px !important;
+        }
+        #academy-tracks .course-facts {
+          display: grid !important; grid-template-columns: repeat(2, minmax(0,1fr)) !important;
+          gap: 8px !important; margin: 0 0 22px !important; padding: 0 !important;
+        }
+        #academy-tracks .course-facts > div {
+          min-width: 0 !important; margin: 0 !important; padding: 13px 11px !important;
+          border-radius: 9px !important; background: #151c25 !important;
+          border: 1px solid #35404c !important;
+        }
+        #academy-tracks .course-facts small {
+          display: block !important; font-size: 10px !important;
+          letter-spacing: .11em !important; color: #c0cad5 !important;
+          margin: 0 0 7px !important;
+        }
+        #academy-tracks .course-facts b {
+          display: block !important; font-size: 12px !important;
+          line-height: 1.45 !important; color: #fff !important;
+          overflow-wrap: anywhere;
+        }
+        #academy-tracks .course-detail h4 { font-size: 11px !important; margin: 22px 0 10px !important; }
+        #academy-tracks .modules { margin: 0 0 20px !important; padding-left: 0 !important; }
+        #academy-tracks .modules li { font-size: 13px !important; padding-block: 10px !important; }
+        #academy-tracks .course-detail article > p:not(.eyebrow):not(.lead) { font-size: 13px !important; line-height: 1.6 !important; }
+      }
+    
+        #academy-tracks .course-slider-shell {
+          position: relative;
+        }
+        #academy-tracks .track-nav {
+          display: none;
+        }
+        @media (max-width: 767px) {
+          #academy-tracks .course-slider-shell {
+            display: grid !important;
+            grid-template-columns: 42px minmax(0, 1fr) 42px !important;
+            align-items: center !important;
+            gap: 8px !important;
+            margin: 0 0 20px !important;
+          }
+          #academy-tracks .track-nav {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 42px !important;
+            height: 42px !important;
+            border-radius: 999px !important;
+            border: 1px solid rgba(232, 190, 103, 0.32) !important;
+            background: rgba(12, 20, 35, 0.96) !important;
+            color: #f4d181 !important;
+            padding: 0 !important;
+            box-shadow: 0 10px 22px rgba(0, 0, 0, 0.24) !important;
+            cursor: pointer !important;
+            transition: transform .22s ease, opacity .22s ease, border-color .22s ease, background .22s ease !important;
+          }
+          #academy-tracks .track-nav:active {
+            transform: scale(.96) !important;
+          }
+          #academy-tracks .track-nav[disabled] {
+            opacity: .38 !important;
+            cursor: default !important;
+          }
+          #academy-tracks .track-nav svg {
+            width: 18px !important;
+            height: 18px !important;
+          }
+          #academy-tracks .course-list {
+            margin: 0 !important;
+            padding: 3px 1px 12px !important;
+          }
+        }
+    </style>
+  </head>
+  <body>
+    <div id="site-header"></div>
+    <main data-page="academy">
+      <section class="hero">
+        <div class="hero-media">
+          <video
+            class="lazy-video hero-video"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            poster="images/NewImages/LEARNING ACADEMY.mp4"
+            aria-hidden="true"
+            tabindex="-1"
+            data-video="images/NewImages/LEARNING ACADEMY.mp4"
+          >
+          </video>
+        </div>
+        <div class="wrap">
+          <p class="eyebrow">Learning Academy</p>
+          <h1>Learn about space. Prepare for tomorrow.</h1>
+          <p class="lead">
+            The science, technologies and discoveries shaping our understanding of the Universe, starting
+            with online courses, workshops and structured programmes.
+          </p>
+          <div class="hero-buttons">
+            <a class="btn btn-solid" href="learning-academy.html#academy-tracks">Browse the tracks</a>
+            <a class="btn" href="learning-academy.html#academy-fees">Eligibility and fees</a>
+          </div>
+        </div>
+       
+        <span class="scroll-cue"></span>
+      </section>
+
+      <section class="submenu-section">
+        <div class="wrap">
+          <nav class="submenu" aria-label="Learning Academy sections">
+            <h2 data-reveal>Learning Academy</h2>
+            <p class="submenu-sub" data-reveal>Ten tracks, flexible formats</p>
+            <ul data-stagger>
+              <li><a href="#academy-tracks">Ten Learning Tracks</a></li>
+              <li><a href="#academy-options">Learning Options</a></li>
+              <li><a href="#academy-catalogue">Course Catalogue</a></li>
+              <li><a href="#academy-admissions">Eligibility and Admissions</a></li>
+              <li><a href="#academy-fees">Fees and Scholarships</a></li>
+              <li><a href="#academy-assess">Assessments and Certification</a></li>
+              <li><a href="#academy-partners">Academic Partners</a></li>
+              <li><a href="#academy-support">Student Support</a></li>
+            </ul>
+          </nav>
+        </div>
+      </section>
+
+      <section class="section" id="academy-tracks">
+        <div class="wrap">
+          <div class="section-head" data-reveal>
+            <p class="eyebrow">Learning Academy</p>
+            <h2>Ten Learning Tracks</h2>
+            <p class="lead">Select a track to see what it covers and the topics you will explore.</p>
+          </div>
+          <div class="course-explorer" data-tabs data-reveal>
+            <div class="course-slider-shell">
+              <button class="track-nav track-prev" type="button" aria-label="Show previous learning tracks">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <div class="course-list" role="tablist">
+              <button type="button" role="tab" class="is-active" data-tab-target="foundations">Foundations of Space Science</button>
+              <button type="button" role="tab" class="" data-tab-target="astronomy">Astronomy and Cosmology</button>
+              <button type="button" role="tab" class="" data-tab-target="planetary">Planetary Science</button>
+              <button type="button" role="tab" class="" data-tab-target="satellite">Satellite Technology</button>
+              <button type="button" role="tab" class="" data-tab-target="ai-robotics">AI and Space Robotics</button>
+              <button type="button" role="tab" class="" data-tab-target="astrobiology">Astrobiology and Exoplanets</button>
+              <button type="button" role="tab" class="" data-tab-target="spaceflight">Human Spaceflight and Mars Exploration</button>
+              <button type="button" role="tab" class="" data-tab-target="resources">Space Resources and Asteroid Mining</button>
+              <button type="button" role="tab" class="" data-tab-target="sustainability">Space Sustainability</button>
+              <button type="button" role="tab" class="" data-tab-target="entrepreneurship">Space Entrepreneurship</button>
+              </div>
+              <button class="track-nav track-next" type="button" aria-label="Show next learning tracks">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+            <div class="course-detail">
+              <article data-tab-panel="foundations">
+                <figure class="course-cover">
+                  <img src="images/learning-academy/track-foundations.jpg" alt="Foundations of Space Science illustration" loading="lazy" />
+                </figure>
+                <p class="eyebrow">Introductory</p>
+                <h3>Foundations of Space Science</h3>
+                <p class="lead">
+                  The fundamental principles of space science, and a foundation for understanding space
+                  exploration and modern astronomical discoveries.
+                </p>
+                <div class="course-facts">
+                  <div><small>Level</small><b>Introductory</b></div>
+                  <div><small>Delivery</small><b>Online (planned)</b></div>
+                  <div><small>Duration</small><b>Published before enrolment</b></div>
+                  <div><small>Fees</small><b>Published before enrolment</b></div>
+                </div>
+                <h4>KEY TOPICS</h4>
+                <ol class="modules">
+                  <li>Gravity</li>
+                  <li>The Solar System</li>
+                  <li>Stars</li>
+                  <li>Galaxies</li>
+                  <li>The evolution of the Universe</li>
+                  <li>Modern astronomical discoveries</li>
+                </ol>
+                <h4>ENROLMENT</h4>
+                <p>Registration opens once the programme is formally launched.</p>
+                <a class="btn btn-solid" href="join.html#join-form">Register your interest</a>
+              </article>
+              <article data-tab-panel="astronomy" hidden>
+                <figure class="course-cover">
+                  <img src="images/learning-academy/track-astronomy.jpg" alt="Astronomy and Cosmology illustration" loading="lazy" />
+                </figure>
+                <p class="eyebrow">Astronomy</p>
+                <h3>Astronomy and Cosmology</h3>
+                <p class="lead">
+                  How astronomers study celestial objects, and how cosmologists investigate the origin,
+                  structure and evolution of the Universe.
+                </p>
+                <div class="course-facts">
+                  <div><small>Level</small><b>Published before enrolment</b></div>
+                  <div><small>Delivery</small><b>Online (planned)</b></div>
+                  <div><small>Duration</small><b>Published before enrolment</b></div>
+                  <div><small>Fees</small><b>Published before enrolment</b></div>
+                </div>
+                <h4>KEY TOPICS</h4>
+                <ol class="modules">
+                  <li>Telescopes</li>
+                  <li>Stellar evolution</li>
+                  <li>Galaxies</li>
+                  <li>Dark matter</li>
+                  <li>The expansion of the Universe</li>
+                </ol>
+                <h4>ENROLMENT</h4>
+                <p>Registration opens once the programme is formally launched.</p>
+                <a class="btn btn-solid" href="join.html#join-form">Register your interest</a>
+              </article>
+              <article data-tab-panel="planetary" hidden>
+                <figure class="course-cover">
+                  <img src="images/learning-academy/track-planetary.jpg" alt="Planetary Science illustration" loading="lazy" />
+                </figure>
+                <p class="eyebrow">Planetary</p>
+                <h3>Planetary Science</h3>
+                <p class="lead">
+                  The formation, composition and evolution of planets, moons, asteroids and other Solar
+                  System bodies.
+                </p>
+                <div class="course-facts">
+                  <div><small>Level</small><b>Published before enrolment</b></div>
+                  <div><small>Delivery</small><b>Online (planned)</b></div>
+                  <div><small>Duration</small><b>Published before enrolment</b></div>
+                  <div><small>Fees</small><b>Published before enrolment</b></div>
+                </div>
+                <h4>KEY TOPICS</h4>
+                <ol class="modules">
+                  <li>Planetary geology</li>
+                  <li>Atmospheres</li>
+                  <li>Impact craters</li>
+                  <li>Methods for studying worlds beyond Earth</li>
+                </ol>
+                <h4>ENROLMENT</h4>
+                <p>Registration opens once the programme is formally launched.</p>
+                <a class="btn btn-solid" href="join.html#join-form">Register your interest</a>
+              </article>
+              <article data-tab-panel="satellite" hidden>
+                <figure class="course-cover">
+                  <img src="images/learning-academy/track-satellite.jpg" alt="Satellite Technology illustration" loading="lazy" />
+                </figure>
+                <p class="eyebrow">Technology</p>
+                <h3>Satellite Technology</h3>
+                <p class="lead">
+                  How satellites operate and how they support communication, navigation, weather
+                  forecasting, Earth observation and scientific research.
+                </p>
+                <div class="course-facts">
+                  <div><small>Level</small><b>Published before enrolment</b></div>
+                  <div><small>Delivery</small><b>Online (planned)</b></div>
+                  <div><small>Duration</small><b>Published before enrolment</b></div>
+                  <div><small>Fees</small><b>Published before enrolment</b></div>
+                </div>
+                <h4>KEY TOPICS</h4>
+                <ol class="modules">
+                  <li>Satellite components</li>
+                  <li>Orbital concepts</li>
+                  <li>Sensors</li>
+                  <li>Basic mission planning</li>
+                </ol>
+                <h4>ENROLMENT</h4>
+                <p>Registration opens once the programme is formally launched.</p>
+                <a class="btn btn-solid" href="join.html#join-form">Register your interest</a>
+              </article>
+              <article data-tab-panel="ai-robotics" hidden>
+                <figure class="course-cover">
+                  <img src="images/learning-academy/track-ai-robotics.jpg" alt="AI and Space Robotics illustration" loading="lazy" />
+                </figure>
+                <p class="eyebrow">Technology</p>
+                <h3>AI and Space Robotics</h3>
+                <p class="lead">
+                  How artificial intelligence, automation and robotics support scientific discovery and
+                  space missions.
+                </p>
+                <div class="course-facts">
+                  <div><small>Level</small><b>Published before enrolment</b></div>
+                  <div><small>Delivery</small><b>Online (planned)</b></div>
+                  <div><small>Duration</small><b>Published before enrolment</b></div>
+                  <div><small>Fees</small><b>Published before enrolment</b></div>
+                </div>
+                <h4>KEY TOPICS</h4>
+                <ol class="modules">
+                  <li>Autonomous rovers</li>
+                  <li>Robotic manipulation</li>
+                  <li>Computer vision</li>
+                  <li>Intelligent systems for space data</li>
+                </ol>
+                <h4>ENROLMENT</h4>
+                <p>Registration opens once the programme is formally launched.</p>
+                <a class="btn btn-solid" href="join.html#join-form">Register your interest</a>
+              </article>
+              <article data-tab-panel="astrobiology" hidden>
+                <figure class="course-cover">
+                  <img src="images/learning-academy/track-astrobiology.jpg" alt="Astrobiology and Exoplanets illustration" loading="lazy" />
+                </figure>
+                <p class="eyebrow">Life sciences</p>
+                <h3>Astrobiology and Exoplanets</h3>
+                <p class="lead">The scientific study of life’s potential beyond Earth.</p>
+                <div class="course-facts">
+                  <div><small>Level</small><b>Published before enrolment</b></div>
+                  <div><small>Delivery</small><b>Online (planned)</b></div>
+                  <div><small>Duration</small><b>Published before enrolment</b></div>
+                  <div><small>Fees</small><b>Published before enrolment</b></div>
+                </div>
+                <h4>KEY TOPICS</h4>
+                <ol class="modules">
+                  <li>Extremophiles</li>
+                  <li>Habitable environments</li>
+                  <li>Exoplanet detection</li>
+                  <li>Biosignatures</li>
+                  <li>Methods for investigating life elsewhere</li>
+                </ol>
+                <h4>ENROLMENT</h4>
+                <p>Registration opens once the programme is formally launched.</p>
+                <a class="btn btn-solid" href="join.html#join-form">Register your interest</a>
+              </article>
+              <article data-tab-panel="spaceflight" hidden>
+                <figure class="course-cover">
+                  <img src="images/learning-academy/track-spaceflight.jpg" alt="Human Spaceflight and Mars Exploration illustration" loading="lazy" />
+                </figure>
+                <p class="eyebrow">Exploration</p>
+                <h3>Human Spaceflight and Mars Exploration</h3>
+                <p class="lead">
+                  The challenges of sending humans into space and sustaining them on long-duration
+                  missions.
+                </p>
+                <div class="course-facts">
+                  <div><small>Level</small><b>Published before enrolment</b></div>
+                  <div><small>Delivery</small><b>Online (planned)</b></div>
+                  <div><small>Duration</small><b>Published before enrolment</b></div>
+                  <div><small>Fees</small><b>Published before enrolment</b></div>
+                </div>
+                <h4>KEY TOPICS</h4>
+                <ol class="modules">
+                  <li>Astronaut health</li>
+                  <li>Radiation</li>
+                  <li>Life-support systems</li>
+                  <li>Habitat design</li>
+                  <li>Mission planning</li>
+                  <li>Scientific goals of Mars exploration</li>
+                </ol>
+                <h4>ENROLMENT</h4>
+                <p>Registration opens once the programme is formally launched.</p>
+                <a class="btn btn-solid" href="join.html#join-form">Register your interest</a>
+              </article>
+              <article data-tab-panel="resources" hidden>
+                <figure class="course-cover">
+                  <img src="images/learning-academy/track-resources.jpg" alt="Space Resources and Asteroid Mining illustration" loading="lazy" />
+                </figure>
+                <p class="eyebrow">Resources</p>
+                <h3>Space Resources and Asteroid Mining</h3>
+                <p class="lead">
+                  Asteroid composition, lunar resources and the engineering challenges of extracting
+                  materials beyond Earth.
+                </p>
+                <div class="course-facts">
+                  <div><small>Level</small><b>Published before enrolment</b></div>
+                  <div><small>Delivery</small><b>Online (planned)</b></div>
+                  <div><small>Duration</small><b>Published before enrolment</b></div>
+                  <div><small>Fees</small><b>Published before enrolment</b></div>
+                </div>
+                <h4>KEY TOPICS</h4>
+                <ol class="modules">
+                  <li>Asteroid composition</li>
+                  <li>Lunar resources</li>
+                  <li>Resource mapping</li>
+                  <li>Extraction engineering</li>
+                  <li>Economic uncertainties</li>
+                  <li>Legal considerations</li>
+                </ol>
+                <div class="note">
+                  <b>Long-term concept</b>
+                  Interstellar mining is introduced as a highly speculative long-term idea.
+                </div>
+                <h4>ENROLMENT</h4>
+                <p>Registration opens once the programme is formally launched.</p>
+                <a class="btn btn-solid" href="join.html#join-form">Register your interest</a>
+              </article>
+              <article data-tab-panel="sustainability" hidden>
+                <figure class="course-cover">
+                  <img src="images/learning-academy/track-sustainability.jpg" alt="Space Sustainability illustration" loading="lazy" />
+                </figure>
+                <p class="eyebrow">Sustainability</p>
+                <h3>Space Sustainability</h3>
+                <p class="lead">Protecting the orbital environment and using space responsibly.</p>
+                <div class="course-facts">
+                  <div><small>Level</small><b>Published before enrolment</b></div>
+                  <div><small>Delivery</small><b>Online (planned)</b></div>
+                  <div><small>Duration</small><b>Published before enrolment</b></div>
+                  <div><small>Fees</small><b>Published before enrolment</b></div>
+                </div>
+                <h4>KEY TOPICS</h4>
+                <ol class="modules">
+                  <li>Space debris</li>
+                  <li>Collision avoidance</li>
+                  <li>Satellite end-of-life management</li>
+                  <li>Satellites for environmental monitoring</li>
+                </ol>
+                <h4>ENROLMENT</h4>
+                <p>Registration opens once the programme is formally launched.</p>
+                <a class="btn btn-solid" href="join.html#join-form">Register your interest</a>
+              </article>
+              <article data-tab-panel="entrepreneurship" hidden>
+                <figure class="course-cover">
+                  <img src="images/learning-academy/track-entrepreneurship.jpg" alt="Space Entrepreneurship illustration" loading="lazy" />
+                </figure>
+                <p class="eyebrow">Business</p>
+                <h3>Space Entrepreneurship</h3>
+                <p class="lead">
+                  The emerging commercial space sector, and how innovative ideas become viable ventures.
+                </p>
+                <div class="course-facts">
+                  <div><small>Level</small><b>Published before enrolment</b></div>
+                  <div><small>Delivery</small><b>Online (planned)</b></div>
+                  <div><small>Duration</small><b>Published before enrolment</b></div>
+                  <div><small>Fees</small><b>Published before enrolment</b></div>
+                </div>
+                <h4>KEY TOPICS</h4>
+                <ol class="modules">
+                  <li>Satellite services</li>
+                  <li>Aerospace technologies</li>
+                  <li>Space data and robotics</li>
+                  <li>Business models</li>
+                  <li>Market opportunities</li>
+                  <li>Technical risks</li>
+                </ol>
+                <h4>ENROLMENT</h4>
+                <p>Registration opens once the programme is formally launched.</p>
+                <a class="btn btn-solid" href="join.html#join-form">Register your interest</a>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section is-alt" id="academy-options">
+        <div class="wrap">
+          <div class="section-head" data-reveal>
+            <p class="eyebrow">Learning Academy</p>
+            <h2>Learning Options</h2>
+            <p class="lead">Different ways to learn, depending on the programme.</p>
+          </div>
+          <div class="card-grid cols-4" data-stagger>
+            <article class="card">
+              <span class="card-tag">Anywhere</span>
+              <h3>Online Courses</h3>
+              <p>Structured material, clear learning objectives and suitable assessments.</p>
+            </article>
+            <article class="card">
+              <span class="card-tag">Live</span>
+              <h3>Live Virtual Classes</h3>
+              <p>Instructors, specialists and invited speakers, with guided discussion.</p>
+            </article>
+            <article class="card">
+              <span class="card-tag">Your pace</span>
+              <h3>Self-Paced Learning</h3>
+              <p>Recorded lessons, readings, quizzes and assessments on your schedule.</p>
+            </article>
+            <article class="card">
+              <span class="card-tag">Focused</span>
+              <h3>Workshops and Masterclasses</h3>
+              <p>Presentations, demonstrations and guided activities, online or in person.</p>
+            </article>
+            <article class="card">
+              <span class="card-tag">Supervised</span>
+              <h3>Student Research Projects</h3>
+              <p>Investigate scientific questions as mentors and collaborations become available.</p>
+            </article>
+            <article class="card">
+              <span class="card-tag">Schools</span>
+              <h3>School Programmes</h3>
+              <p>Age-appropriate astronomy, planetary science and space technology activities.</p>
+            </article>
+            <article class="card">
+              <span class="card-tag">Organisations</span>
+              <h3>Corporate Learning</h3>
+              <p>The space economy, satellite applications and innovation, shaped by demand.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="academy-catalogue">
+        <div class="wrap">
+          <div class="section-head" data-reveal>
+            <p class="eyebrow">Academic Information</p>
+            <h2>Course Catalogue</h2>
+            <p class="lead">Each programme’s catalogue entry will include:</p>
+          </div>
+          <div class="chips" data-reveal>
+            <span class="chip is-gold">Syllabus</span>
+            <span class="chip">Learning objectives</span>
+            <span class="chip">Duration</span>
+            <span class="chip">Delivery method</span>
+            <span class="chip">Instructor (where confirmed)</span>
+            <span class="chip">Assessment requirements</span>
+            <span class="chip">Fees</span>
+          </div>
+          <div class="rows" data-stagger style="margin-top: 26px">
+            <div class="row is-compact"><h3>Foundations of Space Science</h3><span class="chip is-gold">Introductory</span><span class="chip">Online</span></div>
+            <div class="row is-compact"><h3>Astronomy and Cosmology</h3><span class="chip is-gold">Astronomy</span><span class="chip">Online</span></div>
+            <div class="row is-compact"><h3>Planetary Science</h3><span class="chip is-gold">Planetary</span><span class="chip">Online</span></div>
+            <div class="row is-compact"><h3>Satellite Technology</h3><span class="chip is-gold">Technology</span><span class="chip">Online</span></div>
+            <div class="row is-compact"><h3>AI and Space Robotics</h3><span class="chip is-gold">Technology</span><span class="chip">Online</span></div>
+            <div class="row is-compact"><h3>Astrobiology and Exoplanets</h3><span class="chip is-gold">Life sciences</span><span class="chip">Online</span></div>
+            <div class="row is-compact"><h3>Human Spaceflight and Mars Exploration</h3><span class="chip is-gold">Exploration</span><span class="chip">Online</span></div>
+            <div class="row is-compact"><h3>Space Resources and Asteroid Mining</h3><span class="chip is-gold">Resources</span><span class="chip">Online</span></div>
+            <div class="row is-compact"><h3>Space Sustainability</h3><span class="chip is-gold">Sustainability</span><span class="chip">Online</span></div>
+            <div class="row is-compact"><h3>Space Entrepreneurship</h3><span class="chip is-gold">Business</span><span class="chip">Online</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section is-alt" id="academy-admissions">
+        <div class="wrap">
+          <div class="section-head" data-reveal>
+            <p class="eyebrow">Academic Information</p>
+            <h2>Eligibility and Admissions</h2>
+            <p class="lead">Eligibility depends on the subject and level of each course.</p>
+          </div>
+          <ol class="steps cols-4" data-stagger>
+            <li>
+              <h3>Entry requirements</h3>
+              <p>Published for each course before enrolment begins.</p>
+            </li>
+            <li>
+              <h3>Prerequisites</h3>
+              <p>Any required prior knowledge is listed clearly.</p>
+            </li>
+            <li>
+              <h3>Registration</h3>
+              <p>Follow the published registration procedure.</p>
+            </li>
+            <li>
+              <h3>Admission timeline</h3>
+              <p>Dates are announced before each intake.</p>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="section" id="academy-fees">
+        <div class="wrap">
+          <div class="section-head" data-reveal>
+            <p class="eyebrow">Academic Information</p>
+            <h2>Fees and Scholarships</h2>
+          </div>
+          <div class="card-grid cols-2" data-stagger>
+            <article class="card">
+              <span class="card-tag">Fees</span>
+                <ul class="bullets">
+              <li>Course fees will be disclosed clearly before registration. </li>
+
+                </ul>
+            </article>
+            <article class="card">
+              <span class="card-tag">Scholarships</span>
+              <ul class="bullets">
+                <li>SPACE 1 also aims to explore scholarships and sponsored learning opportunities to help widen access to space-science education, subject to available funding and eligibility criteria.</li>
+              </ul>
+            </article>
+          </div>
+          <a class="text-link" href="join.html#join-form">Register interest in a scholarship &rarr;</a>
+        </div>
+      </section>
+
+      <section class="section is-alt" id="academy-assess">
+        <div class="assess-video-bg">
+          <video
+            class="lazy-video assess-bg-video"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            poster="images/learning-academy/assessments.jpg"
+            aria-hidden="true"
+            tabindex="-1"
+            data-video="space_video/4990319-hd_1920_1080_30fps.mp4"
+          >
+          </video>
+        </div>
+        <div class="assess-video-overlay"></div>
+        <div class="wrap">
+          <div class="split1">
+            <div class="split-copy" data-reveal>
+              <p class="eyebrow">Academic Information</p>
+              <h2>Assessments and Certification</h2>
+              <p>Assessment methods depend on the programme and may include:</p>
+              <div class="chips">
+                <span class="chip is-gold">Quizzes</span>
+                <span class="chip">Assignments</span>
+                <span class="chip">Projects</span>
+                <span class="chip">Final evaluations</span>
+              </div>
+              <p>
+                SPACE 1 may issue certificates of completion for its own courses when the stated
+                requirements are met.
+              </p>
+              <div class="note">
+                <b>About certificates</b>
+                External accreditation, academic credit or certification by another institution will be
+                offered only through a formally authorised arrangement.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="academy-partners">
+        <div class="wrap">
+          <div class="section-head" data-reveal>
+            <p class="eyebrow">Academic Information</p>
+            <h2>Academic Partners</h2>
+            <p class="lead">
+              We welcome discussions with universities, educational institutions and qualified training
+              providers.
+            </p>
+          </div>
+          <div class="card-grid cols-3" data-stagger>
+            <article class="card">
+              <span class="card-tag">Area</span>
+              <h3>Curriculum development</h3>
+              <p>Shaping what and how we teach.</p>
+            </article>
+            <article class="card">
+              <span class="card-tag">Area</span>
+              <h3>Teaching collaborations</h3>
+              <p>Shared teaching and guest contributions.</p>
+            </article>
+            <article class="card">
+              <span class="card-tag">Area</span>
+              <h3>Authorised certification pathways</h3>
+              <p>Only through formal, authorised arrangements.</p>
+            </article>
+          </div>
+          <div class="note" data-reveal>
+            <b>Announcements</b>
+            Institutional relationships will be described accurately and announced only after formal
+            confirmation.
+          </div>
+          <a class="text-link" href="partnerships.html#partnerships-academic">Become an Academic Partner &rarr;</a>
+        </div>
+      </section>
+
+      <section class="section is-alt" id="academy-support">
+        <div class="wrap">
+          <div class="section-head" data-reveal>
+            <p class="eyebrow">Academic Information</p>
+            <h2>Student Support</h2>
+            <p class="lead">
+              Guidance follows the support arrangements for your chosen programme. During registration you
+              will receive information about:
+            </p>
+          </div>
+          <div class="card-grid cols-4" data-stagger>
+            <article class="card"><h3>Course access</h3><p>How and when to reach your course material.</p></article>
+            <article class="card"><h3>Technical assistance</h3><p>Help with the learning platform.</p></article>
+            <article class="card"><h3>Assessments</h3><p>How you will be assessed.</p></article>
+            <article class="card"><h3>Learner enquiries</h3><p>Who to contact with questions.</p></article>
+          </div>
+        </div>
+      </section>
+      <a class="next-page" href="innovation-research.html">
+        <div class="wrap">
+          <small>Continue exploring</small>
+          <h2>Innovation &amp; Research &rarr;</h2>
+        </div>
+      </a>
+    </main>
+    <div id="site-footer"></div>
+    <script src="js/video-lazy.js?v=4" defer></script>
+    <script src="js/site-config.js?v=4"></script>
+    <script src="js/layout.js?v=4"></script>
+    <script src="js/components.js?v=4"></script>
+    <script src="js/animations.js?v=4"></script>
+    <script>
+      (function () {
+        const mq = window.matchMedia('(max-width: 767px)');
+        const section = document.querySelector('#academy-tracks');
+        if (!section) return;
+
+        const list = section.querySelector('.course-list');
+        const prev = section.querySelector('.track-prev');
+        const next = section.querySelector('.track-next');
+        if (!list || !prev || !next) return;
+
+        function scrollAmount() {
+          const firstTab = list.querySelector('button[role="tab"]');
+          if (!firstTab) return 220;
+          const style = window.getComputedStyle(list);
+          const gap = parseFloat(style.columnGap || style.gap || '8') || 8;
+          return firstTab.getBoundingClientRect().width + gap;
+        }
+
+        function updateButtons() {
+          if (!mq.matches) {
+            prev.disabled = false;
+            next.disabled = false;
+            return;
+          }
+          const maxScroll = list.scrollWidth - list.clientWidth;
+          prev.disabled = list.scrollLeft <= 6;
+          next.disabled = list.scrollLeft >= maxScroll - 6;
+        }
+
+        function moveSlider(direction) {
+          list.scrollBy({ left: direction * scrollAmount(), behavior: 'smooth' });
+        }
+
+        prev.addEventListener('click', function () {
+          if (!mq.matches) return;
+          moveSlider(-1);
+        });
+
+        next.addEventListener('click', function () {
+          if (!mq.matches) return;
+          moveSlider(1);
+        });
+
+        list.addEventListener('scroll', updateButtons, { passive: true });
+        window.addEventListener('resize', updateButtons);
+        if (mq.addEventListener) {
+          mq.addEventListener('change', updateButtons);
+        } else if (mq.addListener) {
+          mq.addListener(updateButtons);
+        }
+
+        document.addEventListener('click', function (event) {
+          const tab = event.target.closest('#academy-tracks .course-list button[role="tab"]');
+          if (!tab || !mq.matches) return;
+          setTimeout(function () {
+            tab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            updateButtons();
+          }, 60);
+        });
+
+        requestAnimationFrame(updateButtons);
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,188 @@
+/* ==========================================
+   EXPLORE THE UNIVERSE - MOBILE IMAGE SLIDER
+   Desktop: existing tile grid (unchanged)
+   Mobile (<= 760px): swipeable slider
+========================================== */
+
+.universe-slider {
+  position: relative;
+}
+
+/* Controls hidden on desktop */
+.universe-slider-controls {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  /* Turn the grid into a horizontal scroll-snap track */
+  .universe-slider .index-tile-video-section.tile-grid {
+    display: flex !important;
+    grid-template-columns: none !important;
+    gap: 14px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    margin-inline: calc(var(--gutter, 16px) * -1);
+    padding: 4px var(--gutter, 16px);
+    scroll-padding-inline: var(--gutter, 16px);
+    background: transparent;
+    outline: none;
+  }
+
+  .universe-slider .index-tile-video-section.tile-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Section-wide dark layer is not needed in slider mode */
+  .universe-slider .index-tile-video-section::before {
+    display: none;
+  }
+
+  .universe-slider .index-tile-video-section.tile-grid:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  /* Each slide */
+  .universe-slider .tile {
+    position: relative;
+    flex: 0 0 86%;
+    min-height: 400px;
+    margin: 0;
+    overflow: hidden;
+    border-radius: var(--radius, 6px);
+    border: 1px solid var(--color-line);
+    background: #05070a;
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+    transition:
+      transform 0.4s var(--ease-out, ease),
+      opacity 0.4s var(--ease-out, ease);
+  }
+
+  .universe-slider .tile:not(.is-active) {
+    opacity: 0.6;
+    transform: scale(0.96);
+  }
+
+  /* Full-bleed image */
+  .universe-slider .tile .tile-video-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .universe-slider .tile .tile-bg-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  /* Gradient so text stays readable */
+  .universe-slider .tile::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(
+      180deg,
+      rgba(3, 6, 12, 0) 35%,
+      rgba(3, 6, 12, 0.7) 70%,
+      rgba(3, 6, 12, 0.95) 100%
+    );
+  }
+
+  /* Text pinned to the bottom */
+  .universe-slider .tile .tile-body {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    padding: 22px 20px;
+  }
+
+  .universe-slider .tile .tile-body h3 {
+    margin: 0 0 8px;
+    color: #ffffff;
+  }
+
+  .universe-slider .tile .tile-body p {
+    margin: 0;
+    color: #d6dde4;
+  }
+
+  /* Controls: prev, dots, next */
+  .universe-slider-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .universe-slider-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    flex: none;
+    padding: 0;
+    background: none;
+    border: 1px solid var(--color-line);
+    border-radius: 2px;
+    color: var(--color-white, #ffffff);
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    transition: border-color var(--speed-fast, 0.2s);
+  }
+
+  .universe-slider-btn:hover,
+  .universe-slider-btn:focus-visible {
+    border-color: var(--color-white, #ffffff);
+  }
+
+  .universe-slider-dots {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .universe-slider-dot {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition:
+      width 0.3s var(--ease-out, ease),
+      background 0.3s;
+  }
+
+  .universe-slider-dot.is-active {
+    width: 24px;
+    background: var(--color-accent);
+  }
+}
+
+@media (max-width: 760px) and (prefers-reduced-motion: reduce) {
+  .universe-slider .tile,
+  .universe-slider-dot {
+    transition: none;
+  }
+
+  .universe-slider .tile:not(.is-active) {
+    transform: none;
+  }
+}

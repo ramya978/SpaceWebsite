@@ -1,0 +1,675 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Join SPACE 1 | SPACE 1</title>
+  <meta name="description"
+    content="Register, volunteer, mentor. SPACE 1, International Centre for Advanced Space Science &amp; Cosmic Research." />
+  <link rel="stylesheet" href="css/theme.css?v=4" />
+  <link rel="stylesheet" href="css/base.css?v=4" />
+  <link rel="stylesheet" href="css/layout.css?v=4" />
+  <link rel="stylesheet" href="css/components.css?v=4" />
+  <link rel="stylesheet" href="css/animations.css?v=4" />
+  <script>
+    document.documentElement.classList.add("js");
+  </script>
+
+  <!-- Join pathway pills + phone code dropdown only -->
+  <style>
+    /* Pathway: same rounded-chip language as SPACE 1 reference */
+    #join-form [data-role-form-select] .select-wrapper {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      overflow: hidden !important;
+      clip-path: inset(50%) !important
+    }
+
+    #join-form .join-pathway-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 12px;
+      padding: 6px 0 9px
+    }
+
+    #join-form .join-pathway-pill {
+      appearance: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      max-width: 100%;
+      /* min-height: 43px; */
+      padding: 9px 21px;
+      border: 1px solid rgba(185, 197, 211, .4);
+      border-radius: 999px;
+      background: transparent;
+      color: #c3ccd9;
+      font: inherit;
+      font-size: clamp(12px, 1vw, 16px);
+      /* font-weight: 500; */
+      line-height: 1.3;
+      cursor: pointer;
+      transition: background .2s, border-color .2s, color .2s, transform .2s
+    }
+
+    #join-form .join-pathway-pill:hover {
+      color: #fff;
+      border-color: #e2ba78;
+      transform: translateY(-1px)
+    }
+
+    #join-form .join-pathway-pill[aria-pressed="true"] {
+      color: #090c13;
+      background: #fff;
+      border-color: #fff;
+      font-weight: 550
+    }
+
+    #join-form .join-pathway-pill:focus-visible {
+      outline: 2px solid #eac47c;
+      outline-offset: 3px
+    }
+
+    @media(max-width:767px) {
+      #join-form .join-pathway-pills {
+        gap: 8px
+      }
+
+      #join-form .join-pathway-pill {
+        padding: 9px 14px;
+        min-height: 39px;
+        font-size: 13px
+      }
+    }
+
+    /* Phone code only. Keep original native select in the DOM for validation/submission. */
+    #join-form .phone-input {
+      display: flex !important;
+      align-items: stretch !important;
+      gap: 0 !important;
+      min-width: 0 !important;
+      overflow: visible !important;
+      position: relative
+    }
+
+    #join-form .phone-input #join-phone-code {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      opacity: 0 !important;
+      padding: 0 !important;
+      pointer-events: none !important;
+      clip-path: inset(50%) !important
+    }
+
+    #join-form .phone-input .join-code-trigger {
+      appearance: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex: 0 0 104px;
+      min-width: 0;
+      min-height: 51px;
+      padding: 0 10px;
+      border: 1px solid rgba(183, 196, 212, .32);
+      border-right: 0;
+      border-radius: 12px 0 0 12px;
+      background: #151c26;
+      color: #f6f7f9;
+      font: inherit;
+      font-size: 14px;
+      font-weight: 650;
+      white-space: nowrap;
+      cursor: pointer;
+      position: relative;
+      z-index: 1
+    }
+
+    #join-form .phone-input .join-code-trigger:hover,
+    #join-form .phone-input .join-code-trigger[aria-expanded="true"] {
+      background: #202a36;
+      border-color: #d6b47c
+    }
+
+    #join-form .join-code-trigger:focus-visible {
+      outline: 2px solid #e5bd77;
+      outline-offset: 2px
+    }
+
+    #join-form .join-code-trigger .join-code-chevron {
+      width: 15px;
+      height: 15px;
+      color: #e5bd77;
+      flex-shrink: 0;
+      transition: transform .2s
+    }
+
+    #join-form .join-code-trigger[aria-expanded="true"] .join-code-chevron {
+      transform: rotate(180deg)
+    }
+
+    #join-form .phone-input #join-phone {
+      flex: 1 1 auto !important;
+      width: 100% !important;
+      min-width: 0 !important;
+      margin: 0 !important;
+      border-radius: 0 12px 12px 0 !important
+    }
+
+    /* Portal to body: stays in viewport, not cut by .panel-box overflow */
+    .join-country-popover {
+      position: fixed;
+      z-index: 99999;
+      display: none;
+      box-sizing: border-box;
+      max-width: calc(100vw - 20px);
+      overflow: hidden;
+      border: 1px solid rgba(226, 186, 119, .32);
+      border-radius: 14px;
+      background: #111822;
+      color: #ecf0f6;
+      box-shadow: 0 22px 55px rgba(0, 0, 0, .5);
+      padding: 9px;
+      font-family: inherit
+    }
+
+    .join-country-popover.is-visible {
+      display: block
+    }
+
+    .join-country-popover .join-code-search {
+      box-sizing: border-box !important;
+      display: block !important;
+      width: 100% !important;
+      height: 42px !important;
+      padding: 10px 12px !important;
+      margin: 0 0 7px !important;
+      border: 1px solid rgba(184, 198, 216, .23) !important;
+      border-radius: 9px !important;
+      outline: 0 !important;
+      background: #0b111b !important;
+      color: #fff !important;
+      font-family: inherit !important;
+      font-size: 14px !important;
+      line-height: 20px !important
+    }
+
+    .join-country-popover .join-code-search:focus {
+      border-color: #e3bb78 !important
+    }
+
+    .join-country-popover .join-code-options {
+      overflow: auto;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      max-height: 235px;
+      scrollbar-width: thin;
+      scrollbar-color: #586474 transparent
+    }
+
+    .join-country-popover .join-code-option {
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      min-height: 44px;
+      padding: 9px 11px;
+      border: 0;
+      border-radius: 8px;
+      background: transparent;
+      color: #e2e8f0;
+      cursor: pointer;
+      text-align: left;
+      font: inherit;
+      font-size: 13px;
+      line-height: 1.35
+    }
+
+    .join-country-popover .join-code-option:hover,
+    .join-country-popover .join-code-option[aria-selected="true"] {
+      background: #232e3b
+    }
+
+    .join-country-popover .join-code-flag {
+      flex: 0 0 22px;
+      font-size: 19px;
+      line-height: 1
+    }
+
+    .join-country-popover .join-code-name {
+      flex: 1 1 auto;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap
+    }
+
+    .join-country-popover .join-code-number {
+      flex: 0 0 auto;
+      color: #edc17c;
+      white-space: nowrap;
+      font-weight: 700;
+      margin-left: auto;
+      font-variant-numeric: tabular-nums
+    }
+
+    .join-country-popover .join-code-empty {
+      padding: 15px 10px;
+      color: #a8b4c4;
+      font-size: 13px
+    }
+
+    @media(max-width:767px) {
+      #join-form .phone-input .join-code-trigger {
+        flex-basis: 88px;
+        min-height: 48px;
+        font-size: 13px
+      }
+
+      .join-country-popover {
+        border-radius: 16px;
+        box-shadow: 0 0 0 100vmax rgba(0, 0, 0, .38), 0 24px 70px rgba(0, 0, 0, .5)
+      }
+
+      .join-country-popover .join-code-options {
+        max-height: 325px
+      }
+    }
+
+    .join-country-popover.is-visible .join-code-options {
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      min-height: 130px !important;
+      max-height: 260px !important;
+      overflow-y: auto !important;
+    }
+
+    .join-country-popover .join-code-option {
+      display: flex !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      position: relative !important;
+      flex-shrink: 0 !important;
+      min-height: 46px !important;
+      color: #e2e8f0 !important;
+      background: transparent !important;
+    }
+
+    .join-country-popover .join-code-option:hover {
+      background: #263244 !important;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="site-header"></div>
+  <main data-page="join">
+    <section class="hero">
+      <div class="hero-media">
+        <video class="lazy-video hero-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true"
+          tabindex="-1" data-video="space_video/854256-hd_1920_1080_30fps.mp4">
+        </video>
+      </div>
+      <div class="wrap">
+        <p class="eyebrow">Join SPACE 1</p>
+        <h1>There is a place for you here</h1>
+        <p class="lead">
+          Students, volunteers, mentors, researchers and institutions. Tell us how you would like to take
+          part.
+        </p>
+        <div class="hero-buttons"><a class="btn btn-solid" href="join.html#join-form">Register now</a></div>
+      </div>
+
+      <span class="scroll-cue"></span>
+    </section>
+
+    <section class="submenu-section">
+      <div class="wrap">
+        <nav class="submenu" aria-label="Join SPACE 1 sections">
+          <h2 data-reveal>Join SPACE 1</h2>
+          <p class="submenu-sub" data-reveal>Register, volunteer, mentor</p>
+          <ul data-stagger>
+            <li><a href="#join-pathways">Ways to Take Part</a></li>
+            <li><a href="#join-form">How would you like to join?</a></li>
+            <li><a href="#join-scholar">Scholarships and Sponsored Learning</a></li>
+          </ul>
+        </nav>
+      </div>
+    </section>
+
+    <section class="section is-alt" id="join-pathways">
+      <div class="wrap">
+        <div class="section-head" data-reveal>
+          <p class="eyebrow">Join SPACE 1</p>
+          <h2>Ways to Take Part</h2>
+        </div>
+        <div class="card-grid cols-4" data-stagger>
+          <article class="card">
+            <span class="card-tag">Students</span>
+            <h3>Student Registration</h3>
+            <p>Hear first about courses, workshops, eligibility and enrolment.</p>
+          </article>
+          <article class="card">
+            <span class="card-tag">Volunteers</span>
+            <h3>Volunteer With Us</h3>
+            <p>Help with outreach, events, public engagement and community activities.</p>
+          </article>
+          <article class="card">
+            <span class="card-tag">Community</span>
+            <h3>Become a Member</h3>
+            <p>Membership terms will be published once the programme is set up.</p>
+          </article>
+          <article class="card">
+            <span class="card-tag">Professionals</span>
+            <h3>Become a Mentor</h3>
+            <p>Guide projects, deliver sessions and share your knowledge.</p>
+          </article>
+          <article class="card">
+            <span class="card-tag">Specialists</span>
+            <h3>Researcher Registration</h3>
+            <p>Join future discussions, educational collaborations and projects.</p>
+          </article>
+          <article class="card">
+            <span class="card-tag">Organisations</span>
+            <h3>Institutional Membership</h3>
+            <p>Group learning, workshops and collaborative activities for schools to companies.</p>
+          </article>
+          <article class="card">
+            <span class="card-tag">Access</span>
+            <h3>Scholarships</h3>
+            <p>Help for students to access space-science education.</p>
+          </article>
+          <article class="card">
+            <span class="card-tag">Everyone</span>
+            <h3>Register Your Interest</h3>
+            <p>Updates on courses, events, partnerships and opportunities.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="join-form">
+      <div class="wrap">
+        <div class="section-head" data-reveal>
+          <p class="eyebrow">Join SPACE 1</p>
+          <h2>How would you like to join?</h2>
+          <p class="lead">Choose a pathway to see what it involves, then register.</p>
+        </div>
+        <div class="panel-box" data-role-form data-reveal>
+          <div class="select-field" data-role-form-select>
+            <label class="select-field__label">Choose your pathway</label>
+            <div class="select-wrapper">
+              <select class="select-element" data-bind="join-types">
+                <option value="">Select a pathway</option>
+              </select>
+              <span class="select-arrow"></span>
+            </div>
+          </div>
+          <div class="panel-body">
+            <h3 data-role-title></h3>
+            <p class="submenu-sub" data-role-desc></p>
+            <form class="form" data-form novalidate>
+              <div class="input-group">
+                <label for="join-name">Full name</label>
+                <input id="join-name" name="name" autocomplete="name" required  maxlength="250" />
+                <span class="input-error" id="error-join-name"></span>
+              </div>
+              <div class="input-group">
+                <label for="join-email">Email</label>
+                <input id="join-email" name="email" type="email" autocomplete="email" required  maxlength="250"/>
+                <span class="input-error" id="error-join-email"></span>
+              </div>
+              <div class="phone-row">
+                <label for="join-phone">Phone number</label>
+                <div class="phone-input">
+                  <select id="join-phone-code" name="phone-code" data-bind="country-codes"></select>
+                  <input id="join-phone" name="phone" type="tel" autocomplete="tel" placeholder="Enter phone number" />
+                </div>
+                <span class="input-error" id="error-join-phone"></span>
+              </div>
+              <div class="input-group">
+                <label for="join-country">Country</label>
+                <select id="join-country" name="country" data-bind="countries"></select>
+                <span class="input-error" id="error-join-country"></span>
+              </div>
+              <div class="input-group">
+                <label for="join-state">State</label>
+                <input id="join-state" name="state" />
+                <span class="input-error" id="error-join-state"></span>
+              </div>
+              <div class="input-group">
+                <label for="join-city">City</label>
+                <input id="join-city" name="city" />
+                <span class="input-error" id="error-join-city"></span>
+              </div>
+              <div class="input-group">
+                <label for="join-address">Address</label>
+                <input id="join-address" name="address" />
+                <span class="input-error" id="error-join-address"></span>
+              </div>
+              <div class="input-group">
+                <label for="join-org">Organisation (optional)</label>
+                <input id="join-org" name="organisation" />
+                <span class="input-error" id="error-join-org"></span>
+              </div>
+              <input type="hidden" name="join-type" id="join-type" value="Student Registration" />
+              <div class="input-group full">
+                <label for="join-message" data-role-label>Tell us more</label>
+                <textarea id="join-message" name="message" maxlength="250"></textarea>
+                <span class="input-error" id="error-join-message"></span>
+              </div>
+              <div class="full">
+                <button class="btn btn-solid" type="submit">Submit</button>
+
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section is-alt" id="join-scholar">
+      <div class="wrap">
+        <div class="section-head" data-reveal>
+          <p class="eyebrow">Join SPACE 1</p>
+          <h2>Scholarships and Sponsored Learning</h2>
+          <p class="lead">Helping students access space-science education.</p>
+        </div>
+        <p data-reveal>For each opportunity, we will publish:</p>
+        <ol class="steps cols-4" data-stagger>
+          <li>
+            <h3>Availability</h3>
+            <p>What is on offer and when.</p>
+          </li>
+          <li>
+            <h3>Eligibility</h3>
+            <p>Who can apply.</p>
+          </li>
+          <li>
+            <h3>Selection</h3>
+            <p>How recipients are chosen.</p>
+          </li>
+          <li>
+            <h3>Funding conditions</h3>
+            <p>The terms attached.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+    <a class="next-page" href="knowledge-hub.html">
+      <div class="wrap">
+        <small>Continue exploring</small>
+        <h2>Knowledge Hub &rarr;</h2>
+      </div>
+    </a>
+  </main>
+  <div id="site-footer"></div>
+  <div class="toast-container" aria-live="polite"></div>
+  <script src="js/video-lazy.js?v=4" defer></script>
+  <script src="js/site-config.js?v=4"></script>
+  <script src="js/layout.js?v=4"></script>
+  <script src="js/components.js?v=4"></script>
+  <script src="js/animations.js?v=4"></script>
+
+  <!-- Inline functionality scoped to pathway pills and phone country code only -->
+  <script>
+    (function () {
+      function init() {
+        var section = document.querySelector('#join-form [data-role-form-select]');
+        var pathSelect = section && section.querySelector('select[data-bind="join-types"]');
+        if (pathSelect && !pathSelect.dataset.customPillsReady) {
+          pathSelect.dataset.customPillsReady = 'true';
+          var pillRow = document.createElement('div');
+          pillRow.className = 'join-pathway-pills';
+          pillRow.setAttribute('role', 'group');
+          pillRow.setAttribute('aria-label', 'Choose your pathway');
+          section.appendChild(pillRow);
+          var signature = '';
+          function active() {
+            pillRow.querySelectorAll('.join-pathway-pill').forEach(function (button) {
+              button.setAttribute('aria-pressed', String(button.dataset.value === pathSelect.value));
+            });
+          }
+          function render() {
+            var opts = Array.from(pathSelect.options).filter(function (option) { return option.value && !option.disabled });
+            var next = opts.map(function (o) { return o.value + '|' + o.textContent }).join('||');
+            if (signature !== next) {
+              signature = next; pillRow.replaceChildren();
+              opts.forEach(function (o) {
+                var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'join-pathway-pill';
+                btn.textContent = o.textContent.trim(); btn.dataset.value = o.value;
+                btn.addEventListener('click', function () {
+                  pathSelect.value = o.value;
+                  pathSelect.dispatchEvent(new Event('input', { bubbles: true }));
+                  pathSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                  active();
+                });
+                pillRow.appendChild(btn);
+              });
+            }
+            active();
+          }
+          pathSelect.addEventListener('change', active);
+          new MutationObserver(render).observe(pathSelect, { childList: true, subtree: true, characterData: true });
+          render();
+        }
+
+        var select = document.getElementById('join-phone-code');
+        if (!select || select.dataset.customCodeReady) return;
+        select.dataset.customCodeReady = 'true';
+        var inputBox = select.closest('.phone-input');
+        var trigger = document.createElement('button');
+        trigger.type = 'button'; trigger.className = 'join-code-trigger';
+        trigger.setAttribute('aria-label', 'Select phone country code');
+        trigger.setAttribute('aria-haspopup', 'listbox'); trigger.setAttribute('aria-expanded', 'false');
+        trigger.innerHTML = '<span class="join-code-current">+91</span><svg class="join-code-chevron" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        select.insertAdjacentElement('afterend', trigger);
+        var pop = document.createElement('div'); pop.className = 'join-country-popover';
+        pop.innerHTML = '<input class="join-code-search" type="search" aria-label="Search country or calling code" placeholder="Search country or code" autocomplete="off"><div class="join-code-options" role="listbox" aria-label="Country calling codes"></div>';
+        document.body.appendChild(pop);
+        var current = trigger.querySelector('.join-code-current');
+        var search = pop.querySelector('.join-code-search');
+        var optionsBox = pop.querySelector('.join-code-options');
+        var opened = false;
+        // Local fallback copied from the supplied site-config.js. This selector does not
+        // depend on any async select-population or DOM MutationObserver timing.
+        var fallbackCountries = [{ "name": "Afghanistan", "code": "+93", "flag": "🇦🇫" }, { "name": "Albania", "code": "+355", "flag": "🇦🇱" }, { "name": "Algeria", "code": "+213", "flag": "🇩🇿" }, { "name": "Andorra", "code": "+376", "flag": "🇦🇩" }, { "name": "Angola", "code": "+244", "flag": "🇦🇴" }, { "name": "Antigua and Barbuda", "code": "+1-268", "flag": "🇦🇬" }, { "name": "Argentina", "code": "+54", "flag": "🇦🇷" }, { "name": "Armenia", "code": "+374", "flag": "🇦🇲" }, { "name": "Australia", "code": "+61", "flag": "🇦🇺" }, { "name": "Austria", "code": "+43", "flag": "🇦🇹" }, { "name": "Azerbaijan", "code": "+994", "flag": "🇦🇿" }, { "name": "Bahamas", "code": "+1-242", "flag": "🇧🇸" }, { "name": "Bahrain", "code": "+973", "flag": "🇧🇭" }, { "name": "Bangladesh", "code": "+880", "flag": "🇧🇩" }, { "name": "Barbados", "code": "+1-246", "flag": "🇧🇧" }, { "name": "Belarus", "code": "+375", "flag": "🇧🇾" }, { "name": "Belize", "code": "+501", "flag": "🇧🇿" }, { "name": "Benin", "code": "+229", "flag": "🇧🇯" }, { "name": "Bhutan", "code": "+975", "flag": "🇧🇹" }, { "name": "Bolivia", "code": "+591", "flag": "🇧🇴" }, { "name": "Bosnia and Herzegovina", "code": "+387", "flag": "🇧🇦" }, { "name": "Botswana", "code": "+267", "flag": "🇧🇼" }, { "name": "Brazil", "code": "+55", "flag": "🇧🇷" }, { "name": "Brunei", "code": "+673", "flag": "🇧🇳" }, { "name": "Bulgaria", "code": "+359", "flag": "🇧🇬" }, { "name": "Burkina Faso", "code": "+226", "flag": "🇧🇫" }, { "name": "Burundi", "code": "+257", "flag": "🇧🇮" }, { "name": "Cabo Verde", "code": "+238", "flag": "🇨🇻" }, { "name": "Cambodia", "code": "+855", "flag": "🇰🇭" }, { "name": "Cameroon", "code": "+237", "flag": "🇨🇲" }, { "name": "Canada", "code": "+1", "flag": "🇨🇦" }, { "name": "Central African Republic", "code": "+236", "flag": "🇨🇫" }, { "name": "Chad", "code": "+235", "flag": "🇹🇩" }, { "name": "Chile", "code": "+56", "flag": "🇨🇱" }, { "name": "China", "code": "+86", "flag": "🇨🇳" }, { "name": "Colombia", "code": "+57", "flag": "🇨🇴" }, { "name": "Comoros", "code": "+269", "flag": "🇰🇲" }, { "name": "Congo (DRC)", "code": "+243", "flag": "🇨🇩" }, { "name": "Congo (Republic)", "code": "+242", "flag": "🇨🇬" }, { "name": "Costa Rica", "code": "+506", "flag": "🇨🇷" }, { "name": "Croatia", "code": "+385", "flag": "🇭🇷" }, { "name": "Cuba", "code": "+53", "flag": "🇨🇺" }, { "name": "Cyprus", "code": "+357", "flag": "🇨🇾" }, { "name": "Czech Republic", "code": "+420", "flag": "🇨🇿" }, { "name": "Denmark", "code": "+45", "flag": "🇩🇰" }, { "name": "Djibouti", "code": "+253", "flag": "🇩🇯" }, { "name": "Dominica", "code": "+1-767", "flag": "🇩🇲" }, { "name": "Dominican Republic", "code": "+1-809", "flag": "🇩🇴" }, { "name": "Ecuador", "code": "+593", "flag": "🇪🇨" }, { "name": "Egypt", "code": "+20", "flag": "🇪🇬" }, { "name": "El Salvador", "code": "+503", "flag": "🇸🇻" }, { "name": "Equatorial Guinea", "code": "+240", "flag": "🇬🇶" }, { "name": "Eritrea", "code": "+291", "flag": "🇪🇷" }, { "name": "Estonia", "code": "+372", "flag": "🇪🇪" }, { "name": "Eswatini", "code": "+268", "flag": "🇸🇿" }, { "name": "Ethiopia", "code": "+251", "flag": "🇪🇹" }, { "name": "Fiji", "code": "+679", "flag": "🇫🇯" }, { "name": "Finland", "code": "+358", "flag": "🇫🇮" }, { "name": "France", "code": "+33", "flag": "🇫🇷" }, { "name": "Gabon", "code": "+241", "flag": "🇬🇦" }, { "name": "Gambia", "code": "+220", "flag": "🇬🇲" }, { "name": "Georgia", "code": "+995", "flag": "🇬🇪" }, { "name": "Germany", "code": "+49", "flag": "🇩🇪" }, { "name": "Ghana", "code": "+233", "flag": "🇬🇭" }, { "name": "Greece", "code": "+30", "flag": "🇬🇷" }, { "name": "Grenada", "code": "+1-473", "flag": "🇬🇩" }, { "name": "Guatemala", "code": "+502", "flag": "🇬🇹" }, { "name": "Guinea", "code": "+224", "flag": "🇬🇳" }, { "name": "Guinea-Bissau", "code": "+245", "flag": "🇬🇼" }, { "name": "Guyana", "code": "+592", "flag": "🇬🇾" }, { "name": "Haiti", "code": "+509", "flag": "🇭🇹" }, { "name": "Honduras", "code": "+504", "flag": "🇭🇳" }, { "name": "Hungary", "code": "+36", "flag": "🇭🇺" }, { "name": "Iceland", "code": "+354", "flag": "🇮🇸" }, { "name": "India", "code": "+91", "flag": "🇮🇳" }, { "name": "Indonesia", "code": "+62", "flag": "🇮🇩" }, { "name": "Iran", "code": "+98", "flag": "🇮🇷" }, { "name": "Iraq", "code": "+964", "flag": "🇮🇶" }, { "name": "Ireland", "code": "+353", "flag": "🇮🇪" }, { "name": "Israel", "code": "+972", "flag": "🇮🇱" }, { "name": "Italy", "code": "+39", "flag": "🇮🇹" }, { "name": "Jamaica", "code": "+1-876", "flag": "🇯🇲" }, { "name": "Japan", "code": "+81", "flag": "🇯🇵" }, { "name": "Jordan", "code": "+962", "flag": "🇯🇴" }, { "name": "Kazakhstan", "code": "+7", "flag": "🇰🇿" }, { "name": "Kenya", "code": "+254", "flag": "🇰🇪" }, { "name": "Kiribati", "code": "+686", "flag": "🇰🇮" }, { "name": "Kuwait", "code": "+965", "flag": "🇰🇼" }, { "name": "Kyrgyzstan", "code": "+996", "flag": "🇰🇬" }, { "name": "Laos", "code": "+856", "flag": "🇱🇦" }, { "name": "Latvia", "code": "+371", "flag": "🇱🇻" }, { "name": "Lebanon", "code": "+961", "flag": "🇱🇧" }, { "name": "Lesotho", "code": "+266", "flag": "🇱🇸" }, { "name": "Liberia", "code": "+231", "flag": "🇱🇷" }, { "name": "Libya", "code": "+218", "flag": "🇱🇾" }, { "name": "Liechtenstein", "code": "+423", "flag": "🇱🇮" }, { "name": "Lithuania", "code": "+370", "flag": "🇱🇹" }, { "name": "Luxembourg", "code": "+352", "flag": "🇱🇺" }, { "name": "Madagascar", "code": "+261", "flag": "🇲🇬" }, { "name": "Malawi", "code": "+265", "flag": "🇲🇼" }, { "name": "Malaysia", "code": "+60", "flag": "🇲🇾" }, { "name": "Maldives", "code": "+960", "flag": "🇲🇻" }, { "name": "Mali", "code": "+223", "flag": "🇲🇱" }, { "name": "Malta", "code": "+356", "flag": "🇲🇹" }, { "name": "Marshall Islands", "code": "+692", "flag": "🇲🇭" }, { "name": "Mauritania", "code": "+222", "flag": "🇲🇷" }, { "name": "Mauritius", "code": "+230", "flag": "🇲🇺" }, { "name": "Mexico", "code": "+52", "flag": "🇲🇽" }, { "name": "Micronesia", "code": "+691", "flag": "🇫🇲" }, { "name": "Moldova", "code": "+373", "flag": "🇲🇩" }, { "name": "Monaco", "code": "+377", "flag": "🇲🇨" }, { "name": "Mongolia", "code": "+976", "flag": "🇲🇳" }, { "name": "Montenegro", "code": "+382", "flag": "🇲🇪" }, { "name": "Morocco", "code": "+212", "flag": "🇲🇦" }, { "name": "Mozambique", "code": "+258", "flag": "🇲🇿" }, { "name": "Myanmar", "code": "+95", "flag": "🇲🇲" }, { "name": "Namibia", "code": "+264", "flag": "🇳🇦" }, { "name": "Nauru", "code": "+674", "flag": "🇳🇷" }, { "name": "Nepal", "code": "+977", "flag": "🇳🇵" }, { "name": "Netherlands", "code": "+31", "flag": "🇳🇱" }, { "name": "New Zealand", "code": "+64", "flag": "🇳🇿" }, { "name": "Nicaragua", "code": "+505", "flag": "🇳🇮" }, { "name": "Niger", "code": "+227", "flag": "🇳🇪" }, { "name": "Nigeria", "code": "+234", "flag": "🇳🇬" }, { "name": "North Korea", "code": "+850", "flag": "🇰🇵" }, { "name": "North Macedonia", "code": "+389", "flag": "🇲🇰" }, { "name": "Norway", "code": "+47", "flag": "🇳🇴" }, { "name": "Oman", "code": "+968", "flag": "🇴🇲" }, { "name": "Pakistan", "code": "+92", "flag": "🇵🇰" }, { "name": "Palau", "code": "+680", "flag": "🇵🇼" }, { "name": "Palestine", "code": "+970", "flag": "🇵🇸" }, { "name": "Panama", "code": "+507", "flag": "🇵🇦" }, { "name": "Papua New Guinea", "code": "+675", "flag": "🇵🇬" }, { "name": "Paraguay", "code": "+595", "flag": "🇵🇾" }, { "name": "Peru", "code": "+51", "flag": "🇵🇪" }, { "name": "Philippines", "code": "+63", "flag": "🇵🇭" }, { "name": "Poland", "code": "+48", "flag": "🇵🇱" }, { "name": "Portugal", "code": "+351", "flag": "🇵🇹" }, { "name": "Qatar", "code": "+974", "flag": "🇶🇦" }, { "name": "Romania", "code": "+40", "flag": "🇷🇴" }, { "name": "Russia", "code": "+7", "flag": "🇷🇺" }, { "name": "Rwanda", "code": "+250", "flag": "🇷🇼" }, { "name": "Saint Kitts and Nevis", "code": "+1-869", "flag": "🇰🇳" }, { "name": "Saint Lucia", "code": "+1-758", "flag": "🇱🇨" }, { "name": "Saint Vincent", "code": "+1-784", "flag": "🇻🇨" }, { "name": "Samoa", "code": "+685", "flag": "🇼🇸" }, { "name": "San Marino", "code": "+378", "flag": "🇸🇲" }, { "name": "Sao Tome and Principe", "code": "+239", "flag": "🇸🇹" }, { "name": "Saudi Arabia", "code": "+966", "flag": "🇸🇦" }, { "name": "Senegal", "code": "+221", "flag": "🇸🇳" }, { "name": "Serbia", "code": "+381", "flag": "🇷🇸" }, { "name": "Seychelles", "code": "+248", "flag": "🇸🇨" }, { "name": "Sierra Leone", "code": "+232", "flag": "🇸🇱" }, { "name": "Singapore", "code": "+65", "flag": "🇸🇬" }, { "name": "Slovakia", "code": "+421", "flag": "🇸🇰" }, { "name": "Slovenia", "code": "+386", "flag": "🇸🇮" }, { "name": "Solomon Islands", "code": "+677", "flag": "🇸🇧" }, { "name": "Somalia", "code": "+252", "flag": "🇸🇴" }, { "name": "South Africa", "code": "+27", "flag": "🇿🇦" }, { "name": "South Korea", "code": "+82", "flag": "🇰🇷" }, { "name": "South Sudan", "code": "+211", "flag": "🇸🇸" }, { "name": "Spain", "code": "+34", "flag": "🇪🇸" }, { "name": "Sri Lanka", "code": "+94", "flag": "🇱🇰" }, { "name": "Sudan", "code": "+249", "flag": "🇸🇩" }, { "name": "Suriname", "code": "+597", "flag": "🇸🇷" }, { "name": "Sweden", "code": "+46", "flag": "🇸🇪" }, { "name": "Switzerland", "code": "+41", "flag": "🇨🇭" }, { "name": "Syria", "code": "+963", "flag": "🇸🇾" }, { "name": "Taiwan", "code": "+886", "flag": "🇹🇼" }, { "name": "Tajikistan", "code": "+992", "flag": "🇹🇯" }, { "name": "Tanzania", "code": "+255", "flag": "🇹🇿" }, { "name": "Thailand", "code": "+66", "flag": "🇹🇭" }, { "name": "Timor-Leste", "code": "+670", "flag": "🇹🇱" }, { "name": "Togo", "code": "+228", "flag": "🇹🇬" }, { "name": "Tonga", "code": "+676", "flag": "🇹🇴" }, { "name": "Trinidad and Tobago", "code": "+1-868", "flag": "🇹🇹" }, { "name": "Tunisia", "code": "+216", "flag": "🇹🇳" }, { "name": "Turkey", "code": "+90", "flag": "🇹🇷" }, { "name": "Turkmenistan", "code": "+993", "flag": "🇹🇲" }, { "name": "Tuvalu", "code": "+688", "flag": "🇹🇻" }, { "name": "Uganda", "code": "+256", "flag": "🇺🇬" }, { "name": "Ukraine", "code": "+380", "flag": "🇺🇦" }, { "name": "United Arab Emirates", "code": "+971", "flag": "🇦🇪" }, { "name": "United Kingdom", "code": "+44", "flag": "🇬🇧" }, { "name": "United States", "code": "+1", "flag": "🇺🇸" }, { "name": "Uruguay", "code": "+598", "flag": "🇺🇾" }, { "name": "Uzbekistan", "code": "+998", "flag": "🇺🇿" }, { "name": "Vanuatu", "code": "+678", "flag": "🇻🇺" }, { "name": "Vatican City", "code": "+379", "flag": "🇻🇦" }, { "name": "Venezuela", "code": "+58", "flag": "🇻🇪" }, { "name": "Vietnam", "code": "+84", "flag": "🇻🇳" }, { "name": "Yemen", "code": "+967", "flag": "🇾🇪" }, { "name": "Zambia", "code": "+260", "flag": "🇿🇲" }, { "name": "Zimbabwe", "code": "+263", "flag": "🇿🇼" }];
+        function getData() {
+          var live = window.SITE && Array.isArray(window.SITE.countryCodes) && window.SITE.countryCodes.length
+            ? window.SITE.countryCodes : fallbackCountries;
+          return live.filter(function (c) { return c && c.code; }).map(function (c) {
+            return { name: String(c.name || c.code), code: String(c.code), flag: String(c.flag || '🌐') };
+          });
+        }
+        // Retain native select so the existing submit handler reads the chosen code.
+        function ensureSelectOptions() {
+          var values = new Set(Array.from(select.options).map(function (o) { return o.value; }));
+          getData().forEach(function (c) {
+            if (!values.has(c.code)) {
+              var option = document.createElement('option');
+              option.value = c.code;
+              option.textContent = c.code;
+              select.appendChild(option);
+              values.add(c.code);
+            }
+          });
+          if (!select.value) select.value = '+91';
+        }
+        ensureSelectOptions();
+        function sync() { current.textContent = select.value || '+91' }
+        function position() {
+          if (!opened) return;
+          var rect = trigger.getBoundingClientRect();
+          var vw = document.documentElement.clientWidth, vh = window.innerHeight;
+          var width = Math.min(340, vw - 24);
+          var left = Math.max(12, Math.min(rect.left, vw - width - 12));
+          pop.style.width = width + 'px';
+          pop.style.left = left + 'px';
+          // A fixed, viewport-aware popup prevents the country list from collapsing.
+          // On narrow screens, a bottom sheet gives touch users sufficient scroll room.
+          if (window.matchMedia('(max-width: 767px)').matches) {
+            pop.style.left = '12px';
+            pop.style.width = (vw - 24) + 'px';
+            pop.style.top = 'auto';
+            pop.style.bottom = '12px';
+            pop.style.maxHeight = Math.min(440, Math.round(vh * 0.72)) + 'px';
+            optionsBox.style.maxHeight = Math.max(160, Math.min(325, Math.round(vh * 0.72) - 88)) + 'px';
+            return;
+          }
+          pop.style.bottom = 'auto';
+          var availableBelow = vh - rect.bottom - 12;
+          var availableAbove = rect.top - 12;
+          var above = availableBelow < 265 && availableAbove > availableBelow;
+          var available = above ? availableAbove : availableBelow;
+          var height = Math.min(355, Math.max(0, available - 7));
+          pop.style.maxHeight = height + 'px';
+          optionsBox.style.maxHeight = Math.max(70, height - 70) + 'px';
+          pop.style.top = (above ? rect.top - height - 7 : rect.bottom + 7) + 'px';
+        }
+        function renderCountry() {
+          var query = search.value.trim().toLowerCase();
+          var matches = getData().filter(function (c) { return (c.name + ' ' + c.code).toLowerCase().includes(query) });
+          var fragment = document.createDocumentFragment();
+          if (!matches.length) { var empty = document.createElement('div'); empty.className = 'join-code-empty'; empty.textContent = 'No matching countries'; optionsBox.replaceChildren(empty); return; }
+          matches.forEach(function (c) {
+            var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'join-code-option';
+            btn.setAttribute('role', 'option'); btn.setAttribute('aria-selected', String(select.value === c.code));
+            var flag = document.createElement('span'); flag.className = 'join-code-flag'; flag.textContent = c.flag || '🌐';
+            var name = document.createElement('span'); name.className = 'join-code-name'; name.textContent = c.name;
+            var code = document.createElement('span'); code.textContent = c.code;
+            btn.append(code);
+            btn.addEventListener('click', function () {
+              select.value = c.code;
+              select.dispatchEvent(new Event('input', { bubbles: true }));
+              select.dispatchEvent(new Event('change', { bubbles: true }));
+              sync(); close(); trigger.focus();
+            });
+            fragment.appendChild(btn);
+          });
+          optionsBox.replaceChildren(fragment);
+        }
+        function open() { opened = true; pop.classList.add('is-visible'); trigger.setAttribute('aria-expanded', 'true'); search.value = ''; renderCountry(); position(); search.focus({ preventScroll: true }); }
+        function close() { opened = false; pop.classList.remove('is-visible'); trigger.setAttribute('aria-expanded', 'false'); }
+        trigger.addEventListener('click', function () { opened ? close() : open() });
+        search.addEventListener('input', renderCountry);
+        search.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); var first = optionsBox.querySelector('.join-code-option'); if (first) first.click(); } });
+        document.addEventListener('pointerdown', function (e) { if (opened && !pop.contains(e.target) && !trigger.contains(e.target)) close(); });
+        document.addEventListener('keydown', function (e) { if (opened && e.key === 'Escape') { close(); trigger.focus(); } });
+        // No auto-close on scroll. Scroll within popup is independent from page scroll.
+        window.addEventListener('scroll', position, { passive: true });
+        window.addEventListener('resize', position, { passive: true });
+        select.addEventListener('change', sync);
+        new MutationObserver(sync).observe(select, { childList: true, subtree: true });
+        sync();
+      }
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+    })();
+  </script>
+</body>
+
+</html>

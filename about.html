@@ -1,0 +1,739 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>About Us | SPACE 1</title>
+    <meta
+      name="description"
+      content="Who we are and how we work. SPACE 1, International Centre for Advanced Space Science &amp; Cosmic Research."
+    />
+    <link rel="stylesheet" href="css/theme.css?v=4" />
+    <link rel="stylesheet" href="css/base.css?v=4" />
+    <link rel="stylesheet" href="css/layout.css?v=4" />
+    <link rel="stylesheet" href="css/components.css?v=4" />
+    <link rel="stylesheet" href="css/founder.css?v=2" />
+    <link rel="stylesheet" href="css/animations.css?v=4" />
+    <script>
+      document.documentElement.classList.add("js");
+    </script>
+    <style>
+      /* =========================================================
+   About page: Founder's Message
+   1. Intro row   – quote + opening text (left), portrait (right)
+   2. Two-column  – the two "dream / belief" paragraphs
+   3. Vision row  – the frontiers as a strip of tiles
+   4. Closing row – programme panel + future statement & signature
+========================================================= */
+
+#about-founder {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(45% 55% at 88% 18%, rgba(201, 164, 95, 0.08), transparent 70%),
+    radial-gradient(40% 40% at 8% 92%, rgba(120, 150, 190, 0.05), transparent 70%),
+    #05070a;
+}
+
+.founder-text {
+  margin: 0 0 18px;
+  font-size: 16.5px;
+  line-height: 1.8;
+  color: #c4ccd3;
+  
+  max-width:100%
+}
+#about-founder .signature b{
+   font-size: 20px
+}
+#about-founder .signature span{
+  font-size: 18px
+}
+/* ---------- 1. Intro row ---------- */
+.founder-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: clamp(36px, 6vw, 96px);
+  align-items: center;
+}
+.founder-intro .section-head { margin-bottom: 28px; }
+
+.founder-quote {
+  margin: 0 0 30px;
+  padding: 6px 0 6px clamp(18px, 2vw, 28px);
+  border-left: 2px solid var(--color-accent);
+}
+.founder-quote p {
+  max-width: 26ch;
+  margin: 0;
+  font: 300 clamp(24px, 2.7vw, 38px) / 1.3 var(--font-body);
+  color: #f1f3f6;
+  text-wrap: balance;
+}
+
+.founder-highlight {
+  margin: 26px 0 0;
+  padding: 16px 0 16px 20px;
+  border-left: 1px solid rgba(201, 164, 95, 0.6);
+  background: linear-gradient(90deg, rgba(201, 164, 95, 0.09), transparent 80%);
+  /* font: 500 clamp(17px, 1.6vw, 21px) / 1.45 var(--font-display); */
+  color: var(--color-white);
+}
+
+/* Portrait */
+.founder-media {
+  position: relative;
+  justify-self: end;
+  width: 100%;
+  max-width: 440px;
+}
+/* Offset gold frame */
+.founder-media::before {
+  content: "";
+  position: absolute;
+  top: 20px;
+  right: -18px;
+  bottom: 78px;
+  left: 18px;
+  z-index: -1;
+  border: 1px solid rgba(201, 164, 95, 0.4);
+  border-radius: var(--radius);
+}
+.founder-photo {
+  position: relative;
+  margin: 0;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background:
+    radial-gradient(70% 60% at 50% 35%, rgba(201, 164, 95, 0.12), transparent 70%),
+    var(--color-panel);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius);
+}
+/* Fallback initials, visible only if the photo is missing */
+.founder-photo::before {
+  content: "JB";
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font: 700 clamp(64px, 8vw, 110px) / 1 var(--font-display);
+  letter-spacing: 0.06em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(201, 164, 95, 0.45);
+}
+.founder-photo img {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  transition: transform 1.6s var(--ease-out);
+}
+.founder-photo:hover img { transform: scale(1.04); }
+.founder-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(180deg, rgba(5, 7, 10, 0) 55%, rgba(5, 7, 10, 0.92) 100%);
+  pointer-events: none;
+}
+.founder-photo figcaption {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: 18px;
+  z-index: 3;
+}
+.founder-photo figcaption b {
+  display: block;
+  font: 600 15px / 1.3 var(--font-display);
+  font-stretch: 112%;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-white);
+}
+.founder-photo figcaption span {
+  display: block;
+  margin-top: 6px;
+  font: 400 11.5px / 1.4 var(--font-mono);
+  letter-spacing: 0.08em;
+  color: #c2ccd6;
+}
+
+.founder-phase {
+  margin-top: 14px;
+  padding: 16px 18px;
+  background: var(--color-panel);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius);
+}
+.founder-phase > span {
+  display: block;
+  margin-bottom: 12px;
+  font: 500 10.5px / 1 var(--font-mono);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+.founder-phase div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.founder-phase b {
+  flex: none;
+  font: 600 14px / 1 var(--font-display);
+  font-stretch: 112%;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-white);
+}
+.founder-phase i {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--color-accent), rgba(201, 164, 95, 0.15));
+}
+
+/* ---------- 2. Two-column paragraphs ---------- */
+.founder-columns {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: clamp(24px, 0vw, 64px);
+  /* margin-top: clamp(56px, 7vw, 96px); */
+  padding-top: clamp(28px, 3vw, 40px);
+  border-top: 1px solid var(--color-line);
+}
+.founder-columns .founder-text { margin: 0; }
+.founder-columns .founder-text::first-letter {
+  float: left;
+  margin: 6px 10px 0 0;
+  font: 600 46px / 0.85 var(--font-display);
+  color: var(--color-accent);
+}
+
+/* ---------- 3. Vision strip ---------- */
+.founder-vision { margin-top: clamp(56px, 7vw, 43px); }
+.founder-vision .founder-highlight {
+  max-width: 60ch;
+  margin: 0 0 26px;
+}
+.founder-frontiers {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: frontier;
+}
+.founder-frontiers li {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-width: 0;
+  min-height: 150px;
+  padding: 20px 18px;
+  overflow: hidden;
+  background: var(--color-panel-raised, rgba(255, 255, 255, 0.03));
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius);
+  font: 400 15.5px / 1.45 var(--font-display);
+  color: #e9edf1;
+  counter-increment: frontier;
+  transition: border-color var(--speed-normal), transform var(--speed-normal) var(--ease-out);
+}
+.founder-frontiers li::before {
+  content: counter(frontier, decimal-leading-zero);
+  font: 500 12px / 1 var(--font-mono);
+  letter-spacing: 0.14em;
+  color: var(--color-accent);
+}
+.founder-frontiers li::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--speed-normal) var(--ease-out);
+}
+.founder-frontiers li:hover {
+  border-color: rgba(201, 164, 95, 0.5);
+  transform: translateY(-4px);
+}
+.founder-frontiers li:hover::after { transform: scaleX(1); }
+
+/* ---------- 4. Closing row ---------- */
+.founder-closing {
+  /* display: grid; */
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  gap: clamp(24px, 4vw, 56px);
+  align-items: stretch;
+  margin-top: clamp(56px, 7vw, 96px);
+}
+.founder-programme {
+  padding: clamp(22px, 2.8vw, 36px);
+  background: var(--color-panel);
+  border: 1px solid var(--color-line);
+  border-top: 2px solid var(--color-accent);
+  border-radius: var(--radius);
+}
+.founder-programme p {
+  margin: 0 0 16px;
+  font-size: 15.5px;
+  line-height: 1.75;
+  color: #c4ccd3;
+}
+.founder-programme p:first-child {
+  font-size: 15.5px;
+  color: #eef1f4;
+}
+.founder-programme p:last-child { margin-bottom: 0; }
+
+.founder-future {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 28px;
+  /* padding: clamp(4px, 1vw, 12px) 0 0 clamp(20px, 2.4vw, 32px); */
+  /* border-left: 1px solid var(--color-line); */
+}
+.founder-future .founder-text {
+  margin: 0;
+  font-size: 15.5px;
+  color: #dfe5ea;
+}
+.founder-future .signature {
+  margin-top: 0;
+  padding-top: 24px;
+  border-top: 1px solid var(--color-line);
+}
+.founder-future .signature span { line-height: 1.7; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1100px) {
+  .founder-frontiers { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 960px) {
+  .founder-intro,
+  .founder-closing { grid-template-columns: minmax(0, 1fr); }
+  .founder-media {
+    justify-self: start;
+    max-width: 420px;
+  }
+  .founder-future {
+    padding-left: 0;
+    border-left: 0;
+  }
+}
+@media (max-width: 760px) {
+  .founder-columns { grid-template-columns: minmax(0, 1fr); }
+  .founder-frontiers { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .founder-media::before { display: none; }
+}
+@media (max-width: 480px) {
+  .founder-frontiers { grid-template-columns: minmax(0, 1fr); }
+  .founder-frontiers li { min-height: 0; }
+  .founder-text { font-size: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .founder-photo img,
+  .founder-frontiers li { transition: none; }
+}
+    </style>
+  </head>
+  <body>
+    <div id="site-header"></div>
+    <main data-page="about">
+      <section class="hero">
+        <div class="hero-media">
+          <video
+            class="lazy-video hero-video"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            poster="space_video/13387692_3840_2160_25fps.mp4"
+            aria-hidden="true"
+            tabindex="-1"
+            data-video="space_video/13387692_3840_2160_25fps.mp4"
+          >
+          </video>
+        </div>
+        <div class="wrap">
+          <p class="eyebrow">About Us</p>
+          <h1>A centre built on curiosity and rigour</h1>
+          <p class="lead">
+            A platform connecting space-science education, public engagement and future-oriented
+            innovation, developed in phases with scientific integrity.
+          </p>
+          <div class="hero-buttons">
+            <a class="btn" href="about.html#about-journey">Our journey</a>
+          </div>
+        </div>
+       
+        <span class="scroll-cue"></span>
+      </section>
+
+      <section class="submenu-section">
+        <div class="wrap">
+          <nav class="submenu" aria-label="About Us sections">
+            <h2 data-reveal>About Us</h2>
+            <p class="submenu-sub" data-reveal>Who we are and how we work</p>
+            <ul data-stagger>
+              <li><a href="#about-about">About SPACE 1</a></li>
+              <li><a href="#about-values">Vision, Mission and Values</a></li>
+              <li><a href="#about-founder">Founder’s Message</a></li>
+              <li><a href="#about-journey">Our Journey</a></li>
+              <li><a href="#about-board">Scientific Advisory Board</a></li>
+              <li><a href="#about-governance">Governance and Transparency</a></li>
+              <li><a href="#about-faq">Frequently Asked Questions</a></li>
+            </ul>
+          </nav>
+        </div>
+      </section>
+
+      <section class="section about-video-section" id="about-about">
+        <div class="about-video-bg">
+          <video
+            class="lazy-video about-bg-video"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            poster="images/about/about-space1.jpg"
+            aria-hidden="true"
+            tabindex="-1"
+            data-video="space_video/11056560-hd_1920_1080_60fps.mp4"
+          >
+          </video>
+        </div>
+        <div class="about-video-overlay"></div>
+        <div class="wrap">
+          <div class="split">
+            <div class="split-copy" data-reveal>
+              <p class="eyebrow">About Us</p>
+              <h2>About SPACE 1</h2>
+              <p>
+                SPACE 1, the International Centre for Advanced Space Science and Cosmic Research, links
+                education, public engagement and innovation. Our long-term vision includes:
+              </p>
+              <ul class="bullets" data-stagger>
+                <li><b>Cosmic Experience Centre.</b> An immersive space for the public.</li>
+                <li><b>Planetarium.</b> The night sky and the Universe on a full dome.</li>
+                <li><b>Educational facilities.</b> Places to teach and learn space science.</li>
+                <li><b>Research initiatives.</b> Collaborative projects with partners.</li>
+              </ul>
+              <div class="chips" style="margin-top: 26px">
+                <span class="chip is-gold">Phased development</span>
+                <span class="chip">Scientific integrity</span>
+                <span class="chip">Institutional cooperation</span>
+                <span class="chip">Feasibility first</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section is-alt" id="about-values">
+        <div class="wrap">
+          <div class="section-head" data-reveal>
+            <p class="eyebrow">About Us</p>
+            <h2>Vision, Mission and Values</h2>
+          </div>
+          <div class="card-grid cols-2" data-stagger>
+            <article class="card">
+              <span class="card-tag">Vision</span>
+                  <ul class="bullets">
+              <li>SPACE 1 aims to inspire curiosity about the Universe and encourage greater participation in science and technology. </li>
+
+                  </ul>
+            </article>
+            <article class="card">
+              <span class="card-tag">Mission</span>
+              <ul class="bullets">
+                <li>Our mission is to expand access to space-science education, promote critical thinking and foster responsible innovation. We value scientific accuracy, inclusiveness, collaboration, sustainability and the pursuit of knowledge.</li>
+              </ul>
+            </article>
+          </div>
+          <h3 style="margin: 48px 0 20px" data-reveal>Our values</h3>
+          <div class="card-grid cols-4" data-stagger>
+            <article class="card">
+              <span class="card-tag">01</span>
+              <h3>Scientific accuracy</h3>
+              <p>Everything we teach is checked against evidence.</p>
+            </article>
+            <article class="card">
+              <span class="card-tag">02</span>
+              <h3>Inclusiveness</h3>
+              <p>Space science is for people of every background.</p>
+            </article>
+            <article class="card">
+              <span class="card-tag">03</span>
+              <h3>Collaboration</h3>
+              <p>We work with institutions, experts and communities.</p>
+            </article>
+            <article class="card">
+              <span class="card-tag">04</span>
+              <h3>Sustainability</h3>
+              <p>Space is shared, and we use it responsibly.</p>
+            </article>
+            <article class="card">
+              <span class="card-tag">05</span>
+              <h3>Pursuit of knowledge</h3>
+              <p>Asking questions comes first.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section founder-section" id="about-founder">
+        <div class="wrap">
+          <!-- 1. Intro: quote + opening (left), portrait (right) -->
+          <div class="founder-intro">
+            <div>
+              <div class="section-head" data-reveal>
+                <p class="eyebrow">About Us</p>
+                <h2>Founder’s Message</h2>
+              </div>
+              <blockquote class="founder-quote" data-reveal>
+                <p>&ldquo;Building India's Future in Space Science, Research and Cosmic Exploration.&rdquo;</p>
+              </blockquote>
+              <p class="founder-text" data-reveal>
+                I envision an India that stands shoulder to shoulder with the world's leading
+                spacefaring nations, not merely as a participant in global space exploration, but as
+                a pioneer in scientific discovery, technological innovation and the development of
+                new frontiers of human knowledge.
+              </p>
+            </div>
+
+            <aside class="founder-media" data-reveal>
+              <figure class="founder-photo">
+                <img
+                  src="images/NewImages/founder.png"
+                  alt="Jayani Bennheim, Director and Chief Visionary of SPACE 1"
+                  loading="lazy"
+                  onerror="this.remove()"
+                />
+                <figcaption>
+                  <b>Jayani Bennheim</b>
+                  <span>Director &amp; Chief visionary, SPACE 1</span>
+                </figcaption>
+              </figure>
+          
+            </aside>
+          </div>
+
+          <!-- 2. Dream and belief -->
+          <div class="founder-columns" data-stagger>
+                          <strong data-reveal>SPACE 1 was born from this vision.</strong>
+
+            <p class="founder-text">
+              My dream is to create an institution that goes beyond conventional space education and
+              becomes a centre for cosmic exploration, advanced learning, scientific research and
+              international collaboration.   I believe India's greatest strength lies in its intellectual capital. Our young
+              generation possesses extraordinary potential. What they need are world-class
+              facilities, access to advanced technologies, meaningful research opportunities and an
+              ecosystem that allows them to compete and collaborate at the highest international
+              levels.
+            </p>
+        
+          </div>
+
+          <!-- 3. Frontiers -->
+          <div class="founder-vision">
+            <strong data-reveal style="margin-bottom: 18px; display: block">
+              Our long-term vision extends into some of the most transformative frontiers of science
+              and technology, including:
+            </strong>
+            <ul class="founder-frontiers" data-stagger>
+              <li>Advanced Space Research:</li>
+              <li>Space Medicine and Human Health:</li>
+              <li>Interstellar Exploration: Asteroid and Extraterrestrial Resource Research:</li>
+              <li>Planetary Science and Cosmic Discovery:</li>
+              <li>Future Space Technologies.</li>
+            </ul>
+          </div>
+
+          <!-- 4. Programme + future and signature -->
+          <div class="founder-closing">
+            <div class="founder-programme" data-reveal>
+              <p>
+                SPACE 1 will be developed through a structured, five-year, phase-wise implementation
+                programme, commencing in January 2027 and progressing through December 2032, with
+                clearly defined milestones across infrastructure, education, research and
+                technological development.
+              </p>
+              <p>
+                The initiative will be governed, managed and executed by a highly experienced
+                multidisciplinary team comprising distinguished space scientists, academicians,
+                astronauts, professors and subject-matter experts, including professionals who have
+                contributed to space missions, scientific programmes and aerospace initiatives in
+                India and internationally.
+              </p>
+              <p>
+                Their collective expertise, institutional knowledge and global exposure will provide
+                the scientific leadership, academic direction and strategic oversight required to
+                establish SPACE 1 as a centre of excellence in cosmic education, advanced space
+                research and future space technologies.
+              </p>
+              <p>   I see a future where Indian researchers contribute to international space missions,
+                where our institutions collaborate with leading global universities and scientific
+                organisations, where Indian innovations influence the emerging space economy, and
+                where the next generation of space scientists, engineers, medical researchers and
+                explorers emerge from our own soil.</p>
+                 <div class="founder-future" data-reveal>
+            
+              <div class="signature">
+                <div>
+                  <b>With vision and purpose,</b>
+                  <span>Jayani Bennheim<br />Director &amp; Chief visionary<br />SPACE 1</span>
+                </div>
+              </div>
+            </div>
+            </div>
+
+           
+          </div>
+        </div>
+      </section>
+
+      <section class="section is-alt" id="about-journey">
+        <div class="wrap">
+          <div class="section-head" data-reveal>
+            <p class="eyebrow">About Us</p>
+            <h2>Our Journey</h2>
+            <p class="lead">
+SPACE 1 is being developed through a phased approach, beginning with educational planning, online learning initiatives and the establishment of academic and scientific relationships. Future phases may include interactive exhibitions, specialised laboratories, research programmes and a dedicated cosmic experience campus. Each stage will depend on appropriate expertise, resources, partnerships and approvals.            </p>
+          </div>
+         
+        </div>
+      </section>
+
+      <section class="section" id="about-board">
+        <div class="wrap">
+          <div class="section-head" data-reveal>
+            <p class="eyebrow">About Us</p>
+            <h2>Scientific Advisory Board</h2>
+            <p class="lead">
+              Qualified scientists, educators and industry experts will guide our academic programmes
+              and scientific initiatives.
+            </p>
+          </div>
+          <div class="card-grid cols-3" data-stagger>
+            <article class="card">
+              <span class="card-tag">Role</span>
+              <h3>Curriculum quality</h3>
+              <p>Review what we teach and how.</p>
+            </article>
+            <article class="card">
+              <span class="card-tag">Role</span>
+              <h3>Scientific accuracy</h3>
+              <p>Check our content and public claims.</p>
+            </article>
+            <article class="card">
+              <span class="card-tag">Role</span>
+              <h3>Research priorities</h3>
+              <p>Help choose where our work should focus.</p>
+            </article>
+          </div>
+          <div class="note" data-reveal>
+            <b>Membership</b>
+            Members and their affiliations will be announced only after formal consent and confirmation.
+          </div>
+          <a class="text-link" href="partnerships.html#partnerships-advisory">Join the Advisory Board &rarr;</a>
+        </div>
+      </section>
+
+      <section class="section is-alt" id="about-governance">
+        <div class="wrap">
+          <div class="section-head" data-reveal>
+            <p class="eyebrow">About Us</p>
+            <h2>Governance and Transparency</h2>
+            <p class="lead">
+              We are committed to responsible governance, accurate public communication and accountable
+              development.
+            </p>
+          </div>
+          <div class="card-grid cols-4" data-stagger>
+            <article class="card">
+              <h3>Organisational policies</h3>
+              <p>Clear written policies for how we operate.</p>
+            </article>
+            <article class="card">
+              <h3>Financial controls</h3>
+              <p>Proper oversight of how money is managed.</p>
+            </article>
+            <article class="card">
+              <h3>Reporting</h3>
+              <p>Regular reporting arrangements.</p>
+            </article>
+            <article class="card">
+              <h3>Institutional disclosures</h3>
+              <p>In line with our legal structure and applicable requirements.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="about-faq">
+        <div class="wrap">
+          <div class="section-head" data-reveal>
+            <p class="eyebrow">About Us</p>
+            <h2>Frequently Asked Questions</h2>
+          </div>
+          <div class="faq" data-stagger>
+            <details>
+              <summary>What is SPACE 1?</summary>
+              <p>An emerging space-science education, experience and innovation initiative.</p>
+            </details>
+            <details>
+              <summary>Can students enrol in courses?</summary>
+              <p>
+                Yes, once programmes are formally launched and enrolment details are published.
+              </p>
+            </details>
+            <details>
+              <summary>Will SPACE 1 offer recognised certifications?</summary>
+              <p>
+                Certification arrangements will be stated for each programme. External accreditation or
+                certification by another institution will be claimed only where formally authorised.
+              </p>
+            </details>
+            <details>
+              <summary>Will SPACE 1 establish a university?</summary>
+              <p>
+                A university is part of the longer-term vision, subject to feasibility, regulatory
+                approvals and the requirements for higher-education institutions.
+              </p>
+            </details>
+          </div>
+        </div>
+      </section>
+      <a class="next-page" href="learning-academy.html">
+        <div class="wrap">
+          <small>Continue exploring</small>
+          <h2>Learning Academy &rarr;</h2>
+        </div>
+      </a>
+    </main>
+    <div id="site-footer"></div>
+    <script src="js/video-lazy.js?v=4" defer></script>
+    <script src="js/site-config.js?v=4"></script>
+    <script src="js/layout.js?v=4"></script>
+    <script src="js/components.js?v=4"></script>
+    <script src="js/animations.js?v=4"></script>
+  </body>
+</html>

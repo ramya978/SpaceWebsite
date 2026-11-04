@@ -1,0 +1,656 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact Us | SPACE 1</title>
+  <meta name="description"
+    content="Enquiries and location. SPACE 1, International Centre for Advanced Space Science &amp; Cosmic Research." />
+  <link rel="stylesheet" href="css/theme.css?v=4" />
+  <link rel="stylesheet" href="css/base.css?v=4" />
+  <link rel="stylesheet" href="css/layout.css?v=4" />
+  <link rel="stylesheet" href="css/components.css?v=4" />
+  <link rel="stylesheet" href="css/animations.css?v=4" />
+  <script>
+    document.documentElement.classList.add("js");
+  </script>
+  <!-- Only the phone-code dropdown is redesigned. Other page sections remain unchanged. -->
+  <style>
+    #contact-form .phone-input {
+      display: flex !important;
+      align-items: stretch !important;
+      gap: 0 !important;
+      position: relative;
+      min-width: 0;
+      overflow: visible !important;
+      isolation: isolate;
+    }
+
+    #contact-form .phone-input>#contact-phone-code {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      opacity: 0 !important;
+      padding: 0 !important;
+      pointer-events: none !important;
+      clip-path: inset(50%) !important;
+    }
+
+    #contact-form .phone-code-ui {
+      flex: 0 0 84px;
+      min-width: 0;
+    }
+
+    #contact-form .phone-code-trigger {
+      appearance: none;
+      width: 100%;
+      height: 100%;
+      min-height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      border: 1px solid rgba(192, 203, 218, .25);
+      border-right: 1px solid rgba(192, 203, 218, .18);
+      border-radius: 10px 0 0 10px;
+      background: #101720;
+      color: #f7f9fc;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.2;
+      padding: 0 9px;
+      box-sizing: border-box;
+      cursor: pointer;
+      transition: background .2s, border-color .2s;
+    }
+
+    #contact-form .phone-code-trigger:hover,
+    #contact-form .phone-code-ui.is-open .phone-code-trigger {
+      border-color: rgba(223, 182, 109, .65);
+      background: #19222c;
+    }
+
+    #contact-form .phone-code-trigger:focus-visible {
+      outline: 2px solid #dcb979;
+      outline-offset: 2px;
+    }
+
+    #contact-form .phone-code-trigger svg {
+      width: 14px;
+      height: 14px;
+      color: #dbb574;
+      transition: transform .2s;
+    }
+
+    #contact-form .phone-code-ui.is-open .phone-code-trigger svg {
+      transform: rotate(180deg);
+    }
+
+    #contact-form .phone-input>#contact-phone {
+      width: 100% !important;
+      flex: 1 1 auto !important;
+      min-width: 0 !important;
+      margin: 0 !important;
+      border-top-left-radius: 0 !important;
+      border-bottom-left-radius: 0 !important;
+    }
+
+    /* Floating menu is attached to body so no form clipping/overflow. */
+    .space1-phone-menu {
+      position: fixed;
+      z-index: 99999;
+      display: none;
+      width: 310px;
+      max-width: calc(100vw - 24px);
+      box-sizing: border-box;
+      padding: 10px;
+      background: #111821;
+      border: 1px solid #34404d;
+      border-radius: 12px;
+      box-shadow: 0 20px 55px rgba(0, 0, 0, .55);
+      color: #eaf0f7;
+      font-family: inherit;
+    }
+
+    .space1-phone-menu.is-open {
+      display: block;
+    }
+
+    .space1-phone-menu .phone-code-search-wrap {
+      position: relative;
+      margin-bottom: 8px;
+    }
+
+    .space1-phone-menu .phone-code-search-wrap svg {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      color: #95a3b2;
+      pointer-events: none;
+    }
+
+    .space1-phone-menu .phone-code-search {
+      display: block !important;
+      width: 100% !important;
+      height: 40px !important;
+      margin: 0 !important;
+      padding: 0 12px 0 36px !important;
+      box-sizing: border-box !important;
+      border: 1px solid #35414f !important;
+      border-radius: 8px !important;
+      outline: none !important;
+      background: #0b1119 !important;
+      color: #f7f9fc !important;
+      font-family: inherit !important;
+      font-size: 13px !important;
+      font-weight: 400 !important;
+      letter-spacing: 0 !important;
+    }
+
+    .space1-phone-menu .phone-code-search:focus {
+      border-color: #d6b477 !important;
+    }
+
+    .space1-phone-menu .phone-code-options {
+      max-height: 200px;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      scrollbar-width: thin;
+      scrollbar-color: #4a5664 transparent;
+    }
+
+    .space1-phone-menu .phone-code-option {
+      appearance: none;
+      width: 100%;
+      min-height: 40px;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border: 0;
+      border-radius: 7px;
+      padding: 8px 12px;
+      background: transparent;
+      text-align: left;
+      cursor: pointer;
+      color: #dce4ed;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 1.3;
+    }
+
+    .space1-phone-menu .phone-code-option:hover,
+    .space1-phone-menu .phone-code-option[aria-selected="true"] {
+      background: #222c38;
+      color: #fff;
+    }
+
+    .space1-phone-menu .phone-code-option .code-value {
+      display: block;
+      flex: 0 0 86px;
+      white-space: nowrap;
+    }
+
+    .space1-phone-menu .phone-code-option .code-name {
+      flex: 1 1 auto;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: #d8e0e9;
+    }
+
+    .space1-phone-menu .phone-code-empty {
+      padding: 12px;
+      font-size: 13px;
+      color: #aab7c7;
+    }
+
+    @media (max-width: 767px) {
+      #contact-form .phone-code-ui {
+        flex-basis: 76px;
+      }
+
+      #contact-form .phone-code-trigger {
+        min-height: 48px;
+        font-size: 13px;
+        padding: 0 6px;
+      }
+
+      .space1-phone-menu {
+        width: min(300px, calc(100vw - 24px));
+      }
+
+      .space1-phone-menu .phone-code-options {
+        max-height: 188px;
+      }
+    }
+  </style>
+
+  <!-- Enquiry type only: reference-style pill selector -->
+  <style>
+    #contact-form [data-role-form-select] .select-field__label {
+      display: block;
+      margin-bottom: 16px;
+    }
+
+    #contact-form [data-role-form-select] .select-wrapper {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      overflow: hidden !important;
+      clip-path: inset(50%) !important;
+      white-space: nowrap !important;
+    }
+
+    #contact-form .enquiry-pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px 12px;
+      padding: 4px 0 5px;
+    }
+
+    #contact-form .enquiry-pill {
+      appearance: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      /* min-height: 44px; */
+      padding: 6px 22px;
+      border: 1px solid rgba(181, 192, 205, .40);
+      border-radius: 999px;
+      background: transparent;
+      color: #bcc6d2;
+      font: inherit;
+      font-size: clamp(10px, 1vw, 16px);
+      font-weight: 500;
+      line-height: 1.25;
+      letter-spacing: 0;
+      cursor: pointer;
+      transition: color .2s, background .2s, border-color .2s, transform .2s;
+    }
+
+    #contact-form .enquiry-pill:hover {
+      border-color: #f1d39c;
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    #contact-form .enquiry-pill.is-selected,
+    #contact-form .enquiry-pill[aria-pressed="true"] {
+      background: #fff;
+      border-color: #fff;
+      color: #070b12;
+      font-weight: 650;
+    }
+
+    #contact-form .enquiry-pill:focus-visible {
+      outline: 2px solid #dcb56f;
+      outline-offset: 3px;
+    }
+
+    @media (max-width: 767px) {
+      #contact-form .enquiry-pill-list {
+        gap: 9px;
+      }
+
+      #contact-form .enquiry-pill {
+        min-height: 40px;
+        padding: 9px 15px;
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="site-header"></div>
+  <main data-page="contact">
+    <section class="hero">
+      <div class="hero-media">
+        <video class="lazy-video hero-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true"
+          tabindex="-1" data-video="space_video/13442864_1920_1080_60fps.mp4">
+        </video>
+      </div>
+      <div class="wrap">
+        <p class="eyebrow">Contact Us</p>
+        <h1>Talk to Our SPACE 1 team</h1>
+        <p class="lead">
+          Choose the topic that fits your question and we will direct it to the right person.
+        </p>
+        <div class="hero-buttons">
+          <a class="btn btn-solid" href="contact.html#contact-form">Send an enquiry</a>
+        </div>
+      </div>
+
+      <span class="scroll-cue"></span>
+    </section>
+
+    <section class="submenu-section">
+      <div class="wrap">
+        <nav class="submenu" aria-label="Contact Us sections">
+          <h2 data-reveal>Contact Us</h2>
+          <p class="submenu-sub" data-reveal>Enquiries and location</p>
+          <ul data-stagger>
+            <li><a href="#contact-form">Send an Enquiry</a></li>
+            <li><a href="#contact-details">Location and Contact Details</a></li>
+          </ul>
+        </nav>
+      </div>
+    </section>
+    <section class="section" id="contact-form">
+      <div class="wrap">
+        <div class="section-head" data-reveal>
+          <p class="eyebrow">Contact Us</p>
+          <h2>Send an Enquiry</h2>
+        </div>
+        <div class="panel-box" data-role-form data-reveal>
+          <div class="select-field" data-role-form-select>
+            <label class="select-field__label">Choose your enquiry</label>
+            <div class="select-wrapper">
+              <select class="select-element" data-bind="enquiry-types">
+                <option value="">Select an enquiry type</option>
+              </select>
+              <span class="select-arrow"></span>
+            </div>
+            <div class="enquiry-pill-list" role="group" aria-label="Choose your enquiry type"></div>
+          </div>
+          <div class="panel-body">
+            <h3 data-role-title></h3>
+            <p class="submenu-sub" data-role-desc></p>
+            <form class="form" data-form novalidate>
+              <div class="input-group">
+                <label for="contact-name">Full name</label>
+                <input id="contact-name" name="name" autocomplete="name" required maxlength="250" />
+                <span class="input-error" id="error-name"></span>
+              </div>
+              <div class="input-group">
+                <label for="contact-email">Email</label>
+                <input id="contact-email" name="email" type="email" autocomplete="email" required maxlength="250" />
+                <span class="input-error" id="error-email"></span>
+              </div>
+              <div class="phone-row">
+                <label for="contact-phone">Phone number</label>
+                <div class="phone-input">
+                  <select id="contact-phone-code" name="phone-code" data-bind="country-codes"></select>
+                  <input id="contact-phone" name="phone" type="tel" autocomplete="tel" maxlength="10"
+                    placeholder="Enter phone number" />
+                </div>
+                <span class="input-error" id="error-phone"></span>
+              </div>
+              <div class="input-group">
+                <label for="contact-occupation">Occupation</label>
+                <input id="contact-occupation" name="occupation" autocomplete="occupation" maxlength="50" />
+                <span class="input-error" id="error-occupation"></span>
+              </div>
+              <input type="hidden" name="enquiry-type" id="contact-enquiry-type" value="General Enquiries" />
+
+              <div class="input-group full">
+                <label for="contact-message">Message</label>
+                <textarea id="contact-message" name="message" maxlength="250"></textarea>
+                <span class="input-error" id="error-message"></span>
+              </div>
+              <div class="full">
+                <button class="btn btn-solid" type="submit">Send enquiry</button>
+
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section is-alt" id="contact-details">
+      <div class="wrap">
+        <div class="split1 no-image">
+          <div data-reveal>
+            <p class="eyebrow">Contact Us</p>
+            <h2>Location and Contact Details</h2>
+            <ul class="bullets" data-stagger style="margin-top: 20px">
+              <li>Official contact details and registered office will be published once confirmed.</li>
+              <li>Visit information for any future physical facility will follow when premises are operational.</li>
+            </ul>
+          </div>
+          <dl class="definition-list" style="margin-top: 0" data-reveal>
+            <div>
+              <dt> Email</dt>
+              <dd ><span style="border-right: 1px solid gray;padding-right: 20px;">info@space-1.space</span><span style="padding-left: 20px;">space.in@proton.me</span></dd>
+               
+            </div>
+           
+            <!-- <div>
+                <dt>Opening hours</dt>
+                <dd data-config="hours">Monday to Friday, 9:00 to 17:00</dd>
+              </div> -->
+          </dl>
+        </div>
+      </div>
+    </section>
+    <a class="next-page" href="index.html">
+      <div class="wrap">
+        <small>Continue exploring</small>
+        <h2>Home &rarr;</h2>
+      </div>
+    </a>
+  </main>
+  <div id="site-footer"></div>
+  <div class="toast-container" aria-live="polite"></div>
+  <script src="js/video-lazy.js?v=4" defer></script>
+  <script src="js/site-config.js?v=4"></script>
+  <script src="js/layout.js?v=4"></script>
+  <script src="js/components.js?v=4"></script>
+  <script src="js/animations.js?v=4"></script>
+  <!-- Country code selector only; keeps the original select and its change events. -->
+  <script>
+    (function () {
+      function initPhoneCode() {
+        var select = document.getElementById('contact-phone-code');
+        if (!select || select.dataset.phoneUiReady) return;
+        select.dataset.phoneUiReady = 'true';
+
+        var ui = document.createElement('div');
+        ui.className = 'phone-code-ui';
+        ui.innerHTML = '<button type="button" class="phone-code-trigger" aria-label="Select country calling code" aria-expanded="false" aria-haspopup="listbox"><span class="phone-code-current">+91</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>';
+        select.insertAdjacentElement('afterend', ui);
+
+        var menu = document.createElement('div');
+        menu.className = 'space1-phone-menu';
+        menu.innerHTML = '<div class="phone-code-search-wrap"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.5" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><input type="search" class="phone-code-search" placeholder="Search code or country" aria-label="Search country codes" autocomplete="off"></div><div class="phone-code-options" role="listbox" aria-label="Country calling codes"></div>';
+        document.body.appendChild(menu);
+
+        var trigger = ui.querySelector('.phone-code-trigger');
+        var current = ui.querySelector('.phone-code-current');
+        var search = menu.querySelector('.phone-code-search');
+        var results = menu.querySelector('.phone-code-options');
+        var open = false;
+        // Preserve complete calling codes (including +1-268) and map country names
+        // from the existing site-config data, without changing the native select.
+        function countryFor(option) {
+          var configured = (window.SITE && window.SITE.countryCodes) || [];
+          var index = Array.prototype.indexOf.call(select.options, option);
+          var match = configured[index];
+          if (match && String(match.code) === String(option.value)) return match;
+          return configured.find(function (c) { return String(c.code) === String(option.value); }) || null;
+        }
+
+        function allOptions() {
+          return Array.from(select.options).filter(function (o) {
+            return !o.disabled && (o.value || o.textContent.trim());
+          });
+        }
+        function codeFor(o) {
+          // Use the complete option value: e.g. +1-268 instead of +1 and 268.
+          var code = String(o.value || '').trim();
+          var country = countryFor(o);
+          return (country && country.code) || code || (o.textContent || '').trim();
+        }
+        function refreshCurrent() {
+          var o = select.selectedOptions[0];
+          current.textContent = o ? codeFor(o) : '+91';
+          if (open) render();
+        }
+        function position() {
+          var rect = trigger.getBoundingClientRect();
+          var w = Math.min(310, window.innerWidth - 24);
+          var left = Math.max(12, Math.min(rect.left, window.innerWidth - w - 12));
+          menu.style.width = w + 'px';
+          menu.style.left = left + 'px';
+          var height = menu.offsetHeight;
+          var below = window.innerHeight - rect.bottom;
+          var top = (below >= height + 12 || rect.top < height + 12)
+            ? rect.bottom + 7 : rect.top - height - 7;
+          menu.style.top = Math.max(8, Math.min(top, window.innerHeight - height - 8)) + 'px';
+        }
+        function closeMenu() {
+          open = false;
+          menu.classList.remove('is-open');
+          ui.classList.remove('is-open');
+          trigger.setAttribute('aria-expanded', 'false');
+        }
+        function render() {
+          var query = search.value.trim().toLowerCase();
+          results.replaceChildren();
+          var found = allOptions().filter(function (o) {
+            var country = countryFor(o);
+            return ((country ? country.name : '') + ' ' + (o.textContent || '') + ' ' + o.value + ' ' + codeFor(o)).toLowerCase().includes(query);
+          });
+          if (!found.length) {
+            var empty = document.createElement('div');
+            empty.className = 'phone-code-empty';
+            empty.textContent = 'No matching country codes';
+            results.appendChild(empty);
+          }
+          found.forEach(function (o) {
+            var item = document.createElement('button');
+            item.type = 'button';
+            item.className = 'phone-code-option';
+            item.setAttribute('role', 'option');
+            item.setAttribute('aria-selected', String(o.selected));
+            var code = codeFor(o);
+            var country = countryFor(o);
+            var name = country ? country.name : '';
+
+            var codeSpan = document.createElement('span');
+            codeSpan.className = 'code-value';
+            codeSpan.textContent = code;
+            var nameSpan = document.createElement('span');
+            nameSpan.className = 'code-name';
+            nameSpan.textContent = name;
+            item.append(codeSpan);
+            item.addEventListener('click', function () {
+              select.value = o.value;
+              select.dispatchEvent(new Event('input', { bubbles: true }));
+              select.dispatchEvent(new Event('change', { bubbles: true }));
+              refreshCurrent();
+              closeMenu();
+              trigger.focus();
+            });
+            results.appendChild(item);
+          });
+          if (open) position();
+        }
+        function toggleMenu() {
+          if (open) { closeMenu(); return; }
+          open = true;
+          ui.classList.add('is-open');
+          menu.classList.add('is-open');
+          trigger.setAttribute('aria-expanded', 'true');
+          search.value = '';
+          render();
+          position();
+          search.focus({ preventScroll: true });
+        }
+
+        trigger.addEventListener('click', toggleMenu);
+        search.addEventListener('input', render);
+        search.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            var first = results.querySelector('.phone-code-option');
+            if (first) first.click();
+          }
+        });
+        document.addEventListener('pointerdown', function (e) {
+          if (!ui.contains(e.target) && !menu.contains(e.target)) closeMenu();
+        });
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape' && open) { closeMenu(); trigger.focus(); }
+        });
+        window.addEventListener('resize', function () { if (open) position(); });
+        // Do not close when scrolling inside the country list (or on page scroll).
+        // Keep the floating menu aligned when an ancestor/page scrolls.
+        window.addEventListener('scroll', function (event) {
+          if (!open) return;
+          if (menu.contains(event.target)) return;
+          position();
+        }, true);
+        select.addEventListener('change', refreshCurrent);
+        new MutationObserver(refreshCurrent).observe(select, {
+          childList: true, subtree: true, attributes: true, attributeFilter: ['selected']
+        });
+        refreshCurrent();
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initPhoneCode);
+      } else initPhoneCode();
+    })();
+  </script>
+
+  <script>
+    // Mirror the original enquiry <select> as pills, preserving the site's existing change handlers.
+    (function () {
+      function initPills() {
+        const section = document.querySelector('#contact-form [data-role-form-select]');
+        if (!section) return;
+        const select = section.querySelector('select[data-bind="enquiry-types"]');
+        const list = section.querySelector('.enquiry-pill-list');
+        if (!select || !list) return;
+
+        let signature = '';
+        function render() {
+          const opts = Array.from(select.options).filter(o => o.value && !o.disabled);
+          const nextSignature = opts.map(o => o.value + '\u0000' + o.textContent.trim()).join('\u0001');
+          if (signature !== nextSignature) {
+            signature = nextSignature;
+            list.replaceChildren();
+            opts.forEach(function (option) {
+              const button = document.createElement('button');
+              button.type = 'button';
+              button.className = 'enquiry-pill';
+              button.textContent = option.textContent.trim();
+              button.dataset.value = option.value;
+              button.addEventListener('click', function () {
+                select.value = option.value;
+                select.dispatchEvent(new Event('input', { bubbles: true }));
+                select.dispatchEvent(new Event('change', { bubbles: true }));
+                updateSelection();
+              });
+              list.appendChild(button);
+            });
+          }
+          updateSelection();
+        }
+        function updateSelection() {
+          list.querySelectorAll('.enquiry-pill').forEach(function (button) {
+            const selected = button.dataset.value === select.value;
+            button.classList.toggle('is-selected', selected);
+            button.setAttribute('aria-pressed', String(selected));
+          });
+        }
+        select.addEventListener('change', updateSelection);
+        new MutationObserver(render).observe(select, { childList: true, subtree: true, characterData: true });
+        render();
+      }
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initPills);
+      else initPills();
+    })();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Innovation &amp; Research | SPACE 1</title>
+<meta content="Research areas and challenges. SPACE 1, International Centre for Advanced Space Science &amp; Cosmic Research." name="description"/>
+<link href="css/theme.css?v=4" rel="stylesheet"/>
+<link href="css/base.css?v=4" rel="stylesheet"/>
+<link href="css/layout.css?v=4" rel="stylesheet"/>
+<link href="css/components.css?v=4" rel="stylesheet"/>
+<link href="css/animations.css?v=4" rel="stylesheet"/>
+<link href="css/research-video-alternate.css?v=4" rel="stylesheet"/>
+<link href="css/research-hero-fix.css?v=4" rel="stylesheet"/>
+<script>
+  document.documentElement.classList.add("js");
+</script>
+<style>
+/* Research programmes: alternate full-screen video / solid dark background. */
+.research-video-section,
+.research-plain-section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 480px;
+  padding-block: clamp(86px, 10vw, 150px);
+  border-bottom: 1px solid rgba(255,255,255,.1);
+}
+.research-video-section { background: #070b11 !important; }
+.research-plain-section { background: #0a0e16 !important; }
+.research-video-section .research-video-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+  pointer-events: none;
+  background: #070b11;
+}
+.research-video-section .research-video-bg video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.research-video-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(3, 6, 12, 0.92) 0%, rgb(3 6 12 / 0%) 1%, rgb(3 6 12 / 63%) 2%), linear-gradient(180deg, rgba(3, 6, 12, 0.25), rgb(3 6 12 / 14%));
+}
+.research-video-section > .wrap,
+.research-plain-section > .wrap { position: relative; z-index: 1; }
+.research-video-section .split,
+.research-video-section .split.is-flipped,
+.research-video-section .split.no-image,
+.research-plain-section .split,
+.research-plain-section .split.is-flipped,
+.research-plain-section .split.no-image { display: block; }
+.research-video-section .split-copy,
+.research-plain-section .split-copy {
+  width: 100%;
+  max-width: 780px;
+  margin: 0;
+}
+.research-video-section h2,
+.research-video-section h3,
+.research-video-section .split-copy b,
+.research-plain-section h2,
+.research-plain-section h3,
+.research-plain-section .split-copy b { color: #fff; }
+.research-video-section .split-copy p,
+.research-video-section .bullets li,
+.research-plain-section .split-copy p,
+.research-plain-section .bullets li { color: #e0e6ef; }
+.research-video-section .bullets li,
+.research-plain-section .bullets li { border-color: rgba(255,255,255,.16); }
+.research-video-section .rows .row,
+.research-video-section .card,
+.research-plain-section .rows .row,
+.research-plain-section .card {
+  background: rgba(8,13,21,.68);
+  border-color: rgba(255,255,255,.16);
+}
+@media (max-width: 760px) {
+  .research-video-section,
+  .research-plain-section { min-height: auto; padding-block: 72px; }
+  .research-video-section::before { background: rgba(5,8,14,.82); }
+  .research-video-section .split-copy,
+  .research-plain-section .split-copy { max-width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .research-video-section .research-video-bg video { display: none; }
+}
+</style>
+</head>
+<body>
+<div id="site-header"></div>
+<main data-page="research">
+
+<section class="hero">
+  <div class="hero-media">
+    <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="/space_video/854254-hd_1920_1080_30fps.mp4">
+      <source src="/space_video/854254-hd_1920_1080_30fps.mp4" type="video/mp4" />
+    </video>
+  </div>
+  <div class="wrap">
+    <p class="eyebrow">Innovation &amp; Research</p>
+    <h1>Research that reaches beyond Earth</h1>
+    <p class="lead">
+      Resources, satellites, robotics, medicine, energy and habitation, explored through educational
+      projects and future collaborations.
+    </p>
+    <div class="hero-buttons">
+      <a class="btn btn-solid" href="innovation-research.html#research-sro">See the research areas</a>
+    </div>
+  </div>
+
+  <span class="scroll-cue"></span>
+</section>
+
+<section class="submenu-section">
+<div class="wrap">
+<nav aria-label="Innovation &amp; Research sections" class="submenu">
+<h2 data-reveal="">Innovation &amp; Research</h2>
+<p class="submenu-sub" data-reveal="">Research areas and challenges</p>
+<ul data-stagger="">
+<li><a href="#research-sro">Space Resources Observatory</a></li>
+<li><a href="#research-mining">Asteroid Mining and Lunar Resources</a></li>
+<li><a href="#research-cubesat">Satellite and CubeSat Development</a></li>
+<li><a href="#research-eo">Earth Observation and Climate Intelligence</a></li>
+<li><a href="#research-defence">Planetary Defence</a></li>
+<li><a href="#research-robotics">Space Robotics and Artificial Intelligence</a></li>
+<li><a href="#research-medicine">Space Medicine</a></li>
+<li><a href="#research-manufacturing">In-Space Manufacturing</a></li>
+<li><a href="#research-propulsion">Space Energy and Propulsion</a></li>
+<li><a href="#research-habitats">Space Habitats and Life Support</a></li>
+<li><a href="#research-interstellar">Interstellar Exploration Concepts</a></li>
+<li><a href="#research-projects">Research Projects and Publications</a></li>
+<li><a href="#research-challenges">Innovation Challenges</a></li>
+</ul>
+</nav>
+</div>
+</section>
+
+<section class="section research-video-section" id="research-sro">
+<div aria-hidden="true" class="research-video-bg"><video autoplay="" class="lazy-video" loop="" muted="" playsinline="" preload="none" tabindex="-1" data-video="space_video/10800206-hd_1920_1080_30fps.mp4"></video></div>
+<div class="wrap">
+<div class="split">
+<div class="split-copy" data-reveal="">
+<p class="eyebrow">Innovation &amp; Research</p>
+<h2>Space Resources Observatory</h2>
+<p>
+  A proposed observatory studying the scientific, engineering and economic challenges of finding and
+  using resources beyond Earth.
+</p>
+<ul class="bullets" data-stagger="">
+<li>Resource-mapping simulations</li>
+<li>Asteroid analysis</li>
+<li>Future lunar exploration technologies</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+
+<section class="section research-plain-section" id="research-mining">
+<div class="wrap">
+<div class="split is-flipped">
+<div class="split-copy" data-reveal="">
+<p class="eyebrow">Innovation &amp; Research</p>
+<h2>Asteroid Mining and Lunar Resources</h2>
+<p>Asteroids and the Moon hold materials that may matter for future missions. This area explores:</p>
+<div class="chips">
+<span class="chip is-gold">Resource identification</span>
+<span class="chip">Robotic extraction</span>
+<span class="chip">Lunar water</span>
+<span class="chip">In-situ resource utilisation</span>
+<span class="chip">Technical and legal challenges</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="section research-video-section" id="research-cubesat">
+<div aria-hidden="true" class="research-video-bg"><img src="images/NewImages/innovation & research 1.jpeg" style="    object-position: center;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;"></div>
+<div class="wrap">
+<div class="split">
+<div class="split-copy" data-reveal="">
+<p class="eyebrow">Innovation &amp; Research</p>
+<h2>Satellite and CubeSat Development</h2>
+<p>Small satellites offer real opportunities for education, experimentation and research.</p>
+<ul class="bullets" data-stagger="">
+<li><b>Design.</b> Satellite structure and layout.</li>
+<li><b>Sensors.</b> What a satellite measures.</li>
+<li><b>Communications.</b> Talking to the ground.</li>
+<li><b>Onboard systems.</b> Power, computing and control.</li>
+<li><b>Mission planning.</b> From idea to orbit.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+
+<section class="section research-plain-section" id="research-eo">
+<div class="wrap">
+<div class="section-head" data-reveal="">
+<p class="eyebrow">Innovation &amp; Research</p>
+<h2>Earth Observation and Climate Intelligence</h2>
+<p class="lead">How Earth-observation data can support environmental research and practical applications in India.</p>
+</div>
+<div class="card-grid cols-3" data-stagger="">
+<article class="card"><h3>Forests</h3><p>Tracking forest cover and change.</p></article>
+<article class="card"><h3>Oceans</h3><p>Watching seas and coastlines.</p></article>
+<article class="card"><h3>Agriculture</h3><p>Crop health and land use.</p></article>
+<article class="card"><h3>Urban growth</h3><p>How cities expand over time.</p></article>
+<article class="card"><h3>Natural disasters</h3><p>Floods, cyclones and droughts from orbit.</p></article>
+<article class="card"><h3>Climate change</h3><p>Long-term changes in the climate system.</p></article>
+</div>
+</div>
+</section>
+
+<section class="section research-video-section" id="research-defence">
+<div aria-hidden="true" class="research-video-bg"><video autoplay="" class="lazy-video" loop="" muted="" playsinline="" preload="none" tabindex="-1" data-video="space_video/7615703-uhd_3840_2160_30fps.mp4"></video></div>
+<div class="wrap">
+<div class="section-head" data-reveal="">
+<p class="eyebrow">Innovation &amp; Research</p>
+<h2>Planetary Defence</h2>
+<p class="lead">Detecting and tracking near-Earth objects, and assessing impact risk.</p>
+</div>
+<ol class="steps cols-4" data-stagger="">
+<li><h3>Observe</h3><p>Asteroid observation.</p></li>
+<li><h3>Predict</h3><p>Orbital prediction.</p></li>
+<li><h3>Assess</h3><p>Impact assessment.</p></li>
+<li><h3>Deflect</h3><p>Proposed deflection strategies.</p></li>
+</ol>
+</div>
+</section>
+
+<section class="section research-plain-section" id="research-robotics">
+<div class="wrap">
+<div class="split is-flipped">
+<div class="split-copy" data-reveal="">
+<p class="eyebrow">Innovation &amp; Research</p>
+<h2>Space Robotics and Artificial Intelligence</h2>
+<p>For missions where direct human control is difficult or impossible.</p>
+<ul class="bullets" data-stagger="">
+<li>Autonomous navigation</li>
+<li>Robotic exploration</li>
+<li>Intelligent data analysis</li>
+<li>Automated systems for future missions</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+
+<section class="section research-video-section" id="research-medicine">
+<div aria-hidden="true" class="research-video-bg">
+<video autoplay="" class="lazy-video" loop="" muted="" playsinline="" preload="none" tabindex="-1" data-video="space_video/854268-hd_1920_1080_30fps.mp4"></video>
+</div>
+<div class="wrap">
+<div class="split no-image">
+<div class="split-copy" data-reveal="">
+<p class="eyebrow">Innovation &amp; Research</p>
+<h2>Space Medicine</h2>
+<p>How microgravity, radiation, isolation and other spaceflight conditions affect human health.</p>
+<ul class="bullets" data-stagger="">
+<li>Astronaut physiology</li>
+<li>Exercise and nutrition</li>
+<li>Sleep</li>
+<li>Life-support requirements</li>
+</ul>
+<p style="margin-top: 18px">Specialised work is undertaken only with appropriate expertise and facilities.</p>
+<a class="text-link" href="space-medicine.html">Explore Space Medicine →</a>
+</div>
+</div>
+</div>
+</section>
+
+<section class="section research-plain-section" id="research-manufacturing">
+<div class="wrap">
+<div class="split no-image">
+<div class="split-copy" data-reveal="">
+<p class="eyebrow">Innovation &amp; Research</p>
+<h2>In-Space Manufacturing</h2>
+<p>Producing, assembling or repairing specialised components beyond Earth’s surface.</p>
+<div class="chips">
+<span class="chip is-gold">Additive manufacturing</span>
+<span class="chip">Robotic assembly</span>
+<span class="chip">Material behaviour</span>
+<span class="chip">Engineering in space environments</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="section research-video-section" id="research-propulsion">
+<div aria-hidden="true" class="research-video-bg">
+<video autoplay="" class="lazy-video" loop="" muted="" playsinline="" preload="none" tabindex="-1" data-video="space_video/7476130-hd_1920_1080_24fps.mp4"></video>
+</div>
+<div class="wrap">
+<div class="section-head" data-reveal="">
+<p class="eyebrow">Innovation &amp; Research</p>
+<h2>Space Energy and Propulsion</h2>
+<p class="lead">Reliable energy and propulsion for demanding conditions.</p>
+</div>
+<div class="card-grid cols-4" data-stagger="">
+<article class="card"><span class="card-tag">Demonstrated</span><h3>Rocket propulsion</h3><p>Conventional chemical rockets.</p></article>
+<article class="card"><span class="card-tag">Demonstrated</span><h3>Electric propulsion</h3><p>Efficient thrust for long missions.</p></article>
+<article class="card"><span class="card-tag">Emerging</span><h3>Solar sails</h3><p>Pushed by sunlight.</p></article>
+<article class="card"><span class="card-tag">Research stage</span><h3>Advanced concepts</h3><p>Ideas still at the research or theoretical stage.</p></article>
+</div>
+</div>
+</section>
+
+<section class="section research-plain-section" id="research-habitats">
+<div class="wrap">
+<div class="split is-flipped">
+<div class="split-copy" data-reveal="">
+<p class="eyebrow">Innovation &amp; Research</p>
+<h2>Space Habitats and Life Support</h2>
+<p>Long missions need safe habitats, reliable life support and efficient resource management.</p>
+<ul class="bullets" data-stagger="">
+<li><b>Air.</b> Oxygen generation.</li>
+<li><b>Water.</b> Recycling every drop.</li>
+<li><b>Food.</b> Growing food in space.</li>
+<li><b>Shelter.</b> Radiation protection and sustainable habitat design.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+
+<section class="section research-video-section" id="research-interstellar">
+<div aria-hidden="true" class="research-video-bg">
+<video autoplay="" class="lazy-video" loop="" muted="" playsinline="" preload="none" tabindex="-1" data-video="space_video/13442874_1920_1080_60fps.mp4"></video>
+</div>
+<div class="wrap">
+<div class="split">
+<div class="split-copy" data-reveal="">
+<p class="eyebrow">Innovation &amp; Research</p>
+<h2>Interstellar Exploration Concepts</h2>
+<p>The extraordinary challenges of travelling between the stars.</p>
+<ul class="bullets" data-stagger="">
+<li>The immense distances involved</li>
+<li>Propulsion concepts</li>
+<li>Robotic probes</li>
+<li>Theoretical approaches to future missions</li>
+</ul>
+<div class="note">
+<b>Science vs speculation</b>
+We draw a clear line between established science and speculation.
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="section research-plain-section" id="research-projects">
+<div class="wrap">
+<div class="section-head" data-reveal="">
+<p class="eyebrow">Innovation &amp; Research</p>
+<h2>Research Projects and Publications</h2>
+<p class="lead">Educational research now, collaborative investigations as capabilities grow.</p>
+</div>
+<div class="rows" data-stagger="">
+<div class="row">
+<span class="row-date">Now</span>
+<div><h3>Educational research projects</h3><p>Supported learning projects for students.</p></div>
+<span class="chip">Education</span>
+</div>
+<div class="row">
+<span class="row-date">Future</span>
+<div><h3>Collaborative investigations</h3><p>Scientific work with partners as capabilities develop.</p></div>
+<span class="chip">Research</span>
+</div>
+<div class="row">
+<span class="row-date">Ongoing</span>
+<div><h3>Reports and publications</h3><p>Approved findings and educational publications shared openly.</p></div>
+<span class="chip">Publication</span>
+</div>
+</div>
+</div>
+</section>
+
+<section class="section research-video-section" id="research-challenges">
+<div aria-hidden="true" class="research-video-bg">
+<video autoplay="" class="lazy-video" loop="" muted="" playsinline="" preload="none" tabindex="-1" data-video="space_video/16689414_3840_2160_24fps.mp4"></video>
+</div>
+<div class="wrap">
+<div class="section-head" data-reveal="">
+<p class="eyebrow">Innovation &amp; Research</p>
+<h2>Innovation Challenges</h2>
+<p class="lead">Students and aspiring innovators tackle scientific and engineering problems. Possible themes:</p>
+</div>
+<div class="card-grid cols-3" data-stagger="">
+<article class="card"><span class="card-tag">Theme</span><h3>Satellite applications</h3></article>
+<article class="card"><span class="card-tag">Theme</span><h3>Planetary defence</h3></article>
+<article class="card"><span class="card-tag">Theme</span><h3>Space robotics</h3></article>
+<article class="card"><span class="card-tag">Theme</span><h3>Resource utilisation</h3></article>
+<article class="card"><span class="card-tag">Theme</span><h3>Sustainable exploration</h3></article>
+</div>
+<div class="note" data-reveal="">
+<b>How research grows</b>
+Research facilities and formal research programmes will be introduced progressively as expertise,
+funding, infrastructure and partnerships are established.
+</div>
+<a class="text-link" href="events-community.html#events-future">See challenges and events →</a>
+</div>
+</section>
+
+<a class="next-page" href="space-medicine.html">
+<div class="wrap">
+<small>Continue exploring</small>
+<h2>Space Medicine →</h2>
+</div>
+</a>
+</main>
+<div id="site-footer"></div>
+<script src="js/video-lazy.js?v=4" defer></script>
+<script src="js/site-config.js?v=4"></script>
+<script src="js/layout.js?v=4"></script>
+<script src="js/components.js?v=4"></script>
+<script src="js/animations.js?v=4"></script>
+</body>
+</html>

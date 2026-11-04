@@ -1,0 +1,140 @@
+/* SPACE 1 - Experience Centre unique video backgrounds.
+   Load after layout.css and components.css. */
+.experience-hero {
+   position: relative;
+   isolation: isolate;
+   overflow: hidden;
+   background: #05070a;
+}
+
+.experience-hero .hero-media {
+   position: absolute;
+   inset: -6% 0;
+   z-index: 0;
+   overflow: hidden;
+   /* background: url('../images/experience-centre/hero.jpg') center/cover no-repeat; */
+   will-change: transform;
+}
+
+.experience-hero .hero-media video {
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+   display: block;
+   pointer-events: none;
+}
+
+.experience-hero::after {
+   content: '';
+   position: absolute;
+   inset: 0;
+   z-index: 1;
+   pointer-events: none;
+   background: linear-gradient(90deg, rgba(3, 6, 12, .82) 0%, rgba(3, 6, 12, .40) 57%, rgba(3, 6, 12, .18) 100%), linear-gradient(0deg, rgba(3, 6, 12, .77), transparent 55%);
+}
+
+.experience-hero>.wrap {
+   position: relative;
+   z-index: 3;
+   width: 100%;
+}
+
+.experience-hero>.hero-notes,
+.experience-hero>.scroll-cue {
+   z-index: 3;
+}
+
+.experience-hero .starfield {
+   z-index: 2;
+   pointer-events: none;
+}
+
+.experience-video-section {
+   position: relative;
+   isolation: isolate;
+   overflow: hidden;
+   min-height:clamp(395px, 46vh, 713px);
+   display: flex;
+   align-items: center;
+   background: #070b11 !important;
+}
+
+.experience-video-section .experience-video-bg {
+   position: absolute;
+   inset: 0;
+   z-index: 0;
+   overflow: hidden;
+   pointer-events: none;
+   background-position: center;
+   background-size: cover;
+}
+
+.experience-video-section .experience-video-bg video {
+   display: block;
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+   object-position: center;
+   pointer-events: none;
+}
+
+.experience-video-section::before {
+   content: '';
+   position: absolute;
+   inset: 0;
+   z-index: 1;
+   pointer-events: none;
+   background: linear-gradient(90deg, rgba(3, 6, 12, .90), rgba(3, 6, 12, .65) 60%, rgba(3, 6, 12, .35)), linear-gradient(0deg, rgba(3, 6, 12, .55), transparent 70%);
+}
+
+.experience-video-section>.wrap {
+   position: relative;
+   z-index: 2;
+   width: 100%;
+}
+
+.experience-video-section .split,
+.experience-video-section .split.is-flipped {
+   display: block;
+}
+
+.experience-video-section .split-copy {
+   width: 100%;
+   max-width: 760px;
+   margin: 0;
+}
+
+.experience-video-section h2 {
+   color: #fff;
+}
+
+.experience-video-section .split-copy p {
+   color: #e0e6ef;
+}
+
+.experience-video-section .chip {
+   backdrop-filter: blur(8px);
+}
+
+@media(max-width:760px) {
+   .experience-video-section {
+      min-height: auto;
+      padding-block: 88px;
+   }
+
+   .experience-video-section::before {
+      background: rgba(3, 6, 12, .80)
+   }
+
+   .experience-video-section .split-copy {
+      max-width: 100%;
+   }
+}
+
+@media(prefers-reduced-motion:reduce) {
+
+   .experience-hero video,
+   .experience-video-section video {
+      display: none !important;
+   }
+}
