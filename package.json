@@ -1,0 +1,8 @@
+{
+  "name": "space1-website",
+  "version": "1.0.0",
+  "description": "SPACE 1 website",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

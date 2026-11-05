@@ -42,7 +42,7 @@
 .js .timeline.is-in::before { animation: draw-line 2s var(--ease-out) backwards; }
 
 /* ---------- Hero headline: each word rises out of a mask ---------- */
-.hero h1 .word { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: 0.08em; }
+.hero h1 .word { display: inline-block; vertical-align: top; padding-bottom: 0.08em; }
 .hero h1 .word > span {
   display: inline-block;
   transform: translateY(110%);

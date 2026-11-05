@@ -41,7 +41,7 @@
     '<div class="progress" id="progress"></div>' +
     '<header class="site-header" id="header">' +
       '<div class="wrap">' +
-        '<a class="logo" href="index.html" aria-label="' + site.name + ' home">' +
+        '<a class="logo" href="" aria-label="' + site.name + ' home">' +
           '<img src="images/logo/Logo.webp" alt="' + site.name + ' Logo" class="header-logo">' +
         "</a>" +
         '<nav class="main-nav" aria-label="Main">' + headerLinks + "</nav>" +
@@ -50,7 +50,7 @@
     "</header>" +
     '<div class="menu-overlay" id="menu" role="dialog" aria-label="All sections" aria-modal="true">' +
       '<div class="wrap">' +
-        '<div class="menu-top"><a class="logo" href="index.html">' + 
+        '<div class="menu-top"><a class="logo" href="">' + 
         '<img src="images/logo/Logo.webp" alt="' + site.name + ' Logo" class="header-logo">'  + "</a>" +
         '<button class="menu-button" id="menu-close">Close &#10005;</button></div>' +
         '<ul class="menu-list">' + menuItems + "</ul>" +
@@ -72,15 +72,18 @@
     ? '<p class="footer-note" style="margin-top:44px;font-size:11px">' + site.footerDisclaimer + "</p>"
     : "";
 
+  var noteText = site.footerNote
+    ? site.footerNote.replace("Ascending Software", '<a href="https://ascendingsoftware.com/" target="_blank" rel="noopener noreferrer">Ascending Software</a>')
+    : "";
   var note = site.footerNote
-    ? '<small class="footer-note"' + (disclaimer ? ' style="margin-top:0;;text-align:center";border-top:0;padding-top:6px";' : "") + '"><a href="https://ascendingsoftware.com/" target="_blank" rel="noopener noreferrer">' + site.footerNote + "</a></small>"
+    ? '<small class="footer-note"' + (disclaimer ? ' style="margin-top:0;;text-align:center";border-top:0;padding-top:6px";' : "") + '">' + noteText + "</small>"
     : "";
 
   document.getElementById("site-footer").innerHTML =
     '<footer class="site-footer">' +
       '<div class="wrap">' +
         '<div class="footer-columns">' +
-          '<div><a class="logo" href="index.html">' + 
+          '<div><a class="logo" href="">' + 
           '<img src="images/logo/Logo.webp" alt="' + site.name + ' Logo" class="header-logo">' 
            + "</a>" +
           '<p class="muted" style="margin-top:18px;max-width:36ch;font-size:15px">' + site.tagline + ". </p></div>" +

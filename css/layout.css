@@ -1958,7 +1958,7 @@
 }
 }
 
-/* Link style for the "Developed by Ascending Software" footer note */
+/* Link style for the "Ascending Software" portion of the footer note */
 .footer-note a {
   color: var(--color-text-muted);
   text-decoration:none;

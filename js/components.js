@@ -95,7 +95,7 @@
 
   if (site.countryCodes) {
     populateSelects("country-codes", site.countryCodes,
-      function (c) { return (c.code ) },
+      function (c) { return (c.code) },
       function (c) { return c.code; }, "+91");
     // Country starts empty (no country pre-selected)
     populateSelects("countries", site.countryCodes,
@@ -162,10 +162,8 @@
       desc.textContent = button.dataset.desc;
       if (label && button.dataset.label) label.textContent = button.dataset.label;
       if (status) status.textContent = "";
-      // Sync hidden enquiry-type input with selected pill
       var enquiryInput = box.querySelector("[name=enquiry-type]");
       if (enquiryInput) enquiryInput.value = button.textContent.trim();
-      // Sync hidden join-type input with selected pill
       var joinTypeInput = box.querySelector("[name=join-type]");
       if (joinTypeInput) joinTypeInput.value = button.textContent.trim();
       body.classList.remove("is-swapping");
@@ -187,11 +185,11 @@
     }
     if (buttons.length > 0) choose(buttons[0]);
 
-    // ---- Custom dropdown (select) for join-types / enquiry-types ----
+    // ---- Dropdown (select) for join-types / enquiry-types ----
     var select = box.querySelector("select[data-bind]");
     if (select) {
       select.addEventListener("change", function () {
-        var selectedLabel = (this.options[this.selectedIndex] && this.options[this.selectedIndex].textContent) ? this.options[this.selectedIndex].textContent.trim() : "";
+        var selectedLabel = (this.options[this.selectedIndex] && this.value) ? this.options[this.selectedIndex].textContent.trim() : "";
         var bindKey = this.dataset.bind;
         var items = bindKey === "enquiry-types" ? (site.enquiryTypes || []) : (site.joinTypes || []);
         var item = items.find(function (t) { return t.label === selectedLabel; });
@@ -210,7 +208,7 @@
     }
   });
 
-  // Toast helper
+  // ---- Toast helper ----
   function showToast(message, type) {
     var container = document.querySelector(".toast-container");
     if (!container) return;
@@ -222,96 +220,322 @@
     setTimeout(function () { toast.remove(); }, 3100);
   }
 
-  // Clear per-field errors
-  function clearFieldErrors(form) {
-    form.querySelectorAll(".input-group, .phone-row").forEach(function (g) { g.classList.remove("error"); });
-    form.querySelectorAll(".input-error").forEach(function (e) { e.textContent = ""; });
+  /* =========================================================
+     VALIDATION
+     Min / max lengths are read from the HTML minlength / maxlength
+     attributes first, so you only change limits in one place.
+     The numbers below are fallbacks if an attribute is missing.
+     ========================================================= */
+  var NAME_RE = /^[\p{L}\p{M}][\p{L}\p{M}\s.'-]*$/u;      // letters, spaces, . ' -
+  var PLACE_RE = /^[\p{L}\p{M}][\p{L}\p{M}\s.,'()-]*$/u;  // letters, spaces, . , ' ( ) -
+  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+  var RULES = {
+    name: {
+      label: "Full name", required: true, min: 2, max: 100,
+      requiredMsg: "Please enter your full name.",
+      pattern: NAME_RE, patternMsg: "Full name can contain only letters, spaces and . ' -"
+    },
+    email: {
+      label: "Email", required: true, min: 6, max: 250,
+      requiredMsg: "Please enter your email address.",
+      pattern: EMAIL_RE, patternMsg: "Please enter a valid email address (e.g. name@example.com)."
+    },
+    phone: {
+      label: "Phone number", required: true,
+      requiredMsg: "Please enter your phone number.",
+      custom: validatePhone
+    },
+    country: {
+      label: "Country", required: true,
+      requiredMsg: "Please select your country."
+    },
+    state: {
+      label: "State", required: true, min: 2, max: 100,
+      requiredMsg: "Please enter your state.",
+      pattern: PLACE_RE, patternMsg: "State can contain only letters, spaces and . , ' ( ) -"
+    },
+    city: {
+      label: "City", required: true, min: 2, max: 100,
+      requiredMsg: "Please enter your city.",
+      pattern: PLACE_RE, patternMsg: "City can contain only letters, spaces and . , ' ( ) -"
+    },
+    address: {
+      label: "Address", required: true, min: 5, max: 250,
+      requiredMsg: "Please enter your address."
+    },
+    organisation: {
+      label: "Organisation", required: false, min: 2, max: 150
+    },
+    occupation: {
+      label: "Occupation", required: true, min: 2, max: 100,
+      requiredMsg: "Please enter your occupation."
+    },
+    message: {
+      label: "Message", required: true, min: 10, max: 250,
+      requiredMsg: "Please enter your message."
+    }
+  };
+  var FIELD_ORDER = Object.keys(RULES);
+
+  function getField(form, fieldName) {
+    return form.querySelector("[name=\"" + fieldName + "\"]");
   }
 
-  // Set per-field error
+  function getGroup(el) {
+    return el ? el.closest(".input-group, .phone-row") : null;
+  }
+
+  // Finds the error span inside the field's own group (works whatever its id is)
+  function getErrorEl(el) {
+    var group = getGroup(el);
+    return group ? group.querySelector(".input-error") : null;
+  }
+
   function setFieldError(form, fieldName, message) {
-    var input = form.querySelector("[name=" + fieldName + "]");
-    var errorEl = form.querySelector("#error-" + fieldName);
-    var group = input ? input.closest(".input-group, .phone-row") : null;
+    var el = getField(form, fieldName);
+    if (!el) return;
+    var group = getGroup(el);
+    var errorEl = getErrorEl(el);
     if (group) group.classList.add("error");
-    if (errorEl) errorEl.textContent = message;
+    el.setAttribute("aria-invalid", "true");
+    if (errorEl) {
+      errorEl.textContent = message;
+      if (errorEl.id) el.setAttribute("aria-describedby", errorEl.id);
+    }
   }
 
-  // ---- Forms: submit to API ----
+  function clearFieldError(form, fieldName) {
+    var el = getField(form, fieldName);
+    if (!el) return;
+    var group = getGroup(el);
+    var errorEl = getErrorEl(el);
+    if (group) group.classList.remove("error");
+    el.removeAttribute("aria-invalid");
+    if (errorEl) errorEl.textContent = "";
+  }
+
+  function clearAllErrors(form) {
+    FIELD_ORDER.forEach(function (n) { clearFieldError(form, n); });
+    clearPathwayError(form);
+  }
+
+  function getPhoneCode(form) {
+    var code = form.querySelector("[name=phone-code]");
+    return code ? code.value : "";
+  }
+
+  function validatePhone(form, value) {
+    var digits = value.replace(/[\s-]/g, "");
+    if (!/^\d+$/.test(digits)) return "Phone number can contain only digits.";
+    if (getPhoneCode(form) === "+91") {
+      if (digits.length !== 10) return "Indian mobile numbers must be exactly 10 digits (you entered " + digits.length + ").";
+      if (!/^[6-9]/.test(digits)) return "Indian mobile numbers start with 6, 7, 8 or 9.";
+      return "";
+    }
+    if (digits.length < 6) return "Phone number must be at least 6 digits.";
+    if (digits.length > 14) return "Phone number must be no more than 14 digits.";
+    return "";
+  }
+
+  // Returns the error message ("" when valid) and updates the UI
+  function validateField(form, fieldName) {
+    var rule = RULES[fieldName];
+    var el = getField(form, fieldName);
+    if (!rule || !el) return "";
+
+    var value = el.value.trim();
+    var min = el.minLength > 0 ? el.minLength : (rule.min || 0);
+    var max = el.maxLength > 0 ? el.maxLength : (rule.max || 0);
+    var msg = "";
+
+    if (!value) {
+      if (rule.required) msg = rule.requiredMsg || ("Please enter your " + rule.label.toLowerCase() + ".");
+    } else if (rule.custom) {
+      msg = rule.custom(form, value);
+    } else if (el.tagName !== "SELECT" && min && value.length < min) {
+      msg = rule.label + " must be at least " + min + " characters (currently " + value.length + ").";
+    } else if (el.tagName !== "SELECT" && max && value.length > max) {
+      msg = rule.label + " must be no more than " + max + " characters (currently " + value.length + ").";
+    } else if (rule.pattern && !rule.pattern.test(value)) {
+      msg = rule.patternMsg;
+    }
+
+    if (msg) setFieldError(form, fieldName, msg);
+    else clearFieldError(form, fieldName);
+    return msg;
+  }
+
+  // ---- Pathway (join form only) ----
+  function getPathwayBox(form) {
+    var box = form.closest("[data-role-form]");
+    return box ? box.querySelector("[data-role-form-select]") : null;
+  }
+
+  function getPathwaySelect(form) {
+    var box = getPathwayBox(form);
+    return box ? box.querySelector("select[data-bind=\"join-types\"]") : null;
+  }
+
+  function validatePathway(form) {
+    var box = getPathwayBox(form);
+    var sel = getPathwaySelect(form);
+    if (!sel) return "";
+    var msg = sel.value ? "" : "Please choose a pathway before submitting.";
+    var errorEl = box.querySelector(".input-error");
+    box.classList.toggle("error", !!msg);
+    if (errorEl) errorEl.textContent = msg;
+    return msg;
+  }
+
+  function clearPathwayError(form) {
+    var box = getPathwayBox(form);
+    if (!box) return;
+    box.classList.remove("error");
+    var errorEl = box.querySelector(".input-error");
+    if (errorEl) errorEl.textContent = "";
+  }
+
+  function validateForm(form, isJoinForm) {
+    var firstInvalid = null;
+    if (isJoinForm && validatePathway(form)) {
+      var box = getPathwayBox(form);
+      firstInvalid = box.querySelector(".join-pathway-pill") || box;
+    }
+    FIELD_ORDER.forEach(function (n) {
+      if (validateField(form, n) && !firstInvalid) firstInvalid = getField(form, n);
+    });
+    return firstInvalid;
+  }
+
+  function focusField(el) {
+    if (!el) return;
+    el.scrollIntoView({ behavior: "smooth", block: "center" });
+    if (typeof el.focus === "function") el.focus({ preventScroll: true });
+  }
+
+  // ---- Live validation: check on blur, re-check while fixing ----
+  function setupLiveValidation(form) {
+    FIELD_ORDER.forEach(function (n) {
+      var el = getField(form, n);
+      if (!el) return;
+      el.addEventListener("blur", function () {
+        if (el.value.trim() || form.dataset.submitted === "true") validateField(form, n);
+      });
+      el.addEventListener(el.tagName === "SELECT" ? "change" : "input", function () {
+        var group = getGroup(el);
+        if (el.tagName === "SELECT" || (group && group.classList.contains("error"))) validateField(form, n);
+      });
+    });
+  }
+
+  // ---- Phone: digits only, length limit follows the country code ----
+  function setupPhone(form) {
+    var phone = getField(form, "phone");
+    if (!phone) return;
+    var code = form.querySelector("[name=phone-code]");
+    phone.setAttribute("inputmode", "numeric");
+
+    function updateMax() {
+      phone.maxLength = (code && code.value === "+91") ? 10 : 14;
+      if (phone.value.length > phone.maxLength) phone.value = phone.value.slice(0, phone.maxLength);
+    }
+
+    phone.addEventListener("input", function () {
+      var clean = phone.value.replace(/\D/g, "");
+      if (clean !== phone.value) phone.value = clean;
+    });
+    if (code) {
+      code.addEventListener("change", function () {
+        updateMax();
+        if (phone.value) validateField(form, "phone");
+      });
+    }
+    updateMax();
+  }
+
+  // ---- Character counter with min / max text for textareas ----
+  function setupCounters(form) {
+    form.querySelectorAll("textarea[maxlength]").forEach(function (ta) {
+      var counter = document.createElement("small");
+      counter.className = "char-count";
+      counter.setAttribute("aria-live", "polite");
+      ta.insertAdjacentElement("afterend", counter);
+
+      function update() {
+        var len = ta.value.length;
+        var min = ta.minLength > 0 ? ta.minLength : 0;
+        var max = ta.maxLength;
+        counter.textContent = (min ? "Min " + min + " · " : "") + len + " / " + max + " characters";
+        counter.classList.toggle("is-short", len > 0 && len < min);
+        counter.classList.toggle("is-full", len >= max);
+      }
+      ta.addEventListener("input", update);
+      form.addEventListener("reset", function () { setTimeout(update, 0); });
+      update();
+    });
+  }
+
+  // ---- Forms: validate, then submit to API ----
   document.querySelectorAll("form[data-form]").forEach(function (form) {
+    var isJoinForm = !!form.querySelector("[name=join-type]");
+    var pathwaySelect = getPathwaySelect(form);
+
+    setupPhone(form);
+    setupCounters(form);
+    setupLiveValidation(form);
+
+    if (pathwaySelect) {
+      pathwaySelect.addEventListener("change", function () {
+        if (pathwaySelect.value) clearPathwayError(form);
+      });
+    }
+
     form.addEventListener("submit", function (e) {
       e.preventDefault();
-      var getVal = function (selector) {
-        var el = form.querySelector(selector);
-        return el ? el.value.trim() : "";
-      };
-      var name = getVal("[name=name]");
-      var email = getVal("[name=email]");
-      var phoneCode = form.querySelector("[name=phone-code]") ? form.querySelector("[name=phone-code]").value : "";
-      var phone = getVal("[name=phone]");
-      var occupation = getVal("[name=occupation]");
-      var enquiryType = getVal("[name=enquiry-type]");
-      var message = getVal("[name=message]");
-      var joinType = getVal("[name=join-type]");
-      var country = getVal("[name=country]");
-      var state = getVal("[name=state]");
-      var city = getVal("[name=city]");
-      var address = getVal("[name=address]");
-      var organisation = getVal("[name=organisation]");
-      var submitBtn = form.querySelector("button[type=submit]");
-      var isJoinForm = !!form.querySelector("[name=join-type]");
+      form.dataset.submitted = "true";
 
-      clearFieldErrors(form);
-
-      var hasError = false;
-      if (!name) { setFieldError(form, "name", "Please enter your full name."); hasError = true; }
-      if (!email) { setFieldError(form, "email", "Please enter your email address."); hasError = true; }
-      else if (!/.+@.+\..+/.test(email)) { setFieldError(form, "email", "Please enter a valid email address."); hasError = true; }
-      if (!phone) { setFieldError(form, "phone", "Please enter your phone number."); hasError = true; }
-      else if (phone.length < 10 || phone.length > 10) { setFieldError(form, "phone", "Phone number must be exactly 10 digits."); hasError = true; }
-
-      if (isJoinForm) {
-        if (!country) { setFieldError(form, "country", "Please select your country."); hasError = true; }
-        if (!state) { setFieldError(form, "state", "Please enter your state."); hasError = true; }
-        if (!city) { setFieldError(form, "city", "Please enter your city."); hasError = true; }
-        if (!address) { setFieldError(form, "address", "Please enter your address."); hasError = true; }
-        if (!message) { setFieldError(form, "message", "Please enter your message."); hasError = true; }
-      } else {
-        if (!occupation) { setFieldError(form, "occupation", "Please enter your occupation."); hasError = true; }
-        if (!message) { setFieldError(form, "message", "Please enter your message."); hasError = true; }
-      }
-
-      if (hasError) {
+      var firstInvalid = validateForm(form, isJoinForm);
+      if (firstInvalid) {
         showToast("Please fix the highlighted fields.", "error");
+        focusField(firstInvalid);
         return;
       }
 
+      var getVal = function (fieldName) {
+        var el = getField(form, fieldName);
+        return el ? el.value.trim() : "";
+      };
+      var phoneCode = getPhoneCode(form);
+      var phone = getVal("phone").replace(/\D/g, "");
       var fullPhone = phoneCode ? phoneCode + phone : phone;
+      var submitBtn = form.querySelector("button[type=submit]");
+      var payload, apiUrl;
 
       if (isJoinForm) {
-        var payload = {
-          registrationType: joinType,
-          fullName: name,
-          email: email,
+        payload = {
+          registrationType: getVal("join-type") || (pathwaySelect ? pathwaySelect.value : ""),
+          fullName: getVal("name"),
+          email: getVal("email"),
           phone: fullPhone,
-          country: country,
-          state: state,
-          city: city,
-          address: address,
-          organisation: organisation,
-          programmeInterests: message
+          country: getVal("country"),
+          state: getVal("state"),
+          city: getVal("city"),
+          address: getVal("address"),
+          organisation: getVal("organisation"),
+          programmeInterests: getVal("message")
         };
-        var apiUrl = "https://ascendingsoftware.com/api/space/submit-registration.php";
+        apiUrl = "https://space-1.space/api/submit-enquiry.php";
       } else {
-        var payload = {
-          enquiryType: enquiryType,
-          fullName: name,
-          email: email,
+        payload = {
+          enquiryType: getVal("enquiry-type"),
+          fullName: getVal("name"),
+          email: getVal("email"),
           phone: fullPhone,
-          occupation: occupation,
-          message: message
+          occupation: getVal("occupation"),
+          message: getVal("message")
         };
-        var apiUrl = "https://ascendingsoftware.com/api/space/submit-enquiry.php";
+        apiUrl = "https://space-1.space/api/submit-registration.php";
       }
 
       if (submitBtn) submitBtn.disabled = true;
@@ -323,7 +547,7 @@
       })
         .then(function (response) {
           if (!response.ok) {
-            return response.json().then(function (errData) {
+            return response.json().catch(function () { return null; }).then(function (errData) {
               var errMsg = (errData && errData.message) ? errData.message : "Server responded with status " + response.status;
               throw new Error(errMsg);
             });
@@ -333,29 +557,18 @@
         .then(function (data) {
           var successMsg = (data && data.message) ? data.message : (isJoinForm ? "Thank you! Your registration has been submitted successfully." : "Thank you! Your enquiry has been submitted successfully.");
           showToast(successMsg, "success");
+
           form.reset(); // country goes back to "Select country", phone code back to +91
-          // Remove error classes from all fields on success
-          form.querySelectorAll(".input-group.error, .phone-row.error").forEach(function (g) {
-            g.classList.remove("error");
-          });
-          form.querySelectorAll(".input-error").forEach(function (e) { e.textContent = ""; });
-          if (isJoinForm) {
-            var firstPill = form.querySelector("[data-role]:first-child");
-            if (firstPill) {
-              firstPill.classList.add("is-active");
-              firstPill.setAttribute("aria-selected", "true");
-              var joinTypeInput = form.querySelector("[name=join-type]");
-              if (joinTypeInput) joinTypeInput.value = firstPill.textContent.trim();
-            }
-          } else {
-            var firstPill = form.querySelector("[data-role]:first-child");
-            if (firstPill) {
-              firstPill.classList.add("is-active");
-              firstPill.setAttribute("aria-selected", "true");
-              var enquiryInput = form.querySelector("[name=enquiry-type]");
-              if (enquiryInput) enquiryInput.value = firstPill.textContent.trim();
-            }
-          }
+          form.dataset.submitted = "";
+          clearAllErrors(form);
+
+          // Let the custom phone-code button show +91 again
+          var code = form.querySelector("[name=phone-code]");
+          if (code) code.dispatchEvent(new Event("change", { bubbles: true }));
+
+          // Keep the chosen pathway in sync with the hidden input
+          var joinTypeInput = getField(form, "join-type");
+          if (isJoinForm && joinTypeInput && pathwaySelect) joinTypeInput.value = pathwaySelect.value;
         })
         .catch(function (error) {
           console.error("Submission error:", error);

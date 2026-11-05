@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 
 <head>
@@ -16,7 +16,7 @@
     document.documentElement.classList.add("js");
   </script>
 
-  <!-- Join pathway pills + phone code dropdown only -->
+  <!-- Join pathway pills + phone code dropdown + validation messages -->
   <style>
     /* Pathway: same rounded-chip language as SPACE 1 reference */
     #join-form [data-role-form-select] .select-wrapper {
@@ -40,7 +40,6 @@
       align-items: center;
       justify-content: center;
       max-width: 100%;
-      /* min-height: 43px; */
       padding: 9px 21px;
       border: 1px solid rgba(185, 197, 211, .4);
       border-radius: 999px;
@@ -48,7 +47,6 @@
       color: #c3ccd9;
       font: inherit;
       font-size: clamp(12px, 1vw, 16px);
-      /* font-weight: 500; */
       line-height: 1.3;
       cursor: pointer;
       transition: background .2s, border-color .2s, color .2s, transform .2s
@@ -303,6 +301,53 @@
     .join-country-popover .join-code-option:hover {
       background: #263244 !important;
     }
+
+    /* ---------- Validation messages ---------- */
+    /* Force messages visible whenever they have text, whatever components.css does */
+    #join-form .input-error:not(:empty) {
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      height: auto !important;
+      margin-top: 7px;
+      color: #ff8f8f;
+      font-size: 12.5px;
+      line-height: 1.4
+    }
+
+    #join-form .input-error:empty {
+      display: none
+    }
+
+    #join-form .input-group.error input,
+    #join-form .input-group.error select,
+    #join-form .input-group.error textarea,
+    #join-form .phone-row.error #join-phone,
+    #join-form .phone-row.error .join-code-trigger {
+      border-color: #ff7a7a !important;
+      box-shadow: 0 0 0 1px rgba(255, 122, 122, .25)
+    }
+
+    #join-form [data-role-form-select].error .join-pathway-pill:not([aria-pressed="true"]) {
+      border-color: rgba(255, 122, 122, .6)
+    }
+
+    #join-form .char-count {
+      display: block;
+      margin-top: 6px;
+      font-size: 12px;
+      color: #9aa6b6;
+      text-align: right;
+      font-variant-numeric: tabular-nums
+    }
+
+    #join-form .char-count.is-short {
+      color: #e5bd77
+    }
+
+    #join-form .char-count.is-full {
+      color: #ff8f8f
+    }
   </style>
 </head>
 
@@ -409,6 +454,7 @@
               </select>
               <span class="select-arrow"></span>
             </div>
+            <span class="input-error" id="error-join-type" aria-live="polite"></span>
           </div>
           <div class="panel-body">
             <h3 data-role-title></h3>
@@ -416,56 +462,63 @@
             <form class="form" data-form novalidate>
               <div class="input-group">
                 <label for="join-name">Full name</label>
-                <input id="join-name" name="name" autocomplete="name" required  maxlength="250" />
-                <span class="input-error" id="error-join-name"></span>
+                <input id="join-name" name="name" autocomplete="name" required minlength="2" maxlength="100"
+                  placeholder="Enter your full name" />
+                <span class="input-error" id="error-join-name" aria-live="polite"></span>
               </div>
               <div class="input-group">
                 <label for="join-email">Email</label>
-                <input id="join-email" name="email" type="email" autocomplete="email" required  maxlength="250"/>
-                <span class="input-error" id="error-join-email"></span>
+                <input id="join-email" name="email" type="email" inputmode="email" autocomplete="email" required
+                  minlength="6" maxlength="250" placeholder="Enter your email address" />
+                <span class="input-error" id="error-join-email" aria-live="polite"></span>
               </div>
               <div class="phone-row">
                 <label for="join-phone">Phone number</label>
                 <div class="phone-input">
                   <select id="join-phone-code" name="phone-code" data-bind="country-codes"></select>
-                  <input id="join-phone" name="phone" type="tel" autocomplete="tel" placeholder="Enter phone number" />
+                  <input id="join-phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel-national"
+                    required maxlength="10" placeholder="Enter phone number" />
                 </div>
-                <span class="input-error" id="error-join-phone"></span>
+                <span class="input-error" id="error-join-phone" aria-live="polite"></span>
               </div>
               <div class="input-group">
                 <label for="join-country">Country</label>
-                <select id="join-country" name="country" data-bind="countries"></select>
-                <span class="input-error" id="error-join-country"></span>
+                <select id="join-country" name="country" data-bind="countries" required></select>
+                <span class="input-error" id="error-join-country" aria-live="polite"></span>
               </div>
               <div class="input-group">
                 <label for="join-state">State</label>
-                <input id="join-state" name="state" />
-                <span class="input-error" id="error-join-state"></span>
+                <input id="join-state" name="state" autocomplete="address-level1" required minlength="2"
+                  maxlength="100" placeholder="Enter your state" />
+                <span class="input-error" id="error-join-state" aria-live="polite"></span>
               </div>
               <div class="input-group">
                 <label for="join-city">City</label>
-                <input id="join-city" name="city" />
-                <span class="input-error" id="error-join-city"></span>
+                <input id="join-city" name="city" autocomplete="address-level2" required minlength="2"
+                  maxlength="100" placeholder="Enter your city" />
+                <span class="input-error" id="error-join-city" aria-live="polite"></span>
               </div>
               <div class="input-group">
                 <label for="join-address">Address</label>
-                <input id="join-address" name="address" />
-                <span class="input-error" id="error-join-address"></span>
+                <input id="join-address" name="address" autocomplete="street-address" required minlength="5"
+                  maxlength="250" placeholder="Enter your address" />
+                <span class="input-error" id="error-join-address" aria-live="polite"></span>
               </div>
               <div class="input-group">
                 <label for="join-org">Organisation (optional)</label>
-                <input id="join-org" name="organisation" />
-                <span class="input-error" id="error-join-org"></span>
+                <input id="join-org" name="organisation" autocomplete="organization" minlength="2"
+                  maxlength="150" placeholder="Enter your organisation name" />
+                <span class="input-error" id="error-join-org" aria-live="polite"></span>
               </div>
-              <input type="hidden" name="join-type" id="join-type" value="Student Registration" />
+              <input type="hidden" name="join-type" id="join-type" value="" />
               <div class="input-group full">
                 <label for="join-message" data-role-label>Tell us more</label>
-                <textarea id="join-message" name="message" maxlength="250"></textarea>
-                <span class="input-error" id="error-join-message"></span>
+                <textarea id="join-message" name="message" required minlength="10" maxlength="250"
+                  placeholder="Tell us a little about yourself and your interests"></textarea>
+                <span class="input-error" id="error-join-message" aria-live="polite"></span>
               </div>
               <div class="full">
                 <button class="btn btn-solid" type="submit">Submit</button>
-
               </div>
             </form>
           </div>
@@ -528,7 +581,8 @@
           pillRow.className = 'join-pathway-pills';
           pillRow.setAttribute('role', 'group');
           pillRow.setAttribute('aria-label', 'Choose your pathway');
-          section.appendChild(pillRow);
+          // Pills go above the pathway error message
+          section.insertBefore(pillRow, section.querySelector('.input-error'));
           var signature = '';
           function active() {
             pillRow.querySelectorAll('.join-pathway-pill').forEach(function (button) {
@@ -570,7 +624,7 @@
         trigger.innerHTML = '<span class="join-code-current">+91</span><svg class="join-code-chevron" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
         select.insertAdjacentElement('afterend', trigger);
         var pop = document.createElement('div'); pop.className = 'join-country-popover';
-        pop.innerHTML = '<input class="join-code-search" type="search" aria-label="Search country or calling code" placeholder="Search country or code" autocomplete="off"><div class="join-code-options" role="listbox" aria-label="Country calling codes"></div>';
+        pop.innerHTML = '<input class="join-code-search" type="search" aria-label="Search country or calling code" placeholder="Search country code" autocomplete="off"><div class="join-code-options" role="listbox" aria-label="Country calling codes"></div>';
         document.body.appendChild(pop);
         var current = trigger.querySelector('.join-code-current');
         var search = pop.querySelector('.join-code-search');
@@ -639,8 +693,6 @@
           matches.forEach(function (c) {
             var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'join-code-option';
             btn.setAttribute('role', 'option'); btn.setAttribute('aria-selected', String(select.value === c.code));
-            var flag = document.createElement('span'); flag.className = 'join-code-flag'; flag.textContent = c.flag || '🌐';
-            var name = document.createElement('span'); name.className = 'join-code-name'; name.textContent = c.name;
             var code = document.createElement('span'); code.textContent = c.code;
             btn.append(code);
             btn.addEventListener('click', function () {

@@ -262,7 +262,7 @@ window.SITE = {
  
   // Disclaimer shown at the bottom of every page.
   footerDisclaimer:
-    "Disclaimer : SPACE 1 is a proposed 5-year, 3-phase initiative by People’s Planet to advance space science, education, and innovation. All plans, facilities, and partnerships described are informational, subject to feasibility, funding, and approvals, and may be modified as the project develops.",
+    "Disclaimer: SPACE 1 is a proposed 5-year, 3-phase initiative by People’s Planet to advance space science, education, and innovation. All plans, facilities, and partnerships described are informational, subject to feasibility, funding, and approvals, and may be modified as the project develops.",
  
   footerNote: "Developed by Ascending Software"
 };
