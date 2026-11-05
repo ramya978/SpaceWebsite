@@ -42,7 +42,7 @@
     '<header class="site-header" id="header">' +
       '<div class="wrap">' +
         '<a class="logo" href="index.html" aria-label="' + site.name + ' home">' +
-          '<img src="images/logo/Logo.png" alt="' + site.name + ' Logo" class="header-logo">' +
+          '<img src="images/logo/Logo.webp" alt="' + site.name + ' Logo" class="header-logo">' +
         "</a>" +
         '<nav class="main-nav" aria-label="Main">' + headerLinks + "</nav>" +
         '<button class="menu-button" id="menu-open" aria-expanded="false" aria-controls="menu"><span class="menu-icon"></span>Menu</button>' +
@@ -51,7 +51,7 @@
     '<div class="menu-overlay" id="menu" role="dialog" aria-label="All sections" aria-modal="true">' +
       '<div class="wrap">' +
         '<div class="menu-top"><a class="logo" href="index.html">' + 
-        '<img src="images/logo/Logo.png" alt="' + site.name + ' Logo" class="header-logo">'  + "</a>" +
+        '<img src="images/logo/Logo.webp" alt="' + site.name + ' Logo" class="header-logo">'  + "</a>" +
         '<button class="menu-button" id="menu-close">Close &#10005;</button></div>' +
         '<ul class="menu-list">' + menuItems + "</ul>" +
       "</div>" +
@@ -81,7 +81,7 @@
       '<div class="wrap">' +
         '<div class="footer-columns">' +
           '<div><a class="logo" href="index.html">' + 
-          '<img src="images/logo/Logo.png" alt="' + site.name + ' Logo" class="header-logo">' 
+          '<img src="images/logo/Logo.webp" alt="' + site.name + ' Logo" class="header-logo">' 
            + "</a>" +
           '<p class="muted" style="margin-top:18px;max-width:36ch;font-size:15px">' + site.tagline + ". </p></div>" +
           '<ul class="footer-links">' + footerPageLinks + footerPolicyLinks + "</ul>" +

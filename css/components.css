@@ -844,7 +844,7 @@
   margin: 0;
   font-size: var(--text-small);
   color: #b9c2cb;
-  font-family: var(--font-mono);
+  font-family: inherit;
 }
 @media (max-width: 640px) { .definition-list div { grid-template-columns: 1fr; gap: 4px; } }
 

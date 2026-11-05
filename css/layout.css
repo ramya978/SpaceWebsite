@@ -967,7 +967,7 @@
   }
 
   #home-community .community-video-bg {
-    background: url("images/home/community.jpg")
+    background: url("images/home/community.webp")
       center / cover no-repeat;
   }
 }
@@ -1014,7 +1014,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   #contact .contact-bg-video { display: none; }
-  .contact-hero-video-bg { background: url("../images/contact/hero.jpg") center / cover no-repeat; }
+  .contact-hero-video-bg { background: url("../images/contact/hero.webp") center / cover no-repeat; }
 }
 
 
@@ -1060,7 +1060,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   #partnerships .partnerships-bg-video { display: none; }
-  .partnerships-hero-video-bg { background: url("../images/partnerships/hero.jpg") center / cover no-repeat; }
+  .partnerships-hero-video-bg { background: url("../images/partnerships/hero.webp") center / cover no-repeat; }
 }
 
 
@@ -1118,7 +1118,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   #partnerships-government .gov-bg-video { display: none; }
-  #partnerships-government .gov-video-bg { background: url("../images/partnerships/government.jpg") center / cover no-repeat; }
+  #partnerships-government .gov-video-bg { background: url("../images/partnerships/government.webp") center / cover no-repeat; }
 }
 
 
@@ -1176,7 +1176,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   #partnerships-csr .csr-bg-video { display: none; }
-  #partnerships-csr .csr-video-bg { background: url("../images/partnerships/csr.jpg") center / cover no-repeat; }
+  #partnerships-csr .csr-video-bg { background: url("../images/partnerships/csr.webp") center / cover no-repeat; }
 }
 
 
@@ -1234,7 +1234,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   #partnerships-advisory .advisory-bg-video { display: none; }
-  #partnerships-advisory .advisory-video-bg { background: url("../images/partnerships/advisory.jpg") center / cover no-repeat; }
+  #partnerships-advisory .advisory-video-bg { background: url("../images/partnerships/advisory.webp") center / cover no-repeat; }
 }
 
 
@@ -1280,7 +1280,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   #events .events-bg-video { display: none; }
-  .events-hero-video-bg { background: url("../images/events-community/hero.jpg") center / cover no-repeat; }
+  .events-hero-video-bg { background: url("../images/events-community/hero.webp") center / cover no-repeat; }
 }
 
 
@@ -1384,7 +1384,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   #industries .industries-bg-video { display: none; }
-  .industries-hero-video-bg { background: url("../images/future-industries/hero.jpg") center / cover no-repeat; }
+  .industries-hero-video-bg { background: url("../images/future-industries/hero.webp") center / cover no-repeat; }
 }
 
 
@@ -1442,7 +1442,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   #industries-cities .cities-bg-video { display: none; }
-  #industries-cities .cities-video-bg { background: url("../images/future-industries/future-cities.jpg") center / cover no-repeat; }
+  #industries-cities .cities-video-bg { background: url("../images/future-industries/future-cities.webp") center / cover no-repeat; }
 }
 
 
@@ -1488,7 +1488,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   #join .join-bg-video { display: none; }
-  .join-hero-video-bg { background: url("../images/join/hero.jpg") center / cover no-repeat; }
+  .join-hero-video-bg { background: url("../images/join/hero.webp") center / cover no-repeat; }
 }
 
 
@@ -1534,7 +1534,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   #knowledge .knowledge-bg-video { display: none; }
-  .knowledge-hero-video-bg { background: url("../images/knowledge-hub/hero.jpg") center / cover no-repeat; }
+  .knowledge-hero-video-bg { background: url("../images/knowledge-hub/hero.webp") center / cover no-repeat; }
 }
 
 
@@ -1742,7 +1742,7 @@
 
   #about-about .about-video-bg {
     background:
-      url("../images/about/about-space1.jpg")
+      url("../images/about/about-space1.webp")
       center / cover no-repeat;
   }
 }
@@ -1843,7 +1843,7 @@
 
   #about-founder .founder-video-bg {
     background:
-      url("../images/about/founders-message.jpg")
+      url("../images/about/founders-message.webp")
       center / cover no-repeat;
   }
 }
@@ -1945,7 +1945,7 @@
 
   #academy-assess .assess-video-bg {
     background:
-      url("../images/learning-academy/assessments.jpg")
+      url("../images/learning-academy/assessments.webp")
       center / cover no-repeat;
   }
 }
