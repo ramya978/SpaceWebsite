@@ -1,9 +1,40 @@
 /* Builds the parts that are the same on every page (progress bar, header,
    full-screen menu and footer) from the settings in site-config.js. */
 
+// ---- Clean URLs: hide ".html" in the address bar on every page ----
+// learning-academy.html  -> learning-academy
+// index.html             -> /
+// The #hash and ?query are kept. Links in the HTML stay as *.html, so nothing else changes.
+(function () {
+  if (!window.history || !history.replaceState) return;
+  var path = location.pathname;
+  var clean = path
+    .replace(/\/index\.html$/i, "/")   // /index.html -> /
+    .replace(/\.html$/i, "");          // /about.html -> /about
+  if (clean !== path) {
+    history.replaceState(history.state, "", clean + location.search + location.hash);
+  }
+})();
+
+// ---- Make reload / back / forward work on clean URLs ----
+// sw.js (in the same folder as index.html) loads "page.html" when the
+// browser asks for "/page". Works on localhost and on any https site.
+(function () {
+  if (!("serviceWorker" in navigator)) return;
+  var secure = location.protocol === "https:" ||
+    location.hostname === "localhost" || location.hostname === "127.0.0.1";
+  if (!secure) return;
+  navigator.serviceWorker.register("sw.js").catch(function (err) {
+    console.warn("Clean-URL service worker not registered:", err);
+  });
+})();
+
 (function () {
   var site = window.SITE;
   var currentId = document.querySelector("main").dataset.page;
+
+  // Home link without "index.html" in the URL
+  var HOME = "./";
 
   function menuLabel(page) {
     return page.menuLabel || page.label;
@@ -41,7 +72,7 @@
     '<div class="progress" id="progress"></div>' +
     '<header class="site-header" id="header">' +
       '<div class="wrap">' +
-        '<a class="logo" href="" aria-label="' + site.name + ' home">' +
+        '<a class="logo" href="' + HOME + '" aria-label="' + site.name + ' home">' +
           '<img src="images/logo/Logo.webp" alt="' + site.name + ' Logo" class="header-logo">' +
         "</a>" +
         '<nav class="main-nav" aria-label="Main">' + headerLinks + "</nav>" +
@@ -50,7 +81,7 @@
     "</header>" +
     '<div class="menu-overlay" id="menu" role="dialog" aria-label="All sections" aria-modal="true">' +
       '<div class="wrap">' +
-        '<div class="menu-top"><a class="logo" href="">' + 
+        '<div class="menu-top"><a class="logo" href="' + HOME + '">' +
         '<img src="images/logo/Logo.webp" alt="' + site.name + ' Logo" class="header-logo">'  + "</a>" +
         '<button class="menu-button" id="menu-close">Close &#10005;</button></div>' +
         '<ul class="menu-list">' + menuItems + "</ul>" +
@@ -83,8 +114,8 @@
     '<footer class="site-footer">' +
       '<div class="wrap">' +
         '<div class="footer-columns">' +
-          '<div><a class="logo" href="">' + 
-          '<img src="images/logo/Logo.webp" alt="' + site.name + ' Logo" class="header-logo">' 
+          '<div><a class="logo" href="' + HOME + '">' +
+          '<img src="images/logo/Logo.webp" alt="' + site.name + ' Logo" class="header-logo">'
            + "</a>" +
           '<p class="muted" style="margin-top:18px;max-width:36ch;font-size:15px">' + site.tagline + ". </p></div>" +
           '<ul class="footer-links">' + footerPageLinks + footerPolicyLinks + "</ul>" +

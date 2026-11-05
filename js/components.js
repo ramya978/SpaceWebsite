@@ -525,7 +525,7 @@
           organisation: getVal("organisation"),
           programmeInterests: getVal("message")
         };
-        apiUrl = "https://space-1.space/api/submit-enquiry.php";
+        apiUrl = "https://space-1.space/api/submit-registration.php";
       } else {
         payload = {
           enquiryType: getVal("enquiry-type"),
@@ -535,7 +535,7 @@
           occupation: getVal("occupation"),
           message: getVal("message")
         };
-        apiUrl = "https://space-1.space/api/submit-registration.php";
+        apiUrl = "https://space-1.space/api/submit-enquiry.php";
       }
 
       if (submitBtn) submitBtn.disabled = true;
