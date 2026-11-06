@@ -366,7 +366,7 @@
     return msg;
   }
 
-  // ---- Pathway (join form only) ----
+  // ---- Pathway (join form) / Enquiry type (contact form) ----
   function getPathwayBox(form) {
     var box = form.closest("[data-role-form]");
     return box ? box.querySelector("[data-role-form-select]") : null;
@@ -374,14 +374,19 @@
 
   function getPathwaySelect(form) {
     var box = getPathwayBox(form);
-    return box ? box.querySelector("select[data-bind=\"join-types\"]") : null;
+    return box ? box.querySelector("select[data-bind=\"join-types\"], select[data-bind=\"enquiry-types\"]") : null;
   }
 
   function validatePathway(form) {
     var box = getPathwayBox(form);
     var sel = getPathwaySelect(form);
     if (!sel) return "";
-    var msg = sel.value ? "" : "Please choose a pathway before submitting.";
+    var msg = "";
+    if (!sel.value) {
+      msg = sel.dataset.bind === "enquiry-types"
+        ? "Please choose an enquiry type."
+        : "Please choose a pathway.";
+    }
     var errorEl = box.querySelector(".input-error");
     box.classList.toggle("error", !!msg);
     if (errorEl) errorEl.textContent = msg;
@@ -398,9 +403,9 @@
 
   function validateForm(form, isJoinForm) {
     var firstInvalid = null;
-    if (isJoinForm && validatePathway(form)) {
+    if (validatePathway(form)) {
       var box = getPathwayBox(form);
-      firstInvalid = box.querySelector(".join-pathway-pill") || box;
+      firstInvalid = box.querySelector(".join-pathway-pill, .enquiry-pill") || box;
     }
     FIELD_ORDER.forEach(function (n) {
       if (validateField(form, n) && !firstInvalid) firstInvalid = getField(form, n);
@@ -528,7 +533,7 @@
         apiUrl = "https://space-1.space/api/submit-registration.php";
       } else {
         payload = {
-          enquiryType: getVal("enquiry-type"),
+          enquiryType: getVal("enquiry-type") || (pathwaySelect ? pathwaySelect.value : ""),
           fullName: getVal("name"),
           email: getVal("email"),
           phone: fullPhone,
@@ -566,9 +571,15 @@
           var code = form.querySelector("[name=phone-code]");
           if (code) code.dispatchEvent(new Event("change", { bubbles: true }));
 
-          // Keep the chosen pathway in sync with the hidden input
-          var joinTypeInput = getField(form, "join-type");
-          if (isJoinForm && joinTypeInput && pathwaySelect) joinTypeInput.value = pathwaySelect.value;
+          // Clear the chosen pathway / enquiry type too, so no pill stays selected.
+          // The change event updates the pills, heading and hidden input.
+          var typeInput = getField(form, isJoinForm ? "join-type" : "enquiry-type");
+          if (typeInput) typeInput.value = "";
+          if (pathwaySelect) {
+            pathwaySelect.value = "";
+            pathwaySelect.dispatchEvent(new Event("change", { bubbles: true }));
+          }
+          clearPathwayError(form);
         })
         .catch(function (error) {
           console.error("Submission error:", error);

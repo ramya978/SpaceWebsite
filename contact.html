@@ -7,11 +7,12 @@
   <title>Contact Us | SPACE 1</title>
   <meta name="description"
     content="Enquiries and location. SPACE 1, International Centre for Advanced Space Science &amp; Cosmic Research." />
-  <link rel="stylesheet" href="css/theme.css?v=6" />
-  <link rel="stylesheet" href="css/base.css?v=6" />
-  <link rel="stylesheet" href="css/layout.css?v=6" />
-  <link rel="stylesheet" href="css/components.css?v=6" />
-  <link rel="stylesheet" href="css/animations.css?v=6" />
+    <link rel="icon" type="image/webp" href="/images/logo/favicon.webp?v=9" sizes="any">
+  <link rel="stylesheet" href="css/theme.css?v=7" />
+  <link rel="stylesheet" href="css/base.css?v=7" />
+  <link rel="stylesheet" href="css/layout.css?v=7" />
+  <link rel="stylesheet" href="css/components.css?v=7" />
+  <link rel="stylesheet" href="css/animations.css?v=7" />
   <script>
     document.documentElement.classList.add("js");
   </script>
@@ -296,6 +297,21 @@
       outline-offset: 3px;
     }
 
+    /* Enquiry type error: red message + red pill borders when none is chosen */
+    #contact-form [data-role-form-select] .input-error:not(:empty) {
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      margin-top: 8px;
+      color: #ff6b6b;
+      font-size: 12.5px;
+      line-height: 1.4;
+    }
+
+    #contact-form [data-role-form-select].error .enquiry-pill:not([aria-pressed="true"]) {
+      border-color: rgba(255, 107, 107, .6);
+    }
+
     @media (max-width: 767px) {
       #contact-form .enquiry-pill-list {
         gap: 9px;
@@ -326,7 +342,7 @@
           Choose the topic that fits your question and we will direct it to the right person.
         </p>
         <div class="hero-buttons">
-          <a class="btn btn-solid" href="contact.html#contact-form">Send an enquiry</a>
+          <a class="btn btn-solid" href="contact#contact-form">Send an enquiry</a>
         </div>
       </div>
 
@@ -352,7 +368,7 @@
           <h2>Send an Enquiry</h2>
         </div>
         <div class="panel-box" data-role-form data-reveal>
-          <div class="select-field" data-role-form-select>
+          <div class="select-field" data-role-form-select style="    margin: 0 0 7px;">
             <label class="select-field__label">Choose your enquiry Type:</label>
             <div class="select-wrapper">
               <select class="select-element" data-bind="enquiry-types">
@@ -361,11 +377,10 @@
               <span class="select-arrow"></span>
             </div>
             <div class="enquiry-pill-list" role="group" aria-label="Choose your enquiry type"></div>
+            <span class="input-error" id="error-enquiry-type" aria-live="polite"></span>
           </div>
-          <div class="panel-body">
-            <h3 data-role-title></h3>
-            <p class="submenu-sub" data-role-desc></p>
-            <form class="form" data-form novalidate>
+          <div class="panel-body" style="padding: 0;">
+            <form class="form" data-form novalidate style="margin-top: 0;">
               <div class="input-group">
                 <label for="contact-name">Full name</label>
                 <input id="contact-name" name="name" autocomplete="name" required maxlength="250" />
@@ -390,7 +405,7 @@
                 <input id="contact-occupation" name="occupation" autocomplete="occupation" maxlength="50" />
                 <span class="input-error" id="error-occupation"></span>
               </div>
-              <input type="hidden" name="enquiry-type" id="contact-enquiry-type" value="General Enquiries" />
+              <input type="hidden" name="enquiry-type" id="contact-enquiry-type" value="" />
 
               <div class="input-group full">
                 <label for="contact-message">Message</label>
@@ -441,11 +456,11 @@
   </main>
   <div id="site-footer"></div>
   <div class="toast-container" aria-live="polite"></div>
-  <script src="js/video-lazy.js?v=6" defer></script>
-  <script src="js/site-config.js?v=6"></script>
-  <script src="js/layout.js?v=6"></script>
-  <script src="js/components.js?v=6"></script>
-  <script src="js/animations.js?v=6"></script>
+  <script src="js/video-lazy.js?v=7" defer></script>
+  <script src="js/site-config.js?v=7"></script>
+  <script src="js/layout.js?v=7"></script>
+  <script src="js/components.js?v=9"></script>
+  <script src="js/animations.js?v=7"></script>
   <!-- Country code selector only; keeps the original select and its change events. -->
   <script>
     (function () {
@@ -654,5 +669,3 @@
 </body>
 
 </html>
-
-
