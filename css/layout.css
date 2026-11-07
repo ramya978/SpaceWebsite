@@ -486,7 +486,7 @@
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background:linear-gradient(180deg, rgba(5, 7, 10, 0.55) 0%, rgba(5, 7, 10, 0) 28%, rgba(5, 7, 10, 0.708) 60%, rgba(5, 7, 10, 0.92) 100%), linear-gradient(90deg, rgb(5 7 10 / 58%), rgba(5, 7, 10, 0) 62%) 
+  background:linear-gradient(180deg, rgba(5, 7, 10, 0.256) 0%, rgba(5, 7, 10, 0) 28%, rgba(5, 7, 10, 0.708) 60%, rgba(5, 7, 10, 0.251) 100%), linear-gradient(90deg, rgba(5, 7, 10, 0.306), rgba(5, 7, 10, 0) 62%) 
 }
 
 /* Animated starfield */
@@ -512,7 +512,7 @@
 
 .hero h1 {
   max-width: 12.5ch;
-  font-size: clamp(70px, 9vw, 111px) !important;
+  font-size: 60 !important;
   font-stretch: 125%;
   font-weight: 750 !important;
   line-height: 0.96 !important;
@@ -522,7 +522,7 @@
 .hero .lead {
   margin: 26px 0 34px;
   max-width: 56ch;
-  font-size: clamp(17px, 1.3vw, 21px);
+  font-size:16px;
   color: #d6dde4;
 }
 
@@ -1624,7 +1624,7 @@
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  background: rgba(3, 6, 12, 0.6);
+  /* background: rgba(3, 6, 12, 0.6); */
 }
 
 .index-tile-video-section > .wrap {

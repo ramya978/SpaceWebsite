@@ -1,0 +1,257 @@
+/* ============================================================================
+   SPACE 1 | SHARED TYPE SCALE — SpaceX-inspired restrained typography
+   Applied across ALL pages. Keep this CSS link LAST among external stylesheets.
+   Edit the --sx-* variables to retune the entire website from one place.
+   These are design approximations, not claimed to be exact SpaceX CSS values.
+   ============================================================================ */
+:root {
+    --sx-body: 15px;
+    --sx-small: 13px;
+    --sx-lead: clamp(15px, 1.25vw, 16px);
+    --sx-hero: clamp(42px, 5.3vw, 60px);
+    --sx-page-hero: clamp(38px, 4.5vw, 62px);
+    --sx-heading: clamp(28px, 3.15vw, 43px);
+    --sx-subheading: clamp(19px, 1.65vw, 24px);
+    --sx-card-heading: clamp(17px, 1.45vw, 21px);
+    --sx-caption: 10px;
+    --sx-nav: 12px;
+    --sx-button: 10px;
+    --text-base: var(--sx-body);
+    --text-small: var(--sx-small);
+    --text-lead: var(--sx-lead);
+    --text-h1: var(--sx-page-hero);
+    --text-h2: var(--sx-heading);
+    --text-h3: var(--sx-subheading);
+}
+
+/* Base paragraph and text; maintain legibility and typographic hierarchy. */
+body {
+    font-size: var(--sx-body);
+    line-height: 1.65;
+}
+
+main p,
+main li,
+main dd,
+main blockquote,
+main .founder-text,
+main .founder-text p,
+main .founder-bullets li {
+    font-size: var(--sx-body) !important;
+    line-height: 1.7;
+}
+
+main .lead,
+main p.lead,
+.hero .lead,
+.page-hero .lead,
+.legal-hero .lead,
+.course-detail .lead {
+    font-size: var(--sx-lead) !important;
+    line-height: 1.6;
+}
+
+/* All top-level section and page titles, including custom section classes. */
+main h1 {
+    font-size: var(--sx-page-hero) !important;
+    line-height: 1.06;
+}
+
+.hero h1,
+.uc-hero h1 {
+    font-size: var(--sx-hero) !important;
+    line-height: 1.04;
+}
+
+.page-hero h1,
+.legal-hero h1 {
+    font-size: var(--sx-page-hero) !important;
+}
+
+main h2,
+main .section-title,
+main .section-heading,
+main .uc-section h2,
+main .next-page h2 {
+    font-size: var(--sx-heading) !important;
+    line-height: 1.12;
+}
+
+main h3,
+main .panel-body h3,
+main .course-detail h3,
+main .submenu h2 {
+    font-size: var(--sx-subheading) !important;
+    line-height: 1.25;
+}
+
+main h4,
+main .card h3,
+main .tile h3,
+main .row h3,
+main .articles summary h3 {
+    font-size: var(--sx-card-heading) !important;
+    line-height: 1.3;
+}
+
+/* Smaller metadata, quotes, statistics, captions and useful UI text. */
+.eyebrow,
+.hero .eyebrow,
+.card-tag,
+.card-meta,
+.chip,
+.row-date,
+.timeline-phase,
+.course-detail h4,
+.course-facts small,
+.form label,
+.search-label,
+.form-note,
+.input-error,
+.picture figcaption,
+.mosaic figcaption,
+.legal-badge,
+.legal-progress__label,
+.legal-coming,
+.uc-badge,
+.uc-hero .uc-badge,
+.founder-subtitle,
+.uc-notice-box .uc-notice-badge {
+    font-size: var(--sx-caption) !important;
+}
+
+main small,
+main figcaption,
+main .muted,
+main .card-meta,
+main .signature span,
+main .course-facts small,
+main .uc-notice-box p,
+main .definition-list dd,
+main .tile-body p,
+main .card p,
+main .row p {
+    font-size: var(--sx-small) !important;
+}
+
+main .quote,
+main .founder-quote p {
+    font-size: clamp(21px, 2.35vw, 31px) !important;
+}
+
+main .stat b {
+    font-size: clamp(30px, 3.5vw, 46px) !important;
+}
+
+main .marquee .marquee-track span {
+    font-size: clamp(22px, 2.6vw, 29px) !important;
+}
+
+/* Header, dropdown, overlay, links, actions, forms and footer. */
+.site-header .main-nav a,
+.nav-dropdown-menu a {
+    font-size: var(--sx-nav) !important;
+}
+
+.menu-list b,
+.menu-section-link b {
+    font-size: clamp(19px, 2.35vw, 29px) !important;
+}
+
+.menu-list small,
+.menu-section-link small,
+.menu-section-list a {
+    font-size: var(--sx-small) !important;
+}
+
+.btn,
+.btn-small,
+.text-link,
+.pill,
+.course-list button,
+.uc-hero .uc-readmore .uc-btn,
+.site-header .menu-button:not(#menu-open) {
+    font-size: var(--sx-button) !important;
+}
+
+.form input,
+.form select,
+.form textarea,
+.search,
+.select-element,
+.phone-select-wrap select {
+    font-size: 15px !important;
+}
+
+.footer-links a {
+    font-size: 12px !important;
+}
+
+.footer-note {
+    font-size: 11px !important;
+}
+
+/* Tablet size */
+@media (max-width: 1024px) {
+    :root {
+        --sx-hero: clamp(39px, 6.8vw, 64px);
+        --sx-page-hero: clamp(35px, 5.5vw, 54px);
+        --sx-heading: clamp(27px, 3.8vw, 38px);
+        --sx-subheading: clamp(18px, 2.2vw, 22px);
+    }
+}
+
+/* Mobile: intentionally smaller but still impactful; preserve mobile menu icon. */
+@media (max-width: 768px) {
+    :root {
+        --sx-body: 14px;
+        --sx-small: 12px;
+        --sx-lead: 15px;
+        --sx-hero: clamp(32px, 9vw, 46px);
+        --sx-page-hero: clamp(31px, 8.4vw, 43px);
+        --sx-heading: clamp(24px, 6.5vw, 33px);
+        --sx-subheading: clamp(18px, 4.5vw, 21px);
+        --sx-card-heading: 17px;
+        --sx-caption: 10.5px;
+        --sx-nav: 12px;
+        --sx-button: 12px;
+    }
+
+    main p,
+    main li,
+    main dd,
+    main blockquote {
+        line-height: 1.7;
+    }
+
+    .menu-list b,
+    .menu-section-link b {
+        font-size: 16px !important;
+    }
+
+    .menu-section-list a {
+        font-size: 12px !important;
+    }
+
+    /* Keep native 16px controls on mobile to avoid Safari auto-zoom. */
+    .form input,
+    .form select,
+    .form textarea,
+    .search,
+    .select-element,
+    .phone-select-wrap select,
+    input:not([type=checkbox]):not([type=radio]),
+    textarea,
+    select {
+        font-size: 16px !important;
+    }
+
+    .site-header #menu-open,
+    .site-header .menu-button {
+        font-size: 0 !important;
+    }
+
+    .menu-top #menu-close {
+        font-size: 12px !important;
+    }
+}

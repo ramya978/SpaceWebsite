@@ -1,4 +1,3 @@
-
 window.SITE = {
   name: "SPACE 1",
   tagline: "International Centre for Advanced Space Science & Cosmic Research",
@@ -264,6 +263,6 @@ window.SITE = {
   footerDisclaimer:
     "Disclaimer: SPACE 1 is a proposed 5-year, 3-phase initiative by People’s Planet to advance space science, education, and innovation. All plans, facilities, and partnerships described are informational, subject to feasibility, funding, and approvals, and may be modified as the project develops.",
  
-  footerNote: "Developed by Ascending Software"
+  footerNote: "© 2026 Space1 · Developed by Ascending Software",
+
 };
- 

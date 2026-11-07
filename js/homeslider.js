@@ -115,7 +115,7 @@
   track.addEventListener(
     "scroll",
     function () {
-      if (!mobile.matches || ticking) return;
+      if (ticking) return;
       ticking = true;
       window.requestAnimationFrame(updateFromScroll);
     },
@@ -147,7 +147,7 @@
 
   /* ---------- Autoplay ---------- */
   function canAutoplay() {
-    return mobile.matches && !reduceMotion.matches && inView && !document.hidden;
+    return !reduceMotion.matches && inView && !document.hidden;
   }
 
   function start() {
@@ -199,15 +199,10 @@
 
   /* ---------- Mobile / desktop switch ---------- */
   function onModeChange() {
-    if (mobile.matches) {
-      setA11y(true);
-      setActive(0);
-      track.scrollLeft = 0;
-      start();
-    } else {
-      stop();
-      setA11y(false);
-    }
+    setA11y(true);
+    setActive(0);
+    track.scrollLeft = 0;
+    start();
   }
 
   if (mobile.addEventListener) {
@@ -217,4 +212,80 @@
   }
 
   onModeChange();
+})();
+
+/* ==========================================
+   DESKTOP: BACKGROUND IMAGE AUTO-SLIDER
+   Cross-fades full-width background images
+   Active only at min-width: 761px
+   ========================================== */
+(function () {
+  var bgSlider = document.querySelector(".universe-bg-slider");
+  if (!bgSlider) return;
+
+  var slides = Array.prototype.slice.call(bgSlider.querySelectorAll(".bg-slide"));
+  if (!slides.length) return;
+
+  var desktop = window.matchMedia("(min-width: 761px)");
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  var INTERVAL = 5000;
+
+  var current = 0;
+  var timer = null;
+  var inView = false;
+
+  function show(index) {
+    slides.forEach(function (s, i) {
+      s.classList.toggle("is-active", i === index);
+    });
+    current = index;
+  }
+
+  function next() {
+    show((current + 1) % slides.length);
+  }
+
+  function start() {
+    stop();
+    if (reduceMotion.matches || !desktop.matches) return;
+    timer = setInterval(next, INTERVAL);
+  }
+
+  function stop() {
+    if (timer) {
+      clearInterval(timer);
+      timer = null;
+    }
+  }
+
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(
+      function (entries) {
+        inView = entries[0].isIntersecting;
+        if (inView) start();
+        else stop();
+      },
+      { threshold: 0.3 }
+    ).observe(bgSlider);
+  } else {
+    inView = true;
+    start();
+  }
+
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) stop();
+    else start();
+  });
+
+  desktop.addEventListener("change", function () {
+    if (desktop.matches) {
+      show(0);
+      start();
+    } else {
+      stop();
+    }
+  });
+
+  show(0);
+  if (desktop.matches) start();
 })();
