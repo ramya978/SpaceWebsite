@@ -155,7 +155,7 @@ main .marquee .marquee-track span {
 
 .menu-list b,
 .menu-section-link b {
-    font-size: clamp(19px, 2.35vw, 29px) !important;
+    font-size: clamp(16px, 2.35vw, 16px) !important;
 }
 
 .menu-list small,
