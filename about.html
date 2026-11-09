@@ -8,14 +8,14 @@
       name="description"
       content="Who we are and how we work. SPACE 1, International Centre for Advanced Space Science &amp; Cosmic Research."
     />
-<link rel="icon" type="image/webp" href="/images/logo/favicon.webp?v=11" sizes="any">  
-  <link rel="stylesheet" href="css/theme.css?v=11" />
-    <link rel="stylesheet" href="css/base.css?v=11" />
-    <link rel="stylesheet" href="css/layout.css?v=11" />
-    <link rel="stylesheet" href="css/components.css?v=11" />
-    <link rel="stylesheet" href="css/animations.css?v=11" />
-          <link rel="stylesheet" href="css/mobile.css?v=11" />
-                <link rel="stylesheet" href="css/typography.css?v=11" />
+<link rel="icon" type="image/webp" href="/images/logo/favicon.webp?v=13" sizes="any">  
+  <link rel="stylesheet" href="css/theme.css?v=13" />
+    <link rel="stylesheet" href="css/base.css?v=13" />
+    <link rel="stylesheet" href="css/layout.css?v=13" />
+    <link rel="stylesheet" href="css/components.css?v=13" />
+    <link rel="stylesheet" href="css/animations.css?v=13" />
+          <link rel="stylesheet" href="css/mobile.css?v=13" />
+                <link rel="stylesheet" href="css/typography.css?v=13" />
     <script>
       document.documentElement.classList.add("js");
     </script>
@@ -346,6 +346,60 @@
   .founder-photo img,
   .founder-frontiers li { transition: none; }
 }
+
+/* ---------- Our Journey: text + animated route ---------- */
+#about-journey { position: relative; overflow: hidden; }
+.journey-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(32px, 6vw, 96px);
+  align-items: center;
+}
+.journey-layout .section-head { margin-bottom: 0; }
+.journey-visual {
+  width: 100%;
+  max-width: 560px;
+  justify-self: end;
+}
+.journey-visual svg { display: block; width: 100%; height: auto; overflow: visible; }
+.journey-route {
+  stroke-dasharray: 6 8;
+  animation: journeyDash 2.4s linear infinite;
+}
+@keyframes journeyDash { to { stroke-dashoffset: -28; } }
+.journey-node-pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: journeyPulse 2.4s ease-out infinite;
+}
+.journey-node-pulse.d2 { animation-delay: 0.8s; }
+.journey-node-pulse.d3 { animation-delay: 1.6s; }
+@keyframes journeyPulse {
+  0%   { transform: scale(1);   opacity: 0.7; }
+  100% { transform: scale(3.2); opacity: 0; }
+}
+.journey-star { animation: journeyTwinkle 3s ease-in-out infinite alternate; }
+.journey-star.s2 { animation-delay: 1s; }
+.journey-star.s3 { animation-delay: 2s; }
+@keyframes journeyTwinkle { from { opacity: 0.2; } to { opacity: 0.9; } }
+.journey-earth { animation: journeyFloat 6s ease-in-out infinite; }
+.journey-planet { animation: journeyFloat 7s ease-in-out infinite reverse; }
+@keyframes journeyFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
+}
+@media (max-width: 960px) {
+  .journey-layout { grid-template-columns: minmax(0, 1fr); }
+  .journey-visual { justify-self: center; max-width: 440px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .journey-route, .journey-node-pulse, .journey-star,
+  .journey-earth, .journey-planet { animation: none; }
+}
+      /* Hide decorative visual on mobile */
+      @media (max-width: 767px) {
+        .journey-visual { display: none; }
+      }
     </style>
   </head>
   <body>
@@ -606,13 +660,94 @@
 
       <section class="section is-alt" id="about-journey">
         <div class="wrap">
-          <div class="section-head" data-reveal>
-            <p class="eyebrow">About Us</p>
-            <h2>Our Journey</h2>
-            <p class="lead">
+          <div class="journey-layout">
+            <div class="section-head" data-reveal>
+              <p class="eyebrow">About Us</p>
+              <h2>Our Journey</h2>
+              <p class="lead">
 SPACE 1 is being developed through a phased approach, beginning with educational planning, online learning initiatives and the establishment of academic and scientific relationships. Future phases may include interactive exhibitions, specialised laboratories, research programmes and a dedicated cosmic experience campus. Each stage will depend on appropriate expertise, resources, partnerships and approvals.            </p>
+            </div>
+
+            <!-- Decorative: Earth to destination, phase by phase -->
+            <div class="journey-visual" data-reveal aria-hidden="true">
+              <svg viewBox="0 0 440 320" xmlns="http://www.w3.org/2000/svg" focusable="false">
+                <defs>
+                  <radialGradient id="jEarth" cx="35%" cy="30%" r="75%">
+                    <stop offset="0%" stop-color="#9fc4ff" />
+                    <stop offset="45%" stop-color="#3f6fb8" />
+                    <stop offset="100%" stop-color="#0d1a33" />
+                  </radialGradient>
+                  <radialGradient id="jPlanet" cx="32%" cy="30%" r="75%">
+                    <stop offset="0%" stop-color="#ffecc8" />
+                    <stop offset="35%" stop-color="#d4a85c" />
+                    <stop offset="75%" stop-color="#7a5426" />
+                    <stop offset="100%" stop-color="#2a1a0a" />
+                  </radialGradient>
+                  <radialGradient id="jGlow" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#d4a85c" stop-opacity="0.35" />
+                    <stop offset="100%" stop-color="#d4a85c" stop-opacity="0" />
+                  </radialGradient>
+                  <path id="jPath" d="M78 250 C 150 250, 160 170, 220 160 S 300 110, 352 78" />
+                </defs>
+
+                <!-- stars -->
+                <circle class="journey-star" cx="30" cy="40" r="1.4" fill="#fff" />
+                <circle class="journey-star s2" cx="180" cy="30" r="1.1" fill="#fff" />
+                <circle class="journey-star s3" cx="410" cy="200" r="1.4" fill="#fff" />
+                <circle class="journey-star s2" cx="260" cy="290" r="1.2" fill="#d4a85c" />
+                <circle class="journey-star" cx="120" cy="120" r="1" fill="#fff" />
+                <circle class="journey-star s3" cx="330" cy="250" r="1" fill="#fff" />
+
+                <!-- route -->
+                <use href="#jPath" class="journey-route" fill="none" stroke="#d4a85c" stroke-opacity="0.55" stroke-width="1.5" />
+
+                <!-- phase nodes -->
+                <g>
+                  <circle r="4" fill="#d4a85c">
+                    <animateMotion dur="1s" fill="freeze" keyPoints="0.3;0.3" keyTimes="0;1" calcMode="linear"><mpath href="#jPath" /></animateMotion>
+                  </circle>
+                  <circle class="journey-node-pulse" r="4" fill="none" stroke="#d4a85c">
+                    <animateMotion dur="1s" fill="freeze" keyPoints="0.3;0.3" keyTimes="0;1" calcMode="linear"><mpath href="#jPath" /></animateMotion>
+                  </circle>
+                </g>
+                <g>
+                  <circle r="4" fill="#d4a85c">
+                    <animateMotion dur="1s" fill="freeze" keyPoints="0.55;0.55" keyTimes="0;1" calcMode="linear"><mpath href="#jPath" /></animateMotion>
+                  </circle>
+                  <circle class="journey-node-pulse d2" r="4" fill="none" stroke="#d4a85c">
+                    <animateMotion dur="1s" fill="freeze" keyPoints="0.55;0.55" keyTimes="0;1" calcMode="linear"><mpath href="#jPath" /></animateMotion>
+                  </circle>
+                </g>
+                <g>
+                  <circle r="4" fill="#d4a85c">
+                    <animateMotion dur="1s" fill="freeze" keyPoints="0.8;0.8" keyTimes="0;1" calcMode="linear"><mpath href="#jPath" /></animateMotion>
+                  </circle>
+                  <circle class="journey-node-pulse d3" r="4" fill="none" stroke="#d4a85c">
+                    <animateMotion dur="1s" fill="freeze" keyPoints="0.8;0.8" keyTimes="0;1" calcMode="linear"><mpath href="#jPath" /></animateMotion>
+                  </circle>
+                </g>
+
+                <!-- Earth (start) -->
+                <g class="journey-earth">
+                  <circle cx="58" cy="262" r="34" fill="url(#jEarth)" />
+                  <ellipse cx="58" cy="262" rx="52" ry="12" fill="none" stroke="#9fc4ff" stroke-opacity="0.25" transform="rotate(-18 58 262)" />
+                </g>
+
+                <!-- Destination planet -->
+                <g class="journey-planet">
+                  <circle cx="372" cy="66" r="70" fill="url(#jGlow)" />
+                  <circle cx="372" cy="66" r="30" fill="url(#jPlanet)" />
+                </g>
+
+                <!-- travelling craft with trail -->
+                <g>
+                  <circle r="10" fill="#d4a85c" opacity="0.18" />
+                  <path d="M-7 -4 L8 0 L-7 4 L-4 0 Z" fill="#f3f5f8" />
+                  <animateMotion dur="7s" repeatCount="indefinite" rotate="auto" keyPoints="0;1" keyTimes="0;1" calcMode="spline" keySplines="0.45 0 0.55 1"><mpath href="#jPath" /></animateMotion>
+                </g>
+              </svg>
+            </div>
           </div>
-         
         </div>
       </section>
 
@@ -724,14 +859,12 @@ SPACE 1 is being developed through a phased approach, beginning with educational
       </a>
     </main>
     <div id="site-footer"></div>
-    <script src="js/video-lazy.js?v=11" defer></script>
+    <script src="js/video-lazy.js?v=13" defer></script>
   
 
-    <script src="js/site-config.js?v=11"></script>
-    <script src="js/layout.js?v=11"></script>
-    <script src="js/components.js?v=11"></script>
-    <script src="js/animations.js?v=11"></script>
+    <script src="js/site-config.js?v=13"></script>
+    <script src="js/layout.js?v=13"></script>
+    <script src="js/components.js?v=13"></script>
+    <script src="js/animations.js?v=13"></script>
   </body>
 </html>
-
-

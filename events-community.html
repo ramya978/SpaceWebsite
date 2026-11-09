@@ -8,14 +8,182 @@
       name="description"
       content="Nights, lectures, challenges. SPACE 1, International Centre for Advanced Space Science &amp; Cosmic Research."
     />
-    <link rel="icon" type="image/webp" href="/images/logo/favicon.webp?v=11" sizes="any">
-    <link rel="stylesheet" href="css/theme.css?v=11" />
-    <link rel="stylesheet" href="css/base.css?v=11" />
-    <link rel="stylesheet" href="css/layout.css?v=11" />
-    <link rel="stylesheet" href="css/components.css?v=11" />
-    <link rel="stylesheet" href="css/animations.css?v=11" />
-      <link rel="stylesheet" href="css/mobile.css?v=11" />
-            <link rel="stylesheet" href="css/typography.css?v=11" />
+    <link rel="icon" type="image/webp" href="/images/logo/favicon.webp?v=13" sizes="any">
+    <link rel="stylesheet" href="css/theme.css?v=13" />
+    <link rel="stylesheet" href="css/base.css?v=13" />
+    <link rel="stylesheet" href="css/layout.css?v=13" />
+    <link rel="stylesheet" href="css/components.css?v=13" />
+    <link rel="stylesheet" href="css/animations.css?v=13" />
+      <link rel="stylesheet" href="css/mobile.css?v=13" />
+            <link rel="stylesheet" href="css/typography.css?v=13" />
+    <style>
+      /* ---------- Events Calendar: text + month timeline ---------- */
+      #events-calendar { position: relative; overflow: hidden; }
+      .calendar-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: clamp(32px, 6vw, 96px);
+        align-items: center;
+      }
+      .calendar-layout .section-head { margin-bottom: 0; }
+      .calendar-visual {
+        width: 100%;
+        max-width: 520px;
+        justify-self: end;
+      }
+      .ms-card {
+        position: relative;
+        padding: 10px 22px 26px;
+        border-radius: 18px;
+        border: 1px solid rgba(255, 255, 255, 0.10);
+        background: linear-gradient(160deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01));
+      }
+      .ms-sky { display: block; width: 100%; height: auto; overflow: visible; }
+      .ms-arc { animation: msDash 3s linear infinite; }
+      @keyframes msDash { to { stroke-dashoffset: -24; } }
+      .ms-star { animation: msTwinkle 3s ease-in-out infinite alternate; }
+      .ms-star.s2 { animation-delay: 1.2s; }
+      @keyframes msTwinkle { from { opacity: 0.2; } to { opacity: 0.9; } }
+
+      /* track */
+      .ms-track {
+        position: relative;
+        height: 2px;
+        margin: 0 calc(100% / 24);
+        border-radius: 2px;
+        background: rgba(255, 255, 255, 0.10);
+      }
+      .ms-progress {
+        position: absolute;
+        inset: 0 auto 0 0;
+        width: 0;
+        border-radius: 2px;
+        background: linear-gradient(90deg, rgba(212, 168, 92, 0.2), #d4a85c);
+        animation: msFill 12.0s linear infinite;
+      }
+      .ms-progress::after {
+        content: "";
+        position: absolute;
+        right: -5px;
+        top: 50%;
+        width: 10px;
+        height: 10px;
+        margin-top: -5px;
+        border-radius: 50%;
+        background: #fff3d6;
+        box-shadow: 0 0 0 4px rgba(212, 168, 92, 0.25), 0 0 18px rgba(212, 168, 92, 0.9);
+      }
+      @keyframes msFill {
+        0%   { width: 0;    opacity: 1; }
+        94%  { width: 100%; opacity: 1; }
+        100% { width: 100%; opacity: 0; }
+      }
+
+      /* months */
+      .ms-months {
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        margin: -6px 0 0;
+        padding: 0;
+        list-style: none;
+      }
+      .ms-month {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+      }
+      .ms-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.12);
+        animation-duration: 12.0s;
+        animation-timing-function: ease-out;
+        animation-iteration-count: infinite;
+      }
+      .ms-month.is-event .ms-dot { outline: 1px solid rgba(212, 168, 92, 0.6); outline-offset: 4px; }
+      .ms-label {
+        font-size: 0.66em;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        opacity: 0.5;
+      }
+      .ms-month.is-event .ms-label { opacity: 0.85; }
+      @keyframes msLit0 {
+        0%, 4.16% { background: rgba(255,255,255,0.12); box-shadow: none; transform: scale(1); }
+        4.17%, 94% { background: #e8ecf5; box-shadow: 0 0 12px rgba(232,236,245,0.6); transform: scale(1.15); }
+        100% { background: rgba(255,255,255,0.12); box-shadow: none; transform: scale(1); }
+      }
+      @keyframes msLit1 {
+        0%, 12.49% { background: rgba(255,255,255,0.12); box-shadow: none; transform: scale(1); }
+        12.5%, 94% { background: #e8ecf5; box-shadow: 0 0 12px rgba(232,236,245,0.6); transform: scale(1.15); }
+        100% { background: rgba(255,255,255,0.12); box-shadow: none; transform: scale(1); }
+      }
+      @keyframes msLit2 {
+        0%, 20.819999999999997% { background: rgba(255,255,255,0.12); box-shadow: none; transform: scale(1); }
+        20.83%, 94% { background: #d4a85c; box-shadow: 0 0 12px rgba(212,168,92,0.8); transform: scale(1.5); }
+        100% { background: rgba(255,255,255,0.12); box-shadow: none; transform: scale(1); }
+      }
+      @keyframes msLit3 {
+        0%, 29.16% { background: rgba(255,255,255,0.12); box-shadow: none; transform: scale(1); }
+        29.17%, 94% { background: #e8ecf5; box-shadow: 0 0 12px rgba(232,236,245,0.6); transform: scale(1.15); }
+        100% { background: rgba(255,255,255,0.12); box-shadow: none; transform: scale(1); }
+      }
+      @keyframes msLit4 {
+        0%, 37.49% { background: rgba(255,255,255,0.12); box-shadow: none; transform: scale(1); }
+        37.5%, 94% { background: #e8ecf5; box-shadow: 0 0 12px rgba(232,236,245,0.6); transform: scale(1.15); }
+        100% { background: rgba(255,255,255,0.12); box-shadow: none; transform: scale(1); }
+      }
+      @keyframes msLit5 {
+        0%, 45.82% { background: rgba(255,255,255,0.12); box-shadow: none; transform: scale(1); }
+        45.83%, 94% { background: #d4a85c; box-shadow: 0 0 12px rgba(212,168,92,0.8); transform: scale(1.5); }
+        100% { background: rgba(255,255,255,0.12); box-shadow: none; transform: scale(1); }
+      }
+      @keyframes msLit6 {
+        0%, 54.160000000000004% { background: rgba(255,255,255,0.12); box-shadow: none; transform: scale(1); }
+        54.17%, 94% { background: #e8ecf5; box-shadow: 0 0 12px rgba(232,236,245,0.6); transform: scale(1.15); }
+        100% { background: rgba(255,255,255,0.12); box-shadow: none; transform: scale(1); }
+      }
+      @keyframes msLit7 {
+        0%, 62.49% { background: rgba(255,255,255,0.12); box-shadow: none; transform: scale(1); }
+        62.5%, 94% { background: #e8ecf5; box-shadow: 0 0 12px rgba(232,236,245,0.6); transform: scale(1.15); }
+        100% { background: rgba(255,255,255,0.12); box-shadow: none; transform: scale(1); }
+      }
+      @keyframes msLit8 {
+        0%, 70.82% { background: rgba(255,255,255,0.12); box-shadow: none; transform: scale(1); }
+        70.83%, 94% { background: #d4a85c; box-shadow: 0 0 12px rgba(212,168,92,0.8); transform: scale(1.5); }
+        100% { background: rgba(255,255,255,0.12); box-shadow: none; transform: scale(1); }
+      }
+      @keyframes msLit9 {
+        0%, 79.16% { background: rgba(255,255,255,0.12); box-shadow: none; transform: scale(1); }
+        79.17%, 94% { background: #e8ecf5; box-shadow: 0 0 12px rgba(232,236,245,0.6); transform: scale(1.15); }
+        100% { background: rgba(255,255,255,0.12); box-shadow: none; transform: scale(1); }
+      }
+      @keyframes msLit10 {
+        0%, 87.49% { background: rgba(255,255,255,0.12); box-shadow: none; transform: scale(1); }
+        87.5%, 94% { background: #e8ecf5; box-shadow: 0 0 12px rgba(232,236,245,0.6); transform: scale(1.15); }
+        100% { background: rgba(255,255,255,0.12); box-shadow: none; transform: scale(1); }
+      }
+      @keyframes msLit11 {
+        0%, 95.82% { background: rgba(255,255,255,0.12); box-shadow: none; transform: scale(1); }
+        95.83%, 94% { background: #d4a85c; box-shadow: 0 0 12px rgba(212,168,92,0.8); transform: scale(1.5); }
+        100% { background: rgba(255,255,255,0.12); box-shadow: none; transform: scale(1); }
+      }
+
+      @media (max-width: 960px) {
+        .calendar-layout { grid-template-columns: minmax(0, 1fr); }
+        .calendar-visual { justify-self: center; max-width: 480px; }
+      }
+      /* Hide decorative visual on mobile */
+      @media (max-width: 767px) {
+        .calendar-visual { display: none; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .ms-arc, .ms-star, .ms-progress, .ms-dot { animation: none; }
+        .ms-progress { width: 100%; }
+      }
+    </style>
     <script>
       document.documentElement.classList.add("js");
     </script>
@@ -197,12 +365,59 @@
 
       <section class="section" id="events-calendar">
         <div class="wrap">
-          <div class="section-head" data-reveal>
-            <p class="eyebrow">Events &amp; Community</p>
-            <h2>Events Calendar</h2>
-            <p class="lead">The events calendar will list confirmed SPACE 1 activities, including dates, venues or online access details, registration requirements and participation information. Events will be published once the necessary arrangements have been confirmed.</p>
+          <div class="calendar-layout">
+            <div class="section-head" data-reveal>
+              <p class="eyebrow">Events &amp; Community</p>
+              <h2>Events Calendar</h2>
+              <p class="lead">The events calendar will list confirmed SPACE 1 activities, including dates, venues or online access details, registration requirements and participation information. Events will be published once the necessary arrangements have been confirmed.</p>
+            </div>
+
+            <!-- Decorative: year timeline -->
+            <div class="calendar-visual" data-reveal aria-hidden="true">
+              <div class="ms-card">
+                <svg class="ms-sky" viewBox="0 0 440 170" xmlns="http://www.w3.org/2000/svg" focusable="false">
+                  <defs>
+                    <radialGradient id="msPlanet" cx="32%" cy="30%" r="75%">
+                      <stop offset="0%" stop-color="#ffecc8" />
+                      <stop offset="40%" stop-color="#d4a85c" />
+                      <stop offset="100%" stop-color="#4a2f12" />
+                    </radialGradient>
+                    <radialGradient id="msGlow" cx="50%" cy="50%" r="50%">
+                      <stop offset="0%" stop-color="#d4a85c" stop-opacity="0.4" />
+                      <stop offset="100%" stop-color="#d4a85c" stop-opacity="0" />
+                    </radialGradient>
+                    <path id="msPath" d="M18 165 Q220 -20 422 165" />
+                  </defs>
+                  <circle class="ms-star" cx="40" cy="30" r="1.2" fill="#fff" />
+                  <circle class="ms-star s2" cx="400" cy="24" r="1.3" fill="#fff" />
+                  <circle class="ms-star" cx="220" cy="120" r="1" fill="#d4a85c" />
+                  <circle class="ms-star s2" cx="120" cy="60" r="1" fill="#fff" />
+                  <circle class="ms-star" cx="330" cy="70" r="1" fill="#fff" />
+                  <use href="#msPath" class="ms-arc" fill="none" stroke="rgba(212,168,92,0.4)" stroke-width="1.2" stroke-dasharray="4 8" />
+                  <g>
+                    <circle r="26" fill="url(#msGlow)" />
+                    <circle r="11" fill="url(#msPlanet)" />
+                    <animateMotion dur="12s" repeatCount="indefinite" keyPoints="0;1;1" keyTimes="0;0.94;1" calcMode="linear"><mpath href="#msPath" /></animateMotion>
+                  </g>
+                </svg>
+                <div class="ms-track"><span class="ms-progress"></span></div>
+                <ol class="ms-months">
+                  <li class="ms-month"><span class="ms-dot" style="animation-name:msLit0"></span><span class="ms-label">Jan</span></li>
+                  <li class="ms-month"><span class="ms-dot" style="animation-name:msLit1"></span><span class="ms-label">Feb</span></li>
+                  <li class="ms-month is-event"><span class="ms-dot" style="animation-name:msLit2"></span><span class="ms-label">Mar</span></li>
+                  <li class="ms-month"><span class="ms-dot" style="animation-name:msLit3"></span><span class="ms-label">Apr</span></li>
+                  <li class="ms-month"><span class="ms-dot" style="animation-name:msLit4"></span><span class="ms-label">May</span></li>
+                  <li class="ms-month is-event"><span class="ms-dot" style="animation-name:msLit5"></span><span class="ms-label">Jun</span></li>
+                  <li class="ms-month"><span class="ms-dot" style="animation-name:msLit6"></span><span class="ms-label">Jul</span></li>
+                  <li class="ms-month"><span class="ms-dot" style="animation-name:msLit7"></span><span class="ms-label">Aug</span></li>
+                  <li class="ms-month is-event"><span class="ms-dot" style="animation-name:msLit8"></span><span class="ms-label">Sep</span></li>
+                  <li class="ms-month"><span class="ms-dot" style="animation-name:msLit9"></span><span class="ms-label">Oct</span></li>
+                  <li class="ms-month"><span class="ms-dot" style="animation-name:msLit10"></span><span class="ms-label">Nov</span></li>
+                  <li class="ms-month is-event"><span class="ms-dot" style="animation-name:msLit11"></span><span class="ms-label">Dec</span></li>
+                </ol>
+              </div>
+            </div>
           </div>
-        
         </div>
       </section>
 
@@ -231,13 +446,10 @@
       </a>
     </main>
     <div id="site-footer"></div>
-    <script src="js/video-lazy.js?v=11" defer></script>
-    <script src="js/site-config.js?v=11"></script>
-    <script src="js/layout.js?v=11"></script>
-    <script src="js/components.js?v=11"></script>
-    <script src="js/animations.js?v=11"></script>
+    <script src="js/video-lazy.js?v=13" defer></script>
+    <script src="js/site-config.js?v=13"></script>
+    <script src="js/layout.js?v=13"></script>
+    <script src="js/components.js?v=13"></script>
+    <script src="js/animations.js?v=13"></script>
   </body>
 </html>
-
-
-

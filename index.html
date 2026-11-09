@@ -4,19 +4,117 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>SPACE 1</title>
-    <link rel="icon" type="image/webp" href="/images/logo/favicon.webp?v=11" sizes="any">
+    <link rel="icon" type="image/webp" href="/images/logo/favicon.webp?v=13" sizes="any">
     <meta
       name="description"
       content="Welcome and highlights. SPACE 1, International Centre for Advanced Space Science &amp; Cosmic Research."
     />
-    <link rel="stylesheet" href="css/theme.css?v=11" />
-    <link rel="stylesheet" href="css/base.css?v=11" />
-    <link rel="stylesheet" href="css/layout.css?v=11" />
-    <link rel="stylesheet" href="css/components.css?v=11" />
-    <link rel="stylesheet" href="css/animations.css?v=11" />
-    <link rel="stylesheet" href="css/homeslider.css?v=11" />
-        <link rel="stylesheet" href="css/mobile.css?v=11" />
-                  <link rel="stylesheet" href="css/typography.css?v=11" />
+    <link rel="stylesheet" href="css/theme.css?v=13" />
+    <link rel="stylesheet" href="css/base.css?v=13" />
+    <link rel="stylesheet" href="css/layout.css?v=13" />
+    <link rel="stylesheet" href="css/components.css?v=13" />
+    <link rel="stylesheet" href="css/animations.css?v=13" />
+    <link rel="stylesheet" href="css/homeslider.css?v=13" />
+    <style>
+      /* ===== Home – Upcoming Events (text + CSS planet visual) ===== */
+      .home-events {
+        position: relative;
+        overflow: hidden;
+        padding-top: clamp(56px, 7vw, 96px);
+        padding-bottom: clamp(56px, 7vw, 96px);
+      }
+      .home-events .events-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+        column-gap: clamp(32px, 6vw, 96px);
+        align-items: center;
+      }
+      .home-events .events-copy {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .home-events .events-title h2 { margin-bottom: 18px; }
+      .home-events .events-body .lead { margin-top: 0; max-width: 60ch; }
+      .home-events .events-body .text-link { display: inline-block; margin-top: 24px; }
+
+      /* ---- planet visual ---- */
+      .home-events .events-visual {
+        position: relative;
+        width: min(100%, 360px);
+        aspect-ratio: 1;
+        justify-self: start;
+        order: -1;
+      }
+      .home-events .ev-planet {
+        position: absolute;
+        inset: 32%;
+        border-radius: 50%;
+        background:
+          radial-gradient(circle at 32% 30%, rgba(255, 236, 200, 0.95) 0%, #d4a85c 28%, #7a5426 62%, #2a1a0a 100%);
+        box-shadow:
+          0 0 40px rgba(212, 168, 92, 0.45),
+          0 0 120px rgba(212, 168, 92, 0.18),
+          inset -14px -18px 30px rgba(0, 0, 0, 0.55);
+      }
+      .home-events .ev-ring {
+        position: absolute;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        animation: evSpin linear infinite;
+      }
+      .home-events .ev-ring-1 { inset: 18%; animation-duration: 14s; }
+      .home-events .ev-ring-2 {
+        inset: 2%;
+        border-style: dashed;
+        border-color: rgba(212, 168, 92, 0.25);
+        animation-duration: 26s;
+        animation-direction: reverse;
+      }
+      .home-events .ev-moon {
+        position: absolute;
+        top: -5px;
+        left: 50%;
+        width: 10px;
+        height: 10px;
+        margin-left: -5px;
+        border-radius: 50%;
+        background: #e8ecf5;
+        box-shadow: 0 0 12px rgba(232, 236, 245, 0.8);
+      }
+      .home-events .ev-moon-gold {
+        width: 8px;
+        height: 8px;
+        margin-left: -4px;
+        top: -4px;
+        background: #d4a85c;
+        box-shadow: 0 0 12px rgba(212, 168, 92, 0.9);
+      }
+      @keyframes evSpin {
+        to { transform: rotate(360deg); }
+      }
+
+      @media (max-width: 900px) {
+        .home-events .events-layout {
+          grid-template-columns: 1fr;
+        }
+        .home-events .events-visual {
+          width: min(70%, 260px);
+          margin-top: 40px;
+          justify-self: center;
+          order: 0;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .home-events .ev-ring { animation: none; }
+      }
+      /* Hide decorative visual on mobile */
+      @media (max-width: 767px) {
+        .home-events .events-visual { display: none; }
+      }
+    </style>
+        <link rel="stylesheet" href="css/mobile.css?v=13" />
+                  <link rel="stylesheet" href="css/typography.css?v=13" />
 
     <script>
       document.documentElement.classList.add("js");
@@ -177,8 +275,8 @@
           <div class="bg-slide" style="background-image: url('/images/NewImages/9.webp')"></div>
           <div class="bg-slide" style="background-image: url('/images/NewImages/26.webp')"></div>
           <div class="bg-slide" style="background-image: url('/images/NewImages/13.webp')"></div>
-          <div class="bg-slide" style="background-image: url('/images/NewImages/SCHOOL\ &\ GROUP\ VISITS\ 1.webp')"></div>
-          <div class="bg-slide" style="background-image: url('/images/NewImages/SCHOOL\ AND\ GROUP\ VISITS\ 2.webp')"></div>
+          <div class="bg-slide" style="background-image: url('/images/NewImages/SCHOOL&GROUPVISITS1.webp')"></div>
+          <div class="bg-slide" style="background-image: url('/images/NewImages/SCHOOL&GROUPVISITS2.webp')"></div>
         </div>
         <div class="wrap">
           <div class="section-head" data-reveal>
@@ -317,18 +415,28 @@
         </div>
       </section>
 
-      <section class="section is-alt" id="home-events">
+      <!-- ===== Upcoming Events ===== -->
+      <section class="section is-alt home-events" id="home-events">
         <div class="wrap">
-          <div class="section-head" data-reveal>
-            <p class="eyebrow">Home</p>
-            <h2>Upcoming Events</h2>
-            <p class="lead">
-           SPACE 1 plans to organise educational workshops, public lectures, astronomy programmes, student challenges and discussions on the future of space science. Confirmed events, registration details and participation requirements will be announced through the website.
-            </p>
+          <div class="events-layout" data-reveal>
+            <div class="events-copy">
+            <div class="events-title">
+              <p class="eyebrow">Home</p>
+              <h2>Upcoming Events</h2>
+            </div>
+            <div class="events-body">
+              <p class="lead">
+                SPACE 1 plans to organise educational workshops, public lectures, astronomy programmes, student challenges and discussions on the future of space science. Confirmed events, registration details and participation requirements will be announced through the website.
+              </p>
+              <a class="text-link" href="events-community#events-calendar">Full events calendar &rarr;</a>
+            </div>
+            </div>
+            <div class="events-visual" aria-hidden="true">
+              <span class="ev-ring ev-ring-1"><span class="ev-moon"></span></span>
+              <span class="ev-ring ev-ring-2"><span class="ev-moon ev-moon-gold"></span></span>
+              <span class="ev-planet"></span>
+            </div>
           </div>
-       
-    
-          <a class="text-link" href="events-community#events-calendar">Full events calendar &rarr;</a>
         </div>
       </section>
 
@@ -376,13 +484,11 @@
       </a>
     </main>
     <div id="site-footer"></div>
-    <script src="js/video-lazy.js?v=11" defer></script>
-    <script src="js/site-config.js?v=11"></script>
-    <script src="js/layout.js?v=11"></script>
-    <script src="js/components.js?v=11"></script>
-    <script src="js/animations.js?v=11"></script>
-    <script src="js/homeslider.js?v=11" defer></script>
+    <script src="js/video-lazy.js?v=13" defer></script>
+    <script src="js/site-config.js?v=13"></script>
+    <script src="js/layout.js?v=13"></script>
+    <script src="js/components.js?v=13"></script>
+    <script src="js/animations.js?v=13"></script>
+    <script src="js/homeslider.js?v=13" defer></script>
   </body>
 </html>
-
-
