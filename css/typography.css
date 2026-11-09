@@ -255,3 +255,15 @@ main .marquee .marquee-track span {
         font-size: 12px !important;
     }
 }
+
+
+@media(max-width:768px){
+      .hero h1 {
+    max-width: 14ch;
+    font-size:clamp(32px, 8vw, 46px) !important;
+    font-weight: 800 !important;
+    line-height: 1.02 !important;
+    letter-spacing: -0.015em !important;
+    text-transform: uppercase;
+  }
+}
