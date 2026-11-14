@@ -1951,13 +1951,7 @@
 }
 
 
-
-@media(min-width:300px){
-.hero{
-      min-height: clamp(524px, 88vh, 525px);
-}
-}
-
+ 
 /* Link style for the "Ascending Software" portion of the footer note */
 .footer-note a {
   color: var(--color-text-muted);
