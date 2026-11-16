@@ -89,39 +89,33 @@
     "</div>";
 
   // ---- Footer ----
-  // Pages marked inFooter, followed by the policy links.
-  var footerPageLinks = site.pages
-    .filter(function (p) { return p.inFooter; })
-    .map(function (p) { return '<li><a href="' + p.file + '">' + menuLabel(p) + "</a></li>"; })
-    .join("");
-
-  var footerPolicyLinks = (site.footerLinks || [])
+  // One bar: logo | 5 links | copyright, then the disclaimer below it.
+  var footerMenuLinks = (site.footerMenu || [])
     .map(function (l) { return '<li><a href="' + l.href + '">' + l.label + "</a></li>"; })
     .join("");
 
   var disclaimer = site.footerDisclaimer
-    ? '<p class="footer-note" style="margin-top:44px;font-size:11px">' + site.footerDisclaimer + "</p>"
+    ? '<p class="footer-note" style="margin-top:28px;font-size:11px">' + site.footerDisclaimer + "</p>"
     : "";
+
+  var footerLogo =
+    '<a class="logo footer-logo" href="' + HOME + '">' +
+      '<img src="images/logo/Logo.webp" alt="' + site.name + ' Logo" class="header-logo">' +
+    "</a>";
 
   var noteText = site.footerNote
     ? site.footerNote.replace("Ascending Software", '<a href="https://ascendingsoftware.com/" target="_blank" rel="noopener noreferrer">Ascending Software</a>')
-    : "";
-  var note = site.footerNote
-    ? '<small class="footer-note"' + (disclaimer ? ' style="margin-top:0;;text-align:center";border-top:0;padding-top:6px";' : "") + '">' + noteText + "</small>"
     : "";
 
   document.getElementById("site-footer").innerHTML =
     '<footer class="site-footer">' +
       '<div class="wrap">' +
-        '<div class="footer-columns">' +
-          '<div><a class="logo" href="' + HOME + '">' +
-          '<img src="images/logo/Logo.webp" alt="' + site.name + ' Logo" class="header-logo">'
-           + "</a>" +
-          '<p class="muted" style="margin-top:18px;max-width:36ch;font-size:15px">' + site.tagline + ". </p></div>" +
-          '<ul class="footer-links">' + footerPageLinks + footerPolicyLinks + "</ul>" +
+        '<div class="footer-bar">' +
+          footerLogo +
+          '<ul class="footer-links">' + footerMenuLinks + "</ul>" +
+          '<small class="footer-copy">' + noteText + "</small>" +
         "</div>" +
         disclaimer +
-        note +
       "</div>" +
     "</footer>";
 

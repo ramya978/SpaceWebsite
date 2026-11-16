@@ -252,7 +252,19 @@ window.SITE = {
     { id: "contact",      file: "contact.html",             label: "Contact Us",              inHeader: false, inFooter: true,  blurb: "Enquiries and location" }
   ],
  
-  // Policy links added to the end of the footer link list on every page.
+  // The 5 links shown in the centre of the footer bar.
+  footerMenu: [
+    { label: "About Us",         href: "about.html" },
+    { label: "Learning Academy", href: "learning-academy.html" },
+    { label: "Partnerships",     href: "partnerships.html" },
+    { label: "Privacy Policy",   href: "privacy-policy.html" },
+    { label: "Contact Us",       href: "contact.html" }
+  ],
+
+  // Round social button at the left of the footer bar (set the real X profile URL).
+  footerSocial: { label: "X", href: "#" },
+
+  // Policy links (legacy list, no longer shown in the footer bar).
   footerLinks: [
     { label: "Privacy Policy",                  href: "privacy-policy.html" },
     { label: "Terms of Use",                    href: "terms-of-use.html" },
