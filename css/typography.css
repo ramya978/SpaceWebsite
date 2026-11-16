@@ -7,10 +7,10 @@
 :root {
     --sx-body: 15px;
     --sx-small: 13px;
-    --sx-lead: clamp(15px, 1.25vw, 16px);
-    --sx-hero: clamp(42px, 5.3vw, 60px);
-    --sx-page-hero: clamp(38px, 4.5vw, 62px);
-    --sx-heading: clamp(28px, 3.15vw, 43px);
+    --sx-lead: clamp(15px, 1.25vw, 14px);
+    --sx-hero: clamp(42px, 5.3vw, 52px);
+    --sx-page-hero: clamp(38px, 4.5vw, 60px);
+    --sx-heading: clamp(28px, 3.15vw, 38px);
     --sx-subheading: clamp(19px, 1.65vw, 24px);
     --sx-card-heading: clamp(17px, 1.45vw, 21px);
     --sx-caption: 10px;
